@@ -44,8 +44,7 @@ public class Player extends Character {
     return mdf;
   }
 
-  public int getHp(final int harm) {
-    hp = hp - harm;
+  public int getHp() {
     return hp;
   }
 }

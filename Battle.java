@@ -25,12 +25,14 @@ final class Battle {
     int dmgDealt = 0;
     Player user = new Player();
     Enemy monster = new Enemy();
+    int playerHp = user.getHp();
+    int enemyHp = monster.getHp();
     final Scanner userInput = new Scanner(System.in);
     while (true) {
     int input = 0;
     int skillInput = 0;
-    System.out.println("Enemy hp: " + monster.getHp(0));
-    System.out.println("\nPlayer hp: " + user.getHp(0));
+    System.out.println("Enemy hp: " + enemyHp);
+    System.out.println("\nPlayer hp: " + playerHp);
     System.out.println("Attack(1): ");
     System.out.println("Skills(2): ");
     System.out.println("Defend(3): ");
@@ -41,7 +43,7 @@ final class Battle {
         }
         else if (input == 1) {
             dmgDealt = user.attack(monster.getDef());
-            monster.getHp(dmgDealt);
+            enemyHp = enemyHp - dmgDealt;
         }
         else if (input == 2) {
           System.out.println("\nSkills:");
@@ -55,15 +57,15 @@ final class Battle {
             }
             else if (skillInput == 1) {
               dmgDealt = user.fireball(monster.getMdf());
-              monster.getHp(dmgDealt);
+              enemyHp = enemyHp - dmgDealt;
             }
             else if (skillInput == 2) {
               dmgDealt = user.zap(monster.getMdf());
-              monster.getHp(dmgDealt);
+              enemyHp = enemyHp - dmgDealt;
             }
             else {
               dmgDealt = user.frostblast(monster.getMdf());
-              monster.getHp(dmgDealt);
+              enemyHp = enemyHp - dmgDealt;
             }
           }
           catch (InputMismatchException errorCode) {
@@ -75,6 +77,8 @@ final class Battle {
         System.out.println("That is not a viable input.");
     }
     System.out.println("\nDone.");
+    dmgDealt = monster.attack(user.getDef());
+    playerHp = playerHp - dmgDealt;
 }
 }
 }
