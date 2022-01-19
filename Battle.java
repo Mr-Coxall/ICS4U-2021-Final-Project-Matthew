@@ -29,13 +29,14 @@ final class Battle {
     int enemyHp = monster.getHp();
     final Scanner userInput = new Scanner(System.in);
     while (true) {
+    int tempDef = 0;
     int input = 0;
     int skillInput = 0;
     System.out.println("Enemy hp: " + enemyHp);
     System.out.println("\nPlayer hp: " + playerHp);
-    System.out.println("Attack(1): ");
-    System.out.println("Skills(2): ");
-    System.out.println("Defend(3): ");
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
     try {
         input = userInput.nextInt();
         if (input <= 0 || input >= 4) {
@@ -72,12 +73,15 @@ final class Battle {
             System.out.println("That is not a viable input.");
           }
         }
+        else {
+          tempDef = 2;
+        }
     }
     catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
     }
     System.out.println("\nDone.");
-    dmgDealt = monster.attack(user.getDef());
+    dmgDealt = monster.attack(user.getDef() + tempDef);
     playerHp = playerHp - dmgDealt;
 }
 }
