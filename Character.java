@@ -22,21 +22,21 @@ public abstract class Character {
     return damage;
   }
 
-  public int fireball(final int Emdf) {
+  public int fireball(final int intelligence, final int Emdf) {
     final Random fireRand = new Random();
-    final int fireDmg = fireRand.nextInt(intel - Emdf) + Emdf;
+    final int fireDmg = fireRand.nextInt(intelligence - Emdf) + Emdf;
     return fireDmg;
   }
 
-  public int zap(final int Emdf) {
+  public int zap(final int intelligence, final int Emdf) {
     final Random zapRand = new Random();
-    final int zapDmg = zapRand.nextInt(intel - Emdf) + Emdf;
+    final int zapDmg = zapRand.nextInt(intelligence - Emdf) + Emdf;
     return zapDmg;
   }
 
-  public int frostblast(final int Emdf) {
+  public int frostblast(final int intelligence, final int Emdf) {
     final Random frostRand = new Random();
-    final int frostDmg = frostRand.nextInt(intel - Emdf) + Emdf;
+    final int frostDmg = frostRand.nextInt(intelligence - Emdf) + Emdf;
     return frostDmg;
   }
 }

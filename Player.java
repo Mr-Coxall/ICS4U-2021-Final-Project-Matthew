@@ -10,7 +10,7 @@ public class Player extends Character {
 
   private int def = 3;
 
-  private int mdf = 3;
+  private int mdf = 2;
 
   private int agl = 4;
 
@@ -22,17 +22,17 @@ public class Player extends Character {
   }
 
   public int fireball(final int Emdf) {
-    final int fireDmg = super.fireball(Emdf);
+    final int fireDmg = super.fireball(intel, Emdf);
     return fireDmg;
   }
 
   public int zap(final int Emdf) {
-    final int zapDmg = super.zap(Emdf);
+    final int zapDmg = super.zap(intel, Emdf);
     return zapDmg;
   }
 
   public int frostblast(final int Emdf) {
-    final int frostDmg = super.frostblast(Emdf);
+    final int frostDmg = super.frostblast(intel, Emdf);
     return frostDmg;
   }
 

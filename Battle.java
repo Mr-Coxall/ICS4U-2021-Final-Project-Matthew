@@ -22,22 +22,53 @@ final class Battle {
   string of numbers.
   */
   public static void main(final String[] args) {
+    int dmgDealt = 0;
     Player user = new Player();
     Enemy monster = new Enemy();
     final Scanner userInput = new Scanner(System.in);
     while (true) {
+    int input = 0;
+    int skillInput = 0;
     System.out.println("Enemy hp: " + monster.getHp(0));
     System.out.println("\nPlayer hp: " + user.getHp(0));
     System.out.println("Attack(1): ");
     System.out.println("Skills(2): ");
     System.out.println("Defend(3): ");
     try {
-        final int input = userInput.nextInt();
+        input = userInput.nextInt();
         if (input <= 0 || input >= 4) {
             System.out.println("That is not a viable input (must be 1, 2, or 3).");
         }
         else if (input == 1) {
-            monster.getHp(user.attack(monster.getDef()));
+            dmgDealt = user.attack(monster.getDef());
+            monster.getHp(dmgDealt);
+        }
+        else if (input == 2) {
+          System.out.println("\nSkills:");
+          System.out.println("Fireball(1)");
+          System.out.println("Zap(2)");
+          System.out.println("Frostblast(3)");
+          try {
+            skillInput = userInput.nextInt();
+            if (skillInput <= 0 || skillInput >= 4) {
+              System.out.println("That is not a viable input (must be 1, 2, or 3).");
+            }
+            else if (skillInput == 1) {
+              dmgDealt = user.fireball(monster.getMdf());
+              monster.getHp(dmgDealt);
+            }
+            else if (skillInput == 2) {
+              dmgDealt = user.zap(monster.getMdf());
+              monster.getHp(dmgDealt);
+            }
+            else {
+              dmgDealt = user.frostblast(monster.getMdf());
+              monster.getHp(dmgDealt);
+            }
+          }
+          catch (InputMismatchException errorCode) {
+            System.out.println("That is not a viable input.");
+          }
         }
     }
     catch (InputMismatchException errorCode) {
