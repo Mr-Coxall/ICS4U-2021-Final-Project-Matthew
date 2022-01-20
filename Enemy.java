@@ -32,23 +32,30 @@ public class Enemy extends Character {
     return weakness;
   }
 
-  public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + lvl;
+  /**
+  * The attack method.
+  *
+  * @param Pdef the player's defence value.
+  *
+  * @return damage the damage dealt.
+  */
+  public int attack(final int Pdef) {
+    final int damage = super.attack(str, Pdef) + lvl;
     return damage;
   }
 
-  public int fireball(final int Emdf) {
-    final int fireDmg = super.fireball(intel, Emdf);
+  public int fireball(final int Pmdf) {
+    final int fireDmg = super.fireball(intel, Pmdf);
     return fireDmg;
   }
 
-  public int zap(final int Emdf) {
-    final int zapDmg = super.zap(intel, Emdf);
+  public int zap(final int Pmdf) {
+    final int zapDmg = super.zap(intel, Pmdf);
     return zapDmg;
   }
 
-  public int frostblast(final int Emdf) {
-    final int frostDmg = super.frostblast(intel, Emdf);
+  public int frostblast(final int Pmdf) {
+    final int frostDmg = super.frostblast(intel, Pmdf);
     return frostDmg;
   }
 

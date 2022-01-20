@@ -31,13 +31,13 @@ final class Battle {
       int enemyHp = 0;
       int enemyDef = 0;
       int enemyMdf = 0;
-      int bossBattle = 0;
+      boolean bossBattle = false;
       int level = monster.getLevel();
       if (level % 5 == 0) {
         enemyHp = boss.getHp();
         enemyDef = boss.getDef();
         enemyMdf = boss.getMdf();
-        bossBattle = 1;
+        bossBattle = true;
       }
       else {
         enemyHp = monster.getHp();
@@ -145,7 +145,7 @@ final class Battle {
             }
           }
           else {
-            tempDef = 2;
+            tempDef = 2 + user.getLevel();
           }
         }
       catch (InputMismatchException errorCode) {
@@ -153,35 +153,39 @@ final class Battle {
       }
       System.out.println("\nDone.");
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
-        if (bossBattle == 0) {
-          dmgDealt = monster.attack(user.getDef() + tempDef);
-          System.out.println("The enemy attacked for "
-            + dmgDealt + " damage.");
-        }
-        else {
-          dmgDealt = boss.attack(user.getDef() + tempDef);
+        if (bossBattle) {
+          dmgDealt = boss.attack(user.getDef());
           int healAmount = boss.heal();
           System.out.println("The boss attacked for "
             + dmgDealt + " damage!");
           System.out.println("The boss regained "
             + healAmount + " Hp!");
         }
-        playerHp = playerHp - dmgDealt;
+        else {
+          dmgDealt = monster.attack(user.getDef());
+          System.out.println("The enemy attacked for "
+            + dmgDealt + " damage.");
+        }
+        playerHp = playerHp - (dmgDealt - tempDef);
       }
     }
-  int decision = 1;
-  if (bossBattle == 1) {
+  boolean decision = true;
+  if (bossBattle) {
     System.out.println("You win!");
     System.exit(0);
   }
-  while (decision == 1) {
+  while (decision) {
+    int warning = monster.getLevel();
     System.out.println("Continue?: (1/0)");
+    if (warning == 4) {
+      System.out.println("Warning! Boss battle ahead!");
+    }
     try {
       int battle = userInput.nextInt();
       if (battle == 1) {
         monster.levelUp();
         user.levelUp();
-        decision = 0;
+        decision = false;
       }
       else if (battle == 0) {
         System.out.println("Game ended.");

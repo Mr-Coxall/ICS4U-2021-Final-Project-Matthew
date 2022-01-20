@@ -59,4 +59,8 @@ public class Player extends Character {
     mdf += 1;
     lvl += 1;
   }
+
+  public int getLevel() {
+    return lvl;
+  }
 }
