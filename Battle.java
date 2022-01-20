@@ -25,9 +25,25 @@ final class Battle {
     int dmgDealt = 0;
     Player user = new Player();
     Enemy monster = new Enemy();
+    Boss boss = new Boss();
     Actions act = new Actions();
     while (true) {
-      int enemyHp = monster.getHp();
+      int enemyHp = 0;
+      int enemyDef = 0;
+      int enemyMdf = 0;
+      int bossBattle = 0;
+      int level = monster.getLevel();
+      if (level % 5 == 0) {
+        enemyHp = boss.getHp();
+        enemyDef = boss.getDef();
+        enemyMdf = boss.getMdf();
+        bossBattle = 1;
+      }
+      else {
+        enemyHp = monster.getHp();
+        enemyDef = monster.getDef();
+        enemyMdf = monster.getMdf();
+      }
       int playerHp = user.getHp();
       int playerMp = user.getMp();
       final Scanner userInput = new Scanner(System.in);
@@ -48,7 +64,7 @@ final class Battle {
               + " (must be 1, 2, or 3).");
           }
           else if (input == 1) {
-            dmgDealt = user.attack(monster.getDef());
+            dmgDealt = user.attack(enemyDef);
             enemyHp = enemyHp - dmgDealt;
             System.out.println("You hit for " + dmgDealt + " damage.");
           }
@@ -61,7 +77,7 @@ final class Battle {
                   + "(must be 1, 2, 3 or 4).");
               }
               else if (skillInput == 1) {
-                dmgDealt = user.fireball(monster.getMdf());
+                dmgDealt = user.fireball(enemyMdf);
                 if (weakness.equals("fire")) {
                   dmgDealt += 3;
                 }
@@ -82,7 +98,7 @@ final class Battle {
                 }
               }
               else if (skillInput == 2) {
-                dmgDealt = user.zap(monster.getMdf());
+                dmgDealt = user.zap(enemyMdf);
                 if (weakness.equals("lightning")) {
                   dmgDealt += 3;
                 }
@@ -103,7 +119,7 @@ final class Battle {
                 }
               }
               else if (skillInput == 3) {
-                dmgDealt = user.frostblast(monster.getMdf());
+                dmgDealt = user.frostblast(enemyMdf);
                 if (weakness.equals("ice")) {
                   dmgDealt += 3;
                 }
@@ -137,13 +153,27 @@ final class Battle {
       }
       System.out.println("\nDone.");
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
-        dmgDealt = monster.attack(user.getDef() + tempDef);
+        if (bossBattle == 0) {
+          dmgDealt = monster.attack(user.getDef() + tempDef);
+          System.out.println("The enemy attacked for "
+            + dmgDealt + " damage.");
+        }
+        else {
+          dmgDealt = boss.attack(user.getDef() + tempDef);
+          int healAmount = boss.heal();
+          System.out.println("The boss attacked for "
+            + dmgDealt + " damage!");
+          System.out.println("The boss regained "
+            + healAmount + " Hp!");
+        }
         playerHp = playerHp - dmgDealt;
-        System.out.println("The enemy attacked for "
-          + dmgDealt + " damage.");
       }
     }
   int decision = 1;
+  if (bossBattle == 1) {
+    System.out.println("You win!");
+    System.exit(0);
+  }
   while (decision == 1) {
     System.out.println("Continue?: (1/0)");
     try {

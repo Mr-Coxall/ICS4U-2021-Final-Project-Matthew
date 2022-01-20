@@ -1,16 +1,16 @@
 import java.util.Random;
 
-public class Enemy extends Character {
+public class Boss extends Character {
   
-  private int hp = 20;
+  private int hp = 50;
 
-  private int str = 4;
+  private int str = 10;
 
-  private int intel = 1;
+  private int intel = 5;
 
-  private int def = 3;
+  private int def = 10;
 
-  private int mdf = 2;
+  private int mdf = 10;
 
   private int lvl = 1;
 
@@ -33,7 +33,7 @@ public class Enemy extends Character {
   }
 
   public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + lvl;
+    final int damage = super.attack(str, Edef) + (lvl * 5);
     return damage;
   }
 
@@ -64,20 +64,9 @@ public class Enemy extends Character {
     return hp;
   }
 
-  public void levelUp() {
+  public int heal() {
     final Random random = new Random();
-    final int strUp = random.nextInt(2) + 1;
-    final int defUp = random.nextInt(1) + 1;
-    final int mdfUp = random.nextInt(1) + 1;
-    final int hpUp = random.nextInt(5) + 5;
-    str += strUp;
-    hp += hpUp;
-    def += defUp;
-    mdf += mdfUp;
-    lvl += 1;
-  }
-
-  public int getLevel() {
-    return lvl;
+    final int healing = random.nextInt(intel);
+    return healing;
   }
 }
