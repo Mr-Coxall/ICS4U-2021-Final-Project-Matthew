@@ -2,13 +2,13 @@ public class Player extends Character {
   
   private int hp = 30;
 
-  private int mp = 10;
+  private int mp = 6;
 
   private int str = 5;
 
   private int intel = 4;
 
-  private int def = 3;
+  private int def = 2;
 
   private int mdf = 2;
 
@@ -46,5 +46,9 @@ public class Player extends Character {
 
   public int getHp() {
     return hp;
+  }
+
+  public int getMp() {
+    return mp;
   }
 }

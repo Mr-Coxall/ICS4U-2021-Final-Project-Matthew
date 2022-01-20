@@ -1,20 +1,38 @@
+import java.util.Random;
+
 public class Enemy extends Character {
   
-  private int hp = 30;
+  private int hp = 20;
 
-  private int mp = 10;
+  private int str = 4;
 
-  private int str = 5;
-
-  private int intel = 4;
+  private int intel = 1;
 
   private int def = 3;
 
   private int mdf = 2;
 
-  private int agl = 4;
+  private int agl = 3;
 
   private int lvl = 1;
+
+  private String weakness = "none";
+
+  public String getWeakness() {
+    final Random random = new Random();
+    final int weak = random.nextInt(3);
+    if (weak == 1) {
+      weakness = "fire";
+    }
+    else if (weak == 2) {
+      weakness = "ice";
+    }
+    else if (weak == 3) {
+      weakness = "lightning";
+    }
+    System.out.println(weakness);
+    return weakness;
+  }
 
   public int attack(final int Edef) {
     final int damage = super.attack(str, Edef);
