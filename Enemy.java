@@ -12,8 +12,6 @@ public class Enemy extends Character {
 
   private int mdf = 2;
 
-  private int agl = 3;
-
   private int lvl = 1;
 
   private String weakness = "none";
@@ -35,7 +33,7 @@ public class Enemy extends Character {
   }
 
   public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef);
+    final int damage = super.attack(str, Edef) + lvl;
     return damage;
   }
 
@@ -64,5 +62,18 @@ public class Enemy extends Character {
   
   public int getHp() {
     return hp;
+  }
+
+  public void levelUp() {
+    final Random random = new Random();
+    final int strUp = random.nextInt(2) + 1;
+    final int defUp = random.nextInt(1) + 1;
+    final int mdfUp = random.nextInt(1) + 1;
+    final int hpUp = random.nextInt(5) + 5;
+    str += strUp;
+    hp += hpUp;
+    def += defUp;
+    mdf += mdfUp;
+    lvl += 1;
   }
 }

@@ -12,12 +12,10 @@ public class Player extends Character {
 
   private int mdf = 2;
 
-  private int agl = 4;
-
   private int lvl = 1;
 
   public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef);
+    final int damage = super.attack(str, Edef) + lvl;
     return damage;
   }
 
@@ -50,5 +48,15 @@ public class Player extends Character {
 
   public int getMp() {
     return mp;
+  }
+
+  public void levelUp() {
+    str += 2;
+    hp += 5;
+    mp += 1;
+    intel += 1;
+    def += 1;
+    mdf += 1;
+    lvl += 1;
   }
 }
