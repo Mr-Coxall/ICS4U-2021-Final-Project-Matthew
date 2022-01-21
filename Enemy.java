@@ -16,16 +16,16 @@ public class Enemy extends Character {
 
   private String weakness = "none";
 
-  public String getWeakness() {
+  public String getType() {
     final Random random = new Random();
-    final int weak = random.nextInt(3);
-    if (weak == 1) {
+    final int type = random.nextInt(4) + 1;
+    if (type == 1) {
       weakness = "fire";
     }
-    else if (weak == 2) {
+    else if (type == 2) {
       weakness = "ice";
     }
-    else if (weak == 3) {
+    else if (type == 3) {
       weakness = "lightning";
     }
     System.out.println(weakness);

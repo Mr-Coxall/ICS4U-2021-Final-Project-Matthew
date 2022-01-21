@@ -4,7 +4,7 @@ public class Player extends Character {
 
   private int mp = 6;
 
-  private int str = 5;
+  private int str = 20;
 
   private int intel = 4;
 
@@ -15,7 +15,8 @@ public class Player extends Character {
   private int lvl = 1;
 
   public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + lvl;
+    // final int damage = super.attack(str, Edef) + lvl;
+    final int damage = 50;
     return damage;
   }
 

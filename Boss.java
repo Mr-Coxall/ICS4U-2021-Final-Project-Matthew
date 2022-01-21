@@ -12,28 +12,30 @@ public class Boss extends Character {
 
   private int mdf = 10;
 
-  private int lvl = 1;
+  private int lvl = 0;
 
-  private String weakness = "none";
+  private String type = "none";
 
   public String getWeakness() {
+    lvl += 1;
     final Random random = new Random();
     final int weak = random.nextInt(3);
     if (weak == 1) {
-      weakness = "fire";
+      type = "fire";
     }
     else if (weak == 2) {
-      weakness = "ice";
+      type = "ice";
     }
     else if (weak == 3) {
-      weakness = "lightning";
+      type = "lightning";
     }
-    System.out.println(weakness);
-    return weakness;
+    System.out.println(type);
+    return type;
   }
 
   public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + (lvl * 5);
+    final Random random = new Random();
+    final int damage = random.nextInt(str - Edef) + Edef;
     return damage;
   }
 
@@ -52,15 +54,22 @@ public class Boss extends Character {
     return frostDmg;
   }
 
-  public int getDef() {
+  public void getStr(final int level) {
+    str = str + (8 * (level - 1));
+  }
+
+  public int getDef(final int level) {
+    def = def + (5 * (level - 1));
     return def;
   }
 
-  public int getMdf() {
+  public int getMdf(final int level) {
+    mdf = mdf + (5 * (level - 1));
     return mdf;
   }
-  
-  public int getHp() {
+
+  public int getHp(final int level) {
+    hp = hp + (50 * (level - 1));
     return hp;
   }
 
@@ -68,5 +77,9 @@ public class Boss extends Character {
     final Random random = new Random();
     final int healing = random.nextInt(intel);
     return healing;
+  }
+
+  public int revive() {
+    return hp;
   }
 }

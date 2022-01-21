@@ -54,7 +54,7 @@ public abstract class Character {
 
   public int zap(final int intelligence, final int Emdf) {
     final Random zapRand = new Random();
-    final int zapDmg = zapRand.nextInt(intelligence - Emdf) + Emdf;
+    final int zapDmg = zapRand.nextInt(intelligence - Emdf) + 3;
     return zapDmg;
   }
 

@@ -22,22 +22,33 @@ final class Battle {
   string of numbers.
   */
   public static void main(final String[] args) {
+    int bossLevel = 0;
     int dmgDealt = 0;
     Player user = new Player();
     Enemy monster = new Enemy();
     Boss boss = new Boss();
+    Finale finalBoss = new Finale();
     Actions act = new Actions();
     while (true) {
       int enemyHp = 0;
       int enemyDef = 0;
       int enemyMdf = 0;
       boolean bossBattle = false;
+      boolean finalBattle = false;
       int level = monster.getLevel();
-      if (level % 5 == 0) {
-        enemyHp = boss.getHp();
-        enemyDef = boss.getDef();
-        enemyMdf = boss.getMdf();
+      if (level % 5 == 0 && level % 15 != 0) {
+        bossLevel += 1;
+        enemyHp = boss.getHp(bossLevel);
+        boss.getStr(bossLevel);
+        enemyDef = boss.getDef(bossLevel);
+        enemyMdf = boss.getMdf(bossLevel);
         bossBattle = true;
+      }
+      else if (level % 15 == 0) {
+        enemyHp = finalBoss.getHp();
+        enemyDef = finalBoss.getDef();
+        enemyMdf = finalBoss.getMdf();
+        finalBattle = true;
       }
       else {
         enemyHp = monster.getHp();
@@ -47,8 +58,12 @@ final class Battle {
       int playerHp = user.getHp();
       int playerMp = user.getMp();
       final Scanner userInput = new Scanner(System.in);
-      String weakness = monster.getWeakness();
+      String type = monster.getType();
       while (playerHp >= 1 && enemyHp >= 1) {
+        if (finalBattle) {
+          enemyDef = finalBoss.getDef();
+          enemyMdf = finalBoss.getMdf();
+        }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
         int input = 0;
@@ -78,13 +93,13 @@ final class Battle {
               }
               else if (skillInput == 1) {
                 dmgDealt = user.fireball(enemyMdf);
-                if (weakness.equals("fire")) {
+                if (type.equals("ice")) {
                   dmgDealt += 3;
                 }
-                else if (weakness.equals("ice")) {
+                else if (type.equals("fire")) {
                   dmgDealt = 0;
                 }
-                else if (weakness.equals("lightning")) {
+                else if (type.equals("lightning")) {
                   dmgDealt -= 2;
                 }
                 if (playerMp >= 2) {
@@ -98,20 +113,22 @@ final class Battle {
                 }
               }
               else if (skillInput == 2) {
+                int dmgPerHit = 2;
                 dmgDealt = user.zap(enemyMdf);
-                if (weakness.equals("lightning")) {
-                  dmgDealt += 3;
+                if (type.equals("fire")) {
+                  dmgPerHit += 1;
                 }
-                else if (weakness.equals("fire")) {
-                  dmgDealt = 0;
+                else if (type.equals("lightning")) {
+                  dmgPerHit = 0;
                 }
-                else if (weakness.equals("ice")) {
-                  dmgDealt -= 2;
+                else if (type.equals("ice")) {
+                  dmgPerHit -= 1;
                 }
                 if (playerMp >= 2) {
-                  enemyHp = enemyHp - dmgDealt;
-                  System.out.println("You hit for "
-                    + dmgDealt + " damage.");
+                  dmgPerHit = dmgDealt * dmgPerHit;
+                  enemyHp = enemyHp - dmgPerHit;
+                  System.out.println("You hit a total of " + dmgDealt
+                    + " times for a total of " + dmgPerHit + " damage.");
                   playerMp -= 2;
                 }
                 else {
@@ -120,13 +137,13 @@ final class Battle {
               }
               else if (skillInput == 3) {
                 dmgDealt = user.frostblast(enemyMdf);
-                if (weakness.equals("ice")) {
+                if (type.equals("fire")) {
                   dmgDealt += 3;
                 }
-                else if (weakness.equals("lightning")) {
+                else if (type.equals("ice")) {
                   dmgDealt = 0;
                 }
-                else if (weakness.equals("fire")) {
+                else if (type.equals("fire")) {
                   dmgDealt -= 2;
                 }
                 if (playerMp >= 2) {
@@ -153,6 +170,10 @@ final class Battle {
       }
       System.out.println("\nDone.");
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
+        if (finalBattle) {
+          dmgDealt = finalBoss.attack(user.getDef());
+          int healAmount = 10;
+        }
         if (bossBattle) {
           dmgDealt = boss.attack(user.getDef());
           int healAmount = boss.heal();
@@ -168,21 +189,29 @@ final class Battle {
         }
         playerHp = playerHp - (dmgDealt - tempDef);
       }
+      if (finalBattle) {
+        if (enemyHp <= 0 && (tempDef != 0 || enemyCurrentHp != enemyHp)
+          && finalBoss.checkStage() != 3) {
+          enemyHp = finalBoss.revive();
+          System.out.println("The creature stood up, refusing to die!");
+        }
+      }
     }
   boolean decision = true;
-  if (bossBattle) {
+  if (bossBattle && bossLevel == 3) {
     System.out.println("You win!");
     System.exit(0);
   }
   while (decision) {
     int warning = monster.getLevel();
     System.out.println("Continue?: (1/0)");
-    if (warning == 4) {
+    if ((warning + 1) % 5 == 0) {
       System.out.println("Warning! Boss battle ahead!");
     }
     try {
       int battle = userInput.nextInt();
       if (battle == 1) {
+        bossBattle = false;
         monster.levelUp();
         user.levelUp();
         decision = false;
