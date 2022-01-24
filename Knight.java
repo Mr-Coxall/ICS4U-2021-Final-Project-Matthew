@@ -1,4 +1,4 @@
-public class Knight extends Player {
+public class Knight extends Character {
 
   private int hp = 50;
 
@@ -25,7 +25,9 @@ public class Knight extends Player {
   }
 
   public int piercingStrike() {
-    final int damage = Math.round(str * 1.5);
+    int damage = str;
+    int extra = Math.round(str / 2);
+    damage += extra;
     return damage;
   }
 
@@ -58,5 +60,38 @@ public class Knight extends Player {
     def += 1;
     mdf += 1;
     lvl += 1;
+  }
+
+  /**
+  * The fireball method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return fireDmg the damage dealt.
+  */
+  public int fireball(final int Emdf) {
+    return super.fireball(intel, Emdf);
+  }
+
+  /**
+  * The zap method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return zapDmg the damage dealt.
+  */
+  public int zap(final int Emdf) {
+    return super.zap(intel, Emdf);
+  }
+
+  /**
+  * The frostblast method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return frostDmg the damage dealt.
+  */
+  public int frostblast(final int Emdf) {
+    return super.frostblast(intel, Emdf);
   }
 }

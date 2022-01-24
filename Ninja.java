@@ -1,4 +1,4 @@
-public class Ninja extends Player {
+public class Ninja extends Character {
 
   private int hp = 40;
 
@@ -44,5 +44,38 @@ public class Ninja extends Player {
     def += 1;
     mdf += 1;
     lvl += 1;
+  }
+
+  /**
+  * The fireball method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return fireDmg the damage dealt.
+  */
+  public int fireball(final int Emdf) {
+    return super.fireball(intel, Emdf);
+  }
+
+  /**
+  * The zap method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return zapDmg the damage dealt.
+  */
+  public int zap(final int Emdf) {
+    return super.zap(intel, Emdf);
+  }
+
+  /**
+  * The frostblast method.
+  *
+  * @param Emdf the enemy magic defence value.
+  *
+  * @return frostDmg the damage dealt.
+  */
+  public int frostblast(final int Emdf) {
+    return super.frostblast(intel, Emdf);
   }
 }

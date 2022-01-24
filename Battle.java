@@ -25,6 +25,9 @@ final class Battle {
     int bossLevel = 0;
     int dmgDealt = 0;
     Player user = new Player();
+    Knight knight = new Knight();
+    Mage mage = new Mage();
+    Ninja ninja = new Ninja();
     Enemy monster = new Enemy();
     Boss boss = new Boss();
     Finale finalBoss = new Finale();
