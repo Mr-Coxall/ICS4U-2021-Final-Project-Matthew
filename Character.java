@@ -42,13 +42,15 @@ public abstract class Character {
   */
   public int attack(final int strength, final int Edef) {
     final Random random = new Random();
-    final int damage = random.nextInt(strength - Edef) + Edef;
+    final int damage = random.nextInt(strength - Edef)
+      + Math.round(strength / 2);
     return damage;
   }
 
   public int fireball(final int intelligence, final int Emdf) {
     final Random fireRand = new Random();
-    final int fireDmg = fireRand.nextInt(intelligence - Emdf) + Emdf;
+    final int fireDmg = fireRand.nextInt(intelligence - Emdf)
+      + Math.round(intelligence / 2);
     return fireDmg;
   }
 
@@ -60,7 +62,8 @@ public abstract class Character {
 
   public int frostblast(final int intelligence, final int Emdf) {
     final Random frostRand = new Random();
-    final int frostDmg = frostRand.nextInt(intelligence - Emdf) + Emdf;
+    final int frostDmg = frostRand.nextInt(intelligence - Emdf)
+      + Math.round(intelligence / 2);
     return frostDmg;
   }
 }

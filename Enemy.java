@@ -40,7 +40,7 @@ public class Enemy extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int Pdef) {
-    final int damage = super.attack(str, Pdef) + lvl;
+    final int damage = super.attack(str, Pdef);
     return damage;
   }
 

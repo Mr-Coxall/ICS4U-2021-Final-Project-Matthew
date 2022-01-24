@@ -36,7 +36,7 @@ final class Battle {
       boolean bossBattle = false;
       boolean finalBattle = false;
       int level = monster.getLevel();
-      if (level % 5 == 0 && level % 15 != 0) {
+      if (level % 5 == 0 && level % 10 != 0) {
         bossLevel += 1;
         enemyHp = boss.getHp(bossLevel);
         boss.getStr(bossLevel);
@@ -44,7 +44,7 @@ final class Battle {
         enemyMdf = boss.getMdf(bossLevel);
         bossBattle = true;
       }
-      else if (level % 15 == 0) {
+      else if (level % 10 == 0) {
         enemyHp = finalBoss.getHp();
         enemyDef = finalBoss.getDef();
         enemyMdf = finalBoss.getMdf();
@@ -66,109 +66,70 @@ final class Battle {
         }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
-        int input = 0;
-        int skillInput = 0;
         System.out.println("Enemy hp: " + enemyHp);
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
         act.actions();
-        try {
-          input = userInput.nextInt();
-          if (input <= 0 || input >= 4) {
-            System.out.println("That is not a viable input"
-              + " (must be 1, 2, or 3).");
-          }
-          else if (input == 1) {
-            dmgDealt = user.attack(enemyDef);
-            enemyHp = enemyHp - dmgDealt;
-            System.out.println("You hit for " + dmgDealt + " damage.");
-          }
-          else if (input == 2) {
-            act.skills();
-            try {
-              skillInput = userInput.nextInt();
-              if (skillInput <= 0 || skillInput >= 5) {
-                System.out.println("That is not a viable input "
-                  + "(must be 1, 2, 3 or 4).");
-              }
-              else if (skillInput == 1) {
-                dmgDealt = user.fireball(enemyMdf);
-                if (type.equals("ice")) {
-                  dmgDealt += 3;
-                }
-                else if (type.equals("fire")) {
-                  dmgDealt = 0;
-                }
-                else if (type.equals("lightning")) {
-                  dmgDealt -= 2;
-                }
-                if (playerMp >= 2) {
-                  enemyHp = enemyHp - dmgDealt;
-                  System.out.println("You hit for "
-                    + dmgDealt + " damage.");
-                  playerMp -= 2;
-                }
-                else {
-                  System.out.println("Not enough Mp!");
-                }
-              }
-              else if (skillInput == 2) {
-                int dmgPerHit = 2;
-                dmgDealt = user.zap(enemyMdf);
-                if (type.equals("fire")) {
-                  dmgPerHit += 1;
-                }
-                else if (type.equals("lightning")) {
-                  dmgPerHit = 0;
-                }
-                else if (type.equals("ice")) {
-                  dmgPerHit -= 1;
-                }
-                if (playerMp >= 2) {
-                  dmgPerHit = dmgDealt * dmgPerHit;
-                  enemyHp = enemyHp - dmgPerHit;
-                  System.out.println("You hit a total of " + dmgDealt
-                    + " times for a total of " + dmgPerHit + " damage.");
-                  playerMp -= 2;
-                }
-                else {
-                  System.out.println("Not enough Mp!");
-                }
-              }
-              else if (skillInput == 3) {
-                dmgDealt = user.frostblast(enemyMdf);
-                if (type.equals("fire")) {
-                  dmgDealt += 3;
-                }
-                else if (type.equals("ice")) {
-                  dmgDealt = 0;
-                }
-                else if (type.equals("fire")) {
-                  dmgDealt -= 2;
-                }
-                if (playerMp >= 2) {
-                  enemyHp = enemyHp - dmgDealt;
-                  System.out.println("You hit for "
-                    + dmgDealt + " damage.");
-                  playerMp -= 2;
-                }
-                else {
-                  System.out.println("Not enough Mp!");
-                }
-              }
+        int action = act.attacking();
+        if (action == 1) {
+          dmgDealt = user.attack(enemyDef);
+          enemyHp = enemyHp - dmgDealt;
+          System.out.println("You hit for " + dmgDealt + " damage.");
+        }
+        else if (action == 2) {
+          act.skills();
+          int skillAttack = act.skillAction();
+          if (skillAttack == 1) {
+            dmgDealt = user.fireball(enemyMdf, type);
+            if (playerMp >= 2) {
+              enemyHp = enemyHp - dmgDealt;
+              System.out.println("You hit for "
+                + dmgDealt + " damage.");
+              playerMp -= 2;
             }
-            catch (InputMismatchException errorCode) {
-              System.out.println("That is not a viable input.");
+            else {
+              System.out.println("Not enough Mp!");
             }
           }
-          else {
-            tempDef = 2 + user.getLevel();
+          else if (skillAttack == 2) {
+            int dmgPerHit = 2;
+            dmgDealt = user.zap(enemyMdf);
+            if (type.equals("fire")) {
+              dmgPerHit += 1;
+            }
+            else if (type.equals("lightning")) {
+              dmgPerHit = 0;
+            }
+            else if (type.equals("ice")) {
+              dmgPerHit -= 1;
+            }
+            if (playerMp >= 2) {
+              dmgPerHit = dmgDealt * dmgPerHit;
+              enemyHp = enemyHp - dmgPerHit;
+              System.out.println("You hit a total of " + dmgDealt
+                + " times for a total of " + dmgPerHit + " damage.");
+              playerMp -= 2;
+            }
+            else {
+              System.out.println("Not enough Mp!");
+            }
+          }
+          else if (skillAttack == 3) {
+            dmgDealt = user.frostblast(enemyMdf, type);
+            if (playerMp >= 2) {
+              enemyHp = enemyHp - dmgDealt;
+              System.out.println("You hit for "
+                + dmgDealt + " damage.");
+              playerMp -= 2;
+            }
+            else {
+              System.out.println("Not enough Mp!");
+            }
           }
         }
-      catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
-      }
-      System.out.println("\nDone.");
+        else if (action == 3) {
+          tempDef += 3;
+        }
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
         if (finalBattle) {
           dmgDealt = finalBoss.attack(user.getDef());
@@ -198,9 +159,11 @@ final class Battle {
       }
     }
   boolean decision = true;
-  if (bossBattle && bossLevel == 3) {
+  if (bossBattle && bossLevel == 2) {
     System.out.println("You win!");
     System.exit(0);
+  }
+  else if (bossBattle) {
   }
   while (decision) {
     int warning = monster.getLevel();
