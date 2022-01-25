@@ -23,6 +23,7 @@ final class Battle {
   */
   public static void main(final String[] args) {
     int bossLevel = 0;
+    int newClass = 0;
     int dmgDealt = 0;
     Player user = new Player();
     Knight knight = new Knight();
@@ -80,7 +81,7 @@ final class Battle {
           System.out.println("You hit for " + dmgDealt + " damage.");
         }
         else if (action == 2) {
-          act.skills();
+          user.skills();
           int skillAttack = act.skillAction();
           if (skillAttack == 1) {
             dmgDealt = user.fireball(enemyMdf, type);
@@ -98,15 +99,6 @@ final class Battle {
           else if (skillAttack == 2) {
             int dmgPerHit = 2;
             dmgDealt = user.zap(enemyMdf);
-            if (type.equals("fire")) {
-              dmgPerHit += 1;
-            }
-            else if (type.equals("lightning")) {
-              dmgPerHit = 0;
-            }
-            else if (type.equals("ice")) {
-              dmgPerHit -= 1;
-            }
             if (playerMp >= 2) {
               dmgPerHit = dmgDealt * dmgPerHit;
               enemyHp = enemyHp - dmgPerHit;
@@ -170,7 +162,7 @@ final class Battle {
     System.exit(0);
   }
   else if (bossBattle) {
-    act.classChange();
+    newClass = act.classChange();
   }
   while (decision) {
     int warning = monster.getLevel();

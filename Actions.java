@@ -9,38 +9,6 @@ public class Actions {
     System.out.println("Defend(3)");
   }
 
-  public void skills() {
-    System.out.println("\nSkills:");
-    System.out.println("Fireball(1): 2Mp");
-    System.out.println("Zap(2): 2Mp");
-    System.out.println("Frostblast(3): 2Mp");
-    System.out.println("Back(4)");
-  }
-
-  public void knightSkills() {
-    System.out.println("\nSkills:");
-    System.out.println("Slam(1): 1Mp");
-    System.out.println("Piercing Strike(2): 3Mp");
-    System.out.println("Frenzy(3): 4Mp");
-    System.out.println("Back(4)");
-  }
-
-  public void mageSkills() {
-    System.out.println("\nSkills:");
-    System.out.println("Inferno(1): 5Mp");
-    System.out.println("Thunder(2): 5Mp");
-    System.out.println("Icicle Spear(3): 5Mp");
-    System.out.println("Back(4)");
-  }
-
-  public void ninjaSkills() {
-    System.out.println("\nSkills:");
-    System.out.println("Multislash: 4Mp");
-    System.out.println("Slash: 2Mp");
-    System.out.println("Animecut: AllMp");
-    System.out.println("Back(4)");
-  }
-
   public int attacking() {
     int action = 0;
     final Scanner userInput = new Scanner(System.in);
