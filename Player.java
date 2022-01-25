@@ -4,7 +4,7 @@ public class Player extends Character {
 
   private int mp = 6;
 
-  private int str = 20;
+  private int str = 5;
 
   private int intel = 4;
 
@@ -14,14 +14,25 @@ public class Player extends Character {
 
   private int lvl = 1;
 
+  private String Class = "None";
+
   public int attack(final int Edef) {
     // final int damage = super.attack(str, Edef) + lvl;
     final int damage = 50;
     return damage;
   }
 
-  public int fireball(final int Emdf) {
-    final int fireDmg = super.fireball(intel, Emdf);
+  public int fireball(final int Emdf, final String type) {
+    int fireDmg = super.fireball(intel, Emdf);
+    if (type.equals("ice")) {
+      fireDmg += 3;
+    }
+    else if (type.equals("fire")) {
+      fireDmg = 0;
+    }
+    else if (type.equals("lightning")) {
+      fireDmg -= 2;
+    }
     return fireDmg;
   }
 
@@ -30,8 +41,17 @@ public class Player extends Character {
     return zapDmg;
   }
 
-  public int frostblast(final int Emdf) {
-    final int frostDmg = super.frostblast(intel, Emdf);
+  public int frostblast(final int Emdf, final String type) {
+    int frostDmg = super.frostblast(intel, Emdf);
+    if (type.equals("fire")) {
+      frostDmg += 3;
+    }
+    else if (type.equals("ice")) {
+      frostDmg = 0;
+    }
+    else if (type.equals("fire")) {
+      frostDmg -= 2;
+    }
     return frostDmg;
   }
 
@@ -63,5 +83,9 @@ public class Player extends Character {
 
   public int getLevel() {
     return lvl;
+  }
+
+  public void setClass(final String classChange) {
+    Class = classChange;
   }
 }

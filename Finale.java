@@ -2,15 +2,15 @@ import java.util.Random;
 
 public class Finale extends Boss {
   
-  private int hp = 300;
+  private int hp = 150;
 
-  private int str = 60;
+  private int str = 30;
 
-  private int intel = 30;
+  private int intel = 15;
 
-  private int def = 40;
+  private int def = 20;
 
-  private int mdf = 40;
+  private int mdf = 20;
 
   private int lvl = 100;
 
