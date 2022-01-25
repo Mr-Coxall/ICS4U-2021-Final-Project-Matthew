@@ -19,6 +19,13 @@ public class Mage extends Character {
 
   private int tempDef = 0;
 
+  private int currentMp = 20;
+
+  /**
+  * The value used to check if skills can be used for mage (all skills cost 5 mp)
+  */
+  private int spellCost = 5;
+
   public void mageSkills() {
     System.out.println("\nSkills:");
     System.out.println("Inferno(1): 5Mp");
@@ -45,17 +52,23 @@ public class Mage extends Character {
         else if (action == 2) {
           mageSkills();
           skillAction = userInput.nextInt();
-          if (skillAction == 1) {
-            damage = Inferno(Emdf, type);
-            act += 1;
+          if (currentMp >= spellCost) {
+            if (skillAction == 1) {
+              damage = Inferno(Emdf, type);
+              act += 1;
+            }
+            else if (skillAction == 2) {
+              damage = Thunder(Emdf, type);
+              act += 1;
+            }
+            else if (skillAction == 3) {
+              damage = IcicleSpear(Emdf, type);
+              act += 1;
+            }
+            currentMp -= spellCost;
           }
-          else if (skillAction == 2) {
-            damage = Thunder(Emdf, type);
-            act += 1;
-          }
-          else if (skillAction == 3) {
-            damage = IcicleSpear(Emdf, type);
-            act += 1;
+          else {
+            invalidMp();
           }
         }
         else if (action == 3) {
@@ -71,6 +84,10 @@ public class Mage extends Character {
       }
     }
     return damage;
+  }
+
+  public void invalidMp() {
+    System.out.println("Not enough Mp!");
   }
 
   public int attack(final int Edef) {
@@ -124,6 +141,7 @@ public class Mage extends Character {
     def += 1;
     mdf += 1;
     lvl += 1;
+    currentMp = mp;
   }
 
   /**
@@ -160,7 +178,7 @@ public class Mage extends Character {
   }
 
   public int getDef() {
-    return def;
+    return (def + tempDef);
   }
 
   public int getMdf() {
@@ -172,6 +190,6 @@ public class Mage extends Character {
   }
 
   public int getMp() {
-    return mp;
+    return currentMp;
   }
 }

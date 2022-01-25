@@ -21,6 +21,14 @@ public class Knight extends Character {
 
   private int frenzyCasts = 0;
 
+  private int slamCost = 1;
+
+  private int piercestrikeCost = 3;
+
+  private int frenzyCost = 4;
+
+  private int currentMp = 4;
+
   public void knightSkills() {
     System.out.println("\nSkills:");
     System.out.println("Slam(1): 1Mp");
@@ -47,16 +55,34 @@ public class Knight extends Character {
           knightSkills();
           skillAction = userInput.nextInt();
           if (skillAction == 1) {
-            damage = slam(Edef);
-            act += 1;
+            if (checkMp(slamCost)) {
+              damage = slam(Edef);
+              act += 1;
+              currentMp -= slamCost;
+            }
+            else {
+              invalidMp();
+            }
           }
           else if (skillAction == 2) {
-            damage = piercingStrike();
-            act += 1;
+            if (checkMp(piercestrikeCost)) {
+              damage = piercingStrike();
+              act += 1;
+              currentMp -= piercestrikeCost;
+            }
+            else {
+              invalidMp();
+            }
           }
           else if (skillAction == 3) {
-            frenzy();
-            act += 1;
+            if (checkMp(frenzyCost)) {
+              frenzy();
+              act += 1;
+              currentMp -= frenzyCost;
+            }
+            else {
+              invalidMp();
+            }
           }
         }
         else if (action == 3) {
@@ -72,6 +98,14 @@ public class Knight extends Character {
       }
     }
     return damage;
+  }
+
+  public boolean checkMp(final int mpCost) {
+    return (mpCost <= currentMp);
+  }
+
+  public void invalidMp() {
+    System.out.println("Not enough Mp!");
   }
 
   public int attack(final int Edef) {
@@ -127,6 +161,7 @@ public class Knight extends Character {
     def += 1;
     mdf += 1;
     lvl += 1;
+    currentMp = mp;
   }
 
   /**

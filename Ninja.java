@@ -21,11 +21,19 @@ public class Ninja extends Character {
 
   private int prep = 0;
 
+  private int currentMp = 8;
+
+  private int multislashCost = 4;
+
+  private int prepareCost = 2;
+
+  private int animeCost = 6;
+
   public void ninjaSkills() {
     System.out.println("\nSkills:");
     System.out.println("Multislash: 4Mp");
     System.out.println("Prepare: 2Mp");
-    System.out.println("Animecut: AllMp (minimum of 6 required)");
+    System.out.println("Animecut: AllMp (minimum of 6Mp required)");
     System.out.println("Back(4)");
   }
 
@@ -47,19 +55,34 @@ public class Ninja extends Character {
           ninjaSkills();
           skillAction = userInput.nextInt();
           if (skillAction == 1) {
-            damage = multislash(Edef);
-            mp -= 4;
-            act += 1;
+            if (checkMp(multislashCost)) {
+              damage = multislash(Edef);
+              act += 1;
+              currentMp -= multislashCost;
+            }
+            else {
+              invalidMp();
+            }
           }
           else if (skillAction == 2) {
-            prepare();
-            mp -= 2;
-            act += 1;
+            if (checkMp(prepareCost)) {
+              prepare();
+              currentMp -= prepareCost;
+              act += 1;
+            }
+            else {
+              invalidMp();
+            }
           }
           else if (skillAction == 3) {
-            damage = animeCut(Ehp);
-            act += 1;
-            mp = 0;
+            if (checkMp(animeCost)) {
+              damage = animeCut(Ehp);
+              act += 1;
+              currentMp = 0;
+            }
+            else {
+              invalidMp();
+            }
           }
         }
         else if (action == 3) {
@@ -77,6 +100,14 @@ public class Ninja extends Character {
       }
     }
     return damage;
+  }
+
+  public boolean checkMp(final int mpCost) {
+    return (mpCost <= currentMp);
+  }
+
+  public void invalidMp() {
+    System.out.println("Not enough Mp!");
   }
 
   public int attack(final int Edf) {
@@ -110,6 +141,7 @@ public class Ninja extends Character {
     def += 1;
     mdf += 1;
     lvl += 1;
+    currentMp = mp;
   }
 
   /**
@@ -146,7 +178,7 @@ public class Ninja extends Character {
   }
 
   public int getDef() {
-    return def;
+    return (def + tempDef);
   }
 
   public int getMdf() {
