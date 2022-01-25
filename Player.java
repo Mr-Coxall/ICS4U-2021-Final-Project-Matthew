@@ -45,7 +45,7 @@ public class Player extends Character {
   public int zap(final int Emdf, final String type) {
     int zapDmg = super.zap(intel, Emdf);
     if (type.equals("fire")) {
-      zapDmg = zamDmg * 3;
+      zapDmg = zapDmg * 3;
     }
     else if (type.equals("lightning")) {
       zapDmg = 1;

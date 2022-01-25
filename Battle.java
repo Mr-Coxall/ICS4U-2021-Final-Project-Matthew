@@ -98,12 +98,12 @@ final class Battle {
           }
           else if (skillAttack == 2) {
             int dmgPerHit = 2;
-            dmgDealt = user.zap(enemyMdf);
+            dmgDealt = user.zap(enemyMdf, type);
             if (playerMp >= 2) {
-              dmgPerHit = dmgDealt * dmgPerHit;
+              dmgPerHit = dmgDealt;
               enemyHp = enemyHp - dmgPerHit;
-              System.out.println("You hit a total of " + dmgDealt
-                + " times for a total of " + dmgPerHit + " damage.");
+              System.out.println("You hit for "
+                + dmgDealt + " damage.");
               playerMp -= 2;
               enemyCurrentHp -= 1;
             }
