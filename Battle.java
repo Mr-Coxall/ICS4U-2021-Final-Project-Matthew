@@ -89,6 +89,7 @@ final class Battle {
               System.out.println("You hit for "
                 + dmgDealt + " damage.");
               playerMp -= 2;
+              enemyCurrentHp -= 1;
             }
             else {
               System.out.println("Not enough Mp!");
@@ -112,6 +113,7 @@ final class Battle {
               System.out.println("You hit a total of " + dmgDealt
                 + " times for a total of " + dmgPerHit + " damage.");
               playerMp -= 2;
+              enemyCurrentHp -= 1;
             }
             else {
               System.out.println("Not enough Mp!");
@@ -124,6 +126,7 @@ final class Battle {
               System.out.println("You hit for "
                 + dmgDealt + " damage.");
               playerMp -= 2;
+              enemyCurrentHp -= 1;
             }
             else {
               System.out.println("Not enough Mp!");
@@ -167,6 +170,7 @@ final class Battle {
     System.exit(0);
   }
   else if (bossBattle) {
+    act.classChange();
   }
   while (decision) {
     int warning = monster.getLevel();

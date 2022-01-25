@@ -4,9 +4,9 @@ public class Ninja extends Character {
 
   private int mp = 8;
 
-  private int str = 8;
+  private int str = 6;
 
-  private int intel = 8;
+  private int intel = 6;
 
   private int def = 6;
 
@@ -32,7 +32,7 @@ public class Ninja extends Character {
   }
 
   public int animeCut(final int Ehp) {
-    final int damage = Math.round(Ehp / 8);
+    final int damage = Math.round(Ehp / 3);
     return damage;
   }
 
