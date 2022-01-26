@@ -3,10 +3,14 @@ import java.util.InputMismatchException;
 
 public class Actions {
 
+  /**
+  * The help method, used to show the help menu.
+  */
   public void help() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Help:");
-    System.out.println("Attack: deal damage up to half your strength plus your strength minus enemy defence.");
+    System.out.println("Attack: deal damage up to half your strength "
+      + "plus your strength minus enemy defence.");
     System.out.println("Skills: Fireball: deal fire damage equal to "
       + "half your intelligence plus intelligence "
       + "minus enemy magic defence.");
@@ -14,14 +18,20 @@ public class Actions {
       + "Fireball, but deals lightning damage.");
     System.out.println("Skills: Frostblast: Same as Fireball,"
       + " but deals frost damage.");
-    System.out.println("Defend:Increases defence by 3 for one enemy attack.");
-    System.out.println("Elemental damage: Fire damage deals extra to"
-      + " frost enemies, lightning deals extra "
+    System.out.println("Defend:Increases defence by "
+      + "3 for one enemy attack.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, lightning deals extra "
       + "to fire, and frost does extra to lightning.");
     System.out.println("Press enter to continue");
     String waiting = userInput.nextLine();
   }
 
+  /**
+  * The attacking method, used for the basic class' attack menu.
+  *
+  * @return action choice.
+  */
   public int attacking() {
     int action = 0;
     final Scanner userInput = new Scanner(System.in);
@@ -48,6 +58,11 @@ public class Actions {
     return action;
   }
 
+  /**
+  * The skillAction method, used for the basic class' skill menu.
+  *
+  * @return skill choice.
+  */
   public int skillAction() {
     int action = 0;
     final Scanner userInput = new Scanner(System.in);
@@ -74,6 +89,10 @@ public class Actions {
     return action;
   }
 
+  /**
+  * The classKnight method, used for showing.
+  * The basic info about the knight class.
+  */
   public void classKnight() {
     System.out.println("Knight");
     System.out.println("High strength and defence, "
@@ -87,6 +106,10 @@ public class Actions {
       + "your defence in exchange for more strength.");
   }
 
+  /**
+  * The classMage method, used for showing.
+  * The basic info about the mage class.
+  */
   public void classMage() {
     System.out.println("Mage");
     System.out.println("High intelligence and MP, low strength and defence.");
@@ -99,6 +122,10 @@ public class Actions {
       + "that negates a bit of their defences.");
   }
 
+  /**
+  * The classNinja method, used for showing.
+  * The basic info about the ninja class.
+  */
   public void classNinja() {
     System.out.println("Ninja");
     System.out.println("Balanced in all stats, uses both "
@@ -112,6 +139,11 @@ public class Actions {
       + "sacrificing all your MP in exchange for huge damage.");
   }
 
+  /**
+  * The class change method, used for changing to one of the advanced classes.
+  *
+  * @return class value.
+  */
   public int classChange() {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;

@@ -3,30 +3,70 @@ import java.util.InputMismatchException;
 
 public class Knight extends Character {
 
+  /**
+  * The starting hp value of the knight.
+  */
   private int hp = 50;
 
+  /**
+  * The starting mp value.
+  */
   private int mp = 4;
 
+  /**
+  * The starting str (strength) value.
+  */
   private int str = 9;
 
+  /**
+  * The starting intel (intelligence) value.
+  */
   private int intel = 2;
 
+  /**
+  * The starting def (defence) value.
+  */
   private int def = 10;
 
+  /**
+  * The starting mdf (magic defence) value.
+  */
   private int mdf = 10;
 
+  /**
+  * The starting level value.
+  */
   private int lvl = 6;
 
+  /**
+  * The tempdef (temporary defence) value.
+  */
   private int tempDef = 0;
 
+  /**
+  * The frenzy casts value (amount of.
+  * Times frenzy has been used this fight).
+  */
   private int frenzyCasts = 0;
 
+  /**
+  * The mp cost of the slam skill.
+  */
   private int slamCost = 1;
 
+  /**
+  * The mp cost of the piercing strike skill.
+  */
   private int piercestrikeCost = 3;
 
+  /**
+  * The mp cost of the frenzy skill.
+  */
   private int frenzyCost = 4;
 
+  /**
+  * The current mp you have.
+  */
   private int currentMp = 4;
 
   public void actions() {

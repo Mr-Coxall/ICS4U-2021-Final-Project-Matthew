@@ -1,23 +1,52 @@
 import java.util.Random;
 
 public class Enemy extends Character {
-  
+
+  /**
+  * The starting enemy hp value.
+  */
   private int hp = 20;
 
+  /**
+  * The starting enemy strength value.
+  */
   private int str = 4;
 
+  /**
+  * The starting enemy intelligence value.
+  */
   private int intel = 1;
 
+  /**
+  * The starting enemy defence value.
+  */
   private int def = 3;
 
+  /**
+  * The starting enemy magic defence value.
+  */
   private int mdf = 2;
 
+  /**
+  * The starting enemy level value.
+  */
   private int lvl = 1;
 
+  /**
+  * The starting enemy element type value.
+  */
   private String element = "none";
 
+  /**
+  * The empty string for the enemy name.
+  */
   private String name;
 
+  /**
+  * The getType method.
+  *
+  * @return type the enemy's typing.
+  */
   public String getType() {
     final Random random = new Random();
     final int type = random.nextInt(4) + 1;
@@ -33,6 +62,11 @@ public class Enemy extends Character {
     return element;
   }
 
+  /**
+  * The getName method.
+  *
+  * @return name of enemy.
+  */
   public String getName() {
     final Random random = new Random();
     final int randName = random.nextInt(2) + 1;
@@ -85,16 +119,37 @@ public class Enemy extends Character {
     return damage;
   }
 
+  /**
+  * The fireball method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return fireDmg the damage dealt.
+  */
   public int fireball(final int Pmdf) {
     final int fireDmg = super.fireball(intel, Pmdf);
     return fireDmg;
   }
 
+  /**
+  * The zap method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return zapDmg the damage dealt.
+  */
   public int zap(final int Pmdf) {
     final int zapDmg = super.zap(intel, Pmdf);
     return zapDmg;
   }
 
+  /**
+  * The frostblast method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return frostDmg the damage dealt.
+  */
   public int frostblast(final int Pmdf) {
     final int frostDmg = super.frostblast(intel, Pmdf);
     return frostDmg;

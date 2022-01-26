@@ -23,6 +23,7 @@ final class Battle {
   */
   public static void main(final String[] args) {
     int bossLevel = 0;
+    String type = "none";
     int newClass = 0;
     int dmgDealt = 0;
     Player user = new Player();
@@ -43,28 +44,29 @@ final class Battle {
       int level = monster.getLevel();
       if (level % 5 == 0 && level % 10 != 0) {
         bossLevel += 1;
-        enemyHp = boss.getHp(bossLevel);
-        boss.getStr(bossLevel);
-        enemyDef = boss.getDef(bossLevel);
-        enemyMdf = boss.getMdf(bossLevel);
+        enemyHp = boss.getHp();
+        enemyDef = boss.getDef();
+        enemyMdf = boss.getMdf();
         bossBattle = true;
+        type = boss.getType();
       }
       else if (level % 10 == 0) {
         enemyHp = finalBoss.getHp();
         enemyDef = finalBoss.getDef();
         enemyMdf = finalBoss.getMdf();
         finalBattle = true;
+        type = finalBoss.getType();
       }
       else {
         enemyHp = monster.getHp();
         enemyDef = monster.getDef();
         enemyMdf = monster.getMdf();
+        type = monster.getType();
       }
       int playerHp = user.getHp();
       int playerMp = user.getMp();
       int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
-      String type = monster.getType();
       String name = monster.getName();
       if (newClass == 1) {
         playerHp = knight.getHp();
@@ -191,7 +193,7 @@ final class Battle {
       }
     }
     boolean decision = true;
-    if (bossBattle && bossLevel == 2) {
+    if (finalBattle) {
       System.out.println("You win!");
       System.exit(0);
     }

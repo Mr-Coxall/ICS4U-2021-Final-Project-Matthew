@@ -1,23 +1,43 @@
 import java.util.Random;
 
 public class Boss extends Character {
-  
+
+  /**
+  * The boss hp value.
+  */
   private int hp = 50;
 
+  /**
+  * The boss strength value.
+  */
   private int str = 10;
 
+  /**
+  * The boss intelligence value.
+  */
   private int intel = 5;
 
+  /**
+  * The boss defence value.
+  */
   private int def = 10;
 
+  /**
+  * The boss magic defence value.
+  */
   private int mdf = 10;
 
-  private int lvl = 0;
-
+  /**
+  * The boss starting type.
+  */
   private String type = "none";
 
-  public String getWeakness() {
-    lvl += 1;
+  /**
+  * The getType method.
+  *
+  * @return type the enemy's typing.
+  */
+  public String getType() {
     final Random random = new Random();
     final int weak = random.nextInt(3);
     if (weak == 1) {
@@ -33,52 +53,98 @@ public class Boss extends Character {
     return type;
   }
 
-  public int attack(final int Edef) {
+  /**
+  * The attack method.
+  *
+  * @param Pdef the player's defence value.
+  *
+  * @return damage the damage dealt.
+  */
+  public int attack(final int Pdef) {
     final Random random = new Random();
-    final int damage = random.nextInt(str - Edef) + Edef;
+    final int damage = random.nextInt(str - Pdef) + Pdef;
     return damage;
   }
 
-  public int fireball(final int Emdf) {
-    final int fireDmg = super.fireball(intel, Emdf);
+  /**
+  * The fireball method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return fireDmg the damage dealt.
+  */
+  public int fireball(final int Pmdf) {
+    final int fireDmg = super.fireball(intel, Pmdf);
     return fireDmg;
   }
 
-  public int zap(final int Emdf) {
-    final int zapDmg = super.zap(intel, Emdf);
+  /**
+  * The zap method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return zapDmg the damage dealt.
+  */
+  public int zap(final int Pmdf) {
+    final int zapDmg = super.zap(intel, Pmdf);
     return zapDmg;
   }
 
-  public int frostblast(final int Emdf) {
-    final int frostDmg = super.frostblast(intel, Emdf);
+  /**
+  * The frostblast method.
+  *
+  * @param Pmdf the player's magic defence value.
+  *
+  * @return frostDmg the damage dealt.
+  */
+  public int frostblast(final int Pmdf) {
+    final int frostDmg = super.frostblast(intel, Pmdf);
     return frostDmg;
   }
 
-  public void getStr(final int level) {
-    str = str + (8 * (level - 1));
-  }
-
-  public int getDef(final int level) {
-    def = def + (5 * (level - 1));
+  /**
+  * The getDef method.
+  *
+  * @return def
+  */
+  public int getDef() {
     return def;
   }
 
-  public int getMdf(final int level) {
-    mdf = mdf + (5 * (level - 1));
+  /**
+  * The getMdf method.
+  *
+  * @return mdf
+  */
+  public int getMdf() {
     return mdf;
   }
 
-  public int getHp(final int level) {
-    hp = hp + (50 * (level - 1));
+  /**
+  * The getHp method.
+  *
+  * @return hp
+  */
+  public int getHp() {
     return hp;
   }
 
+  /**
+  * The heal method.
+  *
+  * @return healing.
+  */
   public int heal() {
     final Random random = new Random();
     final int healing = random.nextInt(intel);
     return healing;
   }
 
+  /**
+  * The revive method.
+  *
+  * @return hp.
+  */
   public int revive() {
     return hp;
   }
