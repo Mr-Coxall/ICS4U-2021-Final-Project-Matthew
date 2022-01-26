@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
 public class Player extends Character {
 
   /**
@@ -35,6 +38,20 @@ public class Player extends Character {
   */
   private int lvl = 1;
 
+  private final int choiceA = 1;
+
+  private final int choiceB = 2;
+
+  private final int choiceC = 3;
+
+  private final int choiceD = 4;
+
+  private final int spellCost = 2;
+
+  private int tempDef = 0;
+
+  private int currentMp = 6;
+
   /**
   * The actions method, used to show the basic actions.
   */
@@ -53,6 +70,68 @@ public class Player extends Character {
     System.out.println("Zap(2): 2Mp");
     System.out.println("Frostblast(3): 2Mp");
     System.out.println("Back(4)");
+  }
+
+  public int playerAttack(final int Edef, final int Emdf,
+    final String type) {
+    tempDef = 0;
+    int action = 0;
+    int skillAction = 0;
+    int damage = 0;
+    int act = 0;
+    final Scanner userInput = new Scanner(System.in);
+    while (act == 0) {
+      try {
+        actions();
+        action = userInput.nextInt();
+        if (action == choiceA) {
+          damage = attack(Edef);
+          act += 1;
+          attackDamage(damage);
+        } else if (action == choiceB) {
+          skills();
+          skillAction = userInput.nextInt();
+          if (currentMp >= spellCost) {
+            if (skillAction == choiceA) {
+              damage = fireball(Emdf, type);
+              act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceB) {
+              damage = zap(Emdf, type);
+              act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceC) {
+              damage = frostblast(Emdf, type);
+              act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceD) {
+              damage = playerAttack(Edef, Emdf, type);
+            }
+          } else {
+            invalidMp();
+          }
+        } else if (action == choiceC) {
+          tempDef += 3;
+          act += 1;
+        } else {
+          System.out.println("That isn't a viable input.");
+        }
+      } catch (InputMismatchException errorCode) {
+        System.out.println("That is not a viable input.");
+      }
+    }
+    return damage;
+  }
+
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
+  }
+
+  public void invalidMp() {
+    System.out.println("Not enough Mp!");
   }
 
   /**
@@ -80,11 +159,7 @@ public class Player extends Character {
     int fireDmg = super.fireball(intel, Emdf);
     if (type.equals("ice")) {
       fireDmg += 3;
-    }
-    else if (type.equals("fire")) {
-      fireDmg = 0;
-    }
-    else if (type.equals("lightning")) {
+    } else if (type.equals("lightning")) {
       fireDmg -= 2;
     }
     return fireDmg;
@@ -102,9 +177,8 @@ public class Player extends Character {
     int zapDmg = super.zap(intel, Emdf);
     if (type.equals("fire")) {
       zapDmg = zapDmg * 3;
-    }
-    else if (type.equals("lightning")) {
-      zapDmg = 1;
+    } else if (type.equals("ice")) {
+      zapDmg -= 2;
     }
     return zapDmg;
   }
@@ -121,18 +195,14 @@ public class Player extends Character {
     int frostDmg = super.frostblast(intel, Emdf);
     if (type.equals("lightning")) {
       frostDmg += 3;
-    }
-    else if (type.equals("ice")) {
-      frostDmg = 0;
-    }
-    else if (type.equals("fire")) {
+    } else if (type.equals("fire")) {
       frostDmg -= 2;
     }
     return frostDmg;
   }
 
   public int getDef() {
-    return def;
+    return (def + tempDef);
   }
 
   public int getMdf() {
@@ -144,7 +214,7 @@ public class Player extends Character {
   }
 
   public int getMp() {
-    return mp;
+    return currentMp;
   }
 
   public void levelUp() {
@@ -155,6 +225,7 @@ public class Player extends Character {
     def += 1;
     mdf += 1;
     lvl += 1;
+    currentMp = mp;
   }
 
   public int getLevel() {

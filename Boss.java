@@ -42,11 +42,9 @@ public class Boss extends Character {
     final int weak = random.nextInt(3);
     if (weak == 1) {
       type = "fire";
-    }
-    else if (weak == 2) {
+    } else if (weak == 2) {
       type = "ice";
-    }
-    else if (weak == 3) {
+    } else if (weak == 3) {
       type = "lightning";
     }
     System.out.println(type);

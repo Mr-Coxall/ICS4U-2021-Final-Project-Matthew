@@ -46,8 +46,7 @@ public abstract class Character {
     int damage = 1;
     if (range <= 0) {
       damage = 1;
-    }
-    else {
+    } else {
       damage = random.nextInt(range) + Math.round(strength / 2);
     }
     return damage;
@@ -67,8 +66,7 @@ public abstract class Character {
     int fireDmg = 0;
     if (range <= 0) {
       fireDmg = 1;
-    }
-    else {
+    } else {
       fireDmg = fireRand.nextInt(range) + Math.round(intelligence / 2);
     }
     return fireDmg;
@@ -88,8 +86,7 @@ public abstract class Character {
     int zapDmg = 0;
     if (range <= 0) {
       zapDmg = 1;
-    }
-    else {
+    } else {
       zapDmg = zapRand.nextInt(range) + 2;
     }
     return zapDmg;
@@ -109,8 +106,7 @@ public abstract class Character {
     final int range = intelligence - Emdf;
     if (range <= 0) {
       frostDmg = 1;
-    }
-    else {
+    } else {
       frostDmg = frostRand.nextInt(range) + Math.round(intelligence / 2);
     }
     return frostDmg;

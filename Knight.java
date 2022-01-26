@@ -52,22 +52,30 @@ public class Knight extends Character {
   /**
   * The mp cost of the slam skill.
   */
-  private int slamCost = 1;
+  private final int slamCost = 1;
 
   /**
   * The mp cost of the piercing strike skill.
   */
-  private int piercestrikeCost = 3;
+  private final int piercestrikeCost = 3;
 
   /**
   * The mp cost of the frenzy skill.
   */
-  private int frenzyCost = 4;
+  private final int frenzyCost = 4;
 
   /**
   * The current mp you have.
   */
   private int currentMp = 4;
+
+  private final int choiceA = 1;
+
+  private final int choiceB = 2;
+
+  private final int choiceC = 3;
+
+  private final int choiceD = 4;
 
   public void actions() {
     System.out.println("Attack(1)");
@@ -98,59 +106,49 @@ public class Knight extends Character {
       try {
         actions();
         action = userInput.nextInt();
-        if (action == 1) {
+        if (action == choiceA) {
           damage = attack(Edef);
           act += 1;
           attackDamage(damage);
-        }
-        else if (action == 2) {
+        } else if (action == choiceB) {
           knightSkills();
           skillAction = userInput.nextInt();
-          if (skillAction == 1) {
+          if (skillAction == choiceA) {
             if (checkMp(slamCost)) {
               damage = slam(Edef);
               act += 1;
               currentMp -= slamCost;
               attackDamage(damage);
-            }
-            else {
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 2) {
+          } else if (skillAction == choiceB) {
             if (checkMp(piercestrikeCost)) {
               damage = piercingStrike();
               act += 1;
               currentMp -= piercestrikeCost;
               attackDamage(damage);
-            }
-            else {
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 3) {
+          } else if (skillAction == choiceC) {
             if (checkMp(frenzyCost)) {
               frenzy();
               act += 1;
               currentMp -= frenzyCost;
-            }
-            else {
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 4) {
+          } else if (skillAction == choiceD) {
             damage = knightAttack(Edef);
           }
-        }
-        else if (action == 3) {
+        } else if (action == choiceC) {
           tempDef += 3;
           act += 1;
-        }
-        else {
+        } else {
           System.out.println("That isn't a viable input.");
         }
-      }
-      catch (InputMismatchException errorCode) {
+      } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
     }

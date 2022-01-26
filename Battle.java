@@ -49,15 +49,13 @@ final class Battle {
         enemyMdf = boss.getMdf();
         bossBattle = true;
         type = boss.getType();
-      }
-      else if (level % 10 == 0) {
+      } else if (level % 10 == 0) {
         enemyHp = finalBoss.getHp();
         enemyDef = finalBoss.getDef();
         enemyMdf = finalBoss.getMdf();
         finalBattle = true;
         type = finalBoss.getType();
-      }
-      else {
+      } else {
         enemyHp = monster.getHp();
         enemyDef = monster.getDef();
         enemyMdf = monster.getMdf();
@@ -72,13 +70,11 @@ final class Battle {
         playerHp = knight.getHp();
         playerMp = knight.getMp();
         playerDef = knight.getDef();
-      }
-      else if (newClass == 2) {
+      } else if (newClass == 2) {
         playerHp = mage.getHp();
         playerMp = mage.getMp();
         playerDef = mage.getDef();
-      }
-      else if (newClass == 3) {
+      } else if (newClass == 3) {
         playerHp = ninja.getHp();
         playerMp = ninja.getMp();
         playerDef = ninja.getDef();
@@ -95,71 +91,15 @@ final class Battle {
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
         if (newClass == 0) {
-          user.actions();
-          int action = act.attacking();
-          if (action == 1) {
-            dmgDealt = user.attack(enemyDef);
-            enemyHp = enemyHp - dmgDealt;
-            System.out.println("You hit for " + dmgDealt + " damage.");
-          }
-          else if (action == 2) {
-            user.skills();
-            int skillAttack = act.skillAction();
-            if (skillAttack == 1) {
-              dmgDealt = user.fireball(enemyMdf, type);
-              if (playerMp >= 2) {
-                enemyHp = enemyHp - dmgDealt;
-                System.out.println("You hit for "
-                  + dmgDealt + " damage.");
-                playerMp -= 2;
-                enemyCurrentHp -= 1;
-              }
-              else {
-                System.out.println("Not enough Mp!");
-              }
-            }
-            else if (skillAttack == 2) {
-              int dmgPerHit = 2;
-              dmgDealt = user.zap(enemyMdf, type);
-              if (playerMp >= 2) {
-                dmgPerHit = dmgDealt;
-                enemyHp = enemyHp - dmgPerHit;
-                System.out.println("You hit for "
-                  + dmgDealt + " damage.");
-                playerMp -= 2;
-                enemyCurrentHp -= 1;
-              }
-              else {
-                System.out.println("Not enough Mp!");
-              }
-            }
-            else if (skillAttack == 3) {
-              dmgDealt = user.frostblast(enemyMdf, type);
-              if (playerMp >= 2) {
-                enemyHp = enemyHp - dmgDealt;
-                System.out.println("You hit for "
-                  + dmgDealt + " damage.");
-                playerMp -= 2;
-                enemyCurrentHp -= 1;
-              }
-              else {
-                System.out.println("Not enough Mp!");
-              }
-            }
-          }
-          else if (action == 3) {
-            tempDef += 3;
-          }
-        }
-        else if (newClass == 1) {
+          dmgDealt = user.playerAttack(enemyDef, enemyMdf, type);
+          enemyHp -= dmgDealt;
+        } else if (newClass == 1) {
           dmgDealt = knight.knightAttack(enemyDef);
           enemyHp -= dmgDealt;
-        }
-        else if (newClass == 2) {
+        } else if (newClass == 2) {
           dmgDealt = mage.mageAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
-        }
-        else if (newClass == 3) {
+        } else if (newClass == 3) {
           dmgDealt = ninja.ninjaAttack(((enemyDef + enemyMdf) / 2),
             enemyCurrentHp);
           enemyHp -= dmgDealt;
@@ -176,8 +116,7 @@ final class Battle {
             + dmgDealt + " damage!");
           System.out.println("The boss regained "
             + healAmount + " Hp!");
-        }
-        else {
+        } else {
           dmgDealt = monster.attack(playerDef);
           System.out.println("The " + name + " attacked for "
             + dmgDealt + " damage.");
@@ -196,8 +135,7 @@ final class Battle {
     if (finalBattle) {
       System.out.println("You win!");
       System.exit(0);
-    }
-    else if (bossBattle) {
+    } else if (bossBattle) {
       newClass = act.classChange();
     }
     while (decision) {
@@ -214,24 +152,19 @@ final class Battle {
           user.levelUp();
           if (newClass == 1) {
             knight.levelUp();
-          }
-          else if (newClass == 2) {
+          } else if (newClass == 2) {
             mage.levelUp();
-          }
-          else if (newClass == 3) {
+          } else if (newClass == 3) {
             ninja.levelUp();
           }
           decision = false;
-        }
-        else if (battle == 0) {
+        } else if (battle == 0) {
           System.out.println("Game ended.");
           System.exit(0);
-        }
-        else {
+        } else {
           System.out.println("Invalid input, please input real value.");
         }
-      }
-      catch (InputMismatchException errorCode) {
+      } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
     }

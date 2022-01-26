@@ -52,11 +52,9 @@ public class Enemy extends Character {
     final int type = random.nextInt(4) + 1;
     if (type == 1) {
       element = "fire";
-    }
-    else if (type == 2) {
+    } else if (type == 2) {
       element = "ice";
-    }
-    else if (type == 3) {
+    } else if (type == 3) {
       element = "lightning";
     }
     return element;
@@ -69,38 +67,30 @@ public class Enemy extends Character {
   */
   public String getName() {
     final Random random = new Random();
-    final int randName = random.nextInt(2) + 1;
+    final int randName = random.nextInt(3) + 1;
     name = "Skeleton";
     if (element == "fire") {
       if (randName == 1) {
         name = "Fire Spirit";
-      }
-      else if (randName == 2) {
+      } else if (randName == 2) {
         name = "Pyro";
-      }
-      else {
+      } else {
         name = "Flame Golem";
       }
-    }
-    else if (element == "ice") {
+    } else if (element == "ice") {
       if (randName == 1) {
         name = "Frost giant";
-      }
-      else if (randName == 2) {
+      } else if (randName == 2) {
         name = "Ice Golem";
-      }
-      else {
+      } else {
         name = "Frozen Soul";
       }
-    }
-    else if (element == "lightning") {
+    } else if (element == "lightning") {
       if (randName == 1) {
         name = "Conduit";
-      }
-      else if (randName == 2) {
+      } else if (randName == 2) {
         name = "Thunder Spirit";
-      }
-      else {
+      } else {
         name = "Robot";
       }
     }
