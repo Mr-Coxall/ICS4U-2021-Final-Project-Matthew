@@ -82,7 +82,7 @@ public class Actions {
 
   public void classKnight() {
     System.out.println("Knight");
-    System.out.println("High strength and defence,"
+    System.out.println("High strength and defence, "
       + "low mp and intelligence.");
     System.out.println("Skills:");
     System.out.println("Slam: Attack the enemy, "
@@ -98,7 +98,7 @@ public class Actions {
     System.out.println("High intelligence and MP, low strength and defence.");
     System.out.println("Skills:");
     System.out.println("Inferno: Burn the enemy, dealing high fire damage.");
-    System.out.println("Thunder: Strike from the heavens,"
+    System.out.println("Thunder: Strike from the heavens, "
       + "dealing mass lightning damage.");
     System.out.println("Icicle Spear: Throw a spear of pure ice at the enemy," + " dealing large ice damage that negates a bit of their defences.");
   }
