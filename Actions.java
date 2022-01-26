@@ -4,6 +4,26 @@ import java.util.InputMismatchException;
 public class Actions {
 
   /**
+  * The value used every time a 1 is needed.
+  */
+  private final int choiceA = 1;
+
+  /**
+  * The value used every time a 2 is needed.
+  */
+  private final int choiceB = 2;
+
+  /**
+  * The value used every time a 3 is needed.
+  */
+  private final int choiceC = 3;
+
+  /**
+  * The value used every time a 4 is needed.
+  */
+  private final int choiceD = 4;
+
+  /**
   * The help method, used to show the help menu.
   */
   public void help() {
@@ -38,15 +58,15 @@ public class Actions {
     int input = 0;
     try {
       input = userInput.nextInt();
-      if (input <= 0 || input >= 4) {
+      if (input <= 0 || input >= choiceD) {
         System.out.println("That is not a viable input"
           + " (must be 1, 2, or 3).");
-      } else if (input == 1) {
-        action = 1;
-      } else if (input == 2) {
-        action = 2;
+      } else if (input == choiceA) {
+        action = choiceA;
+      } else if (input == choiceB) {
+        action = choiceB;
       } else {
-        action = 3;
+        action = choiceC;
       }
     } catch (InputMismatchException errorCode) {
       System.out.println("That is not a viable input.");
@@ -65,15 +85,15 @@ public class Actions {
     int skillInput = 0;
     try {
       skillInput = userInput.nextInt();
-      if (skillInput <= 0 || skillInput >= 5) {
+      if (skillInput <= 0 || skillInput > choiceD) {
         System.out.println("That is not a viable input"
           + " (must be 1, 2, 3, or 4).");
-      } else if (skillInput == 1) {
-        action = 1;
-      } else if (skillInput == 2) {
-        action = 2;
-      } else if (skillInput == 3) {
-        action = 3;
+      } else if (skillInput == choiceA) {
+        action = choiceA;
+      } else if (skillInput == choiceB) {
+        action = choiceB;
+      } else if (skillInput == choiceC) {
+        action = choiceC;
       }
     } catch (InputMismatchException errorCode) {
       System.out.println("That is not a viable input.");
@@ -148,24 +168,24 @@ public class Actions {
     while (classChoice == 0) {
       try {
         classInput = userInput.nextInt();
-        if (classInput <= 0 || classInput >= 4) {
+        if (classInput <= 0 || classInput >= choiceD) {
           System.out.println("That is not a viable input"
             + " (must be 1, 2, or 3).");
-        } else if (classInput == 1) {
+        } else if (classInput == choiceA) {
           classKnight();
-        } else if (classInput == 2) {
+        } else if (classInput == choiceB) {
           classMage();
-        } else if (classInput == 3) {
+        } else if (classInput == choiceC) {
           classNinja();
         }
       } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
-      if (classInput <= 3 && classInput >= 1) {
+      if (classInput <= choiceC && classInput >= choiceA) {
         System.out.println("Confirm (1/0)");
         try {
           int confirm = userInput.nextInt();
-          if (confirm == 1) {
+          if (confirm == choiceA) {
             classChoice = classInput;
           } else if (confirm == 0) {
             classChoice = classChange();

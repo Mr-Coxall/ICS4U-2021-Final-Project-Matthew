@@ -69,12 +69,24 @@ public class Knight extends Character {
   */
   private int currentMp = 4;
 
+  /**
+  * The value used every time a 1 is needed.
+  */
   private final int choiceA = 1;
 
+  /**
+  * The value used every time a 2 is needed.
+  */
   private final int choiceB = 2;
 
+  /**
+  * The value used every time a 3 is needed.
+  */
   private final int choiceC = 3;
 
+  /**
+  * The value used every time a 4 is needed.
+  */
   private final int choiceD = 4;
 
   public void actions() {

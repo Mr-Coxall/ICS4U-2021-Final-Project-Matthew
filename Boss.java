@@ -10,27 +10,27 @@ public class Boss extends Character {
   /**
   * The boss strength value.
   */
-  private int str = 10;
+  private final int str = 10;
 
   /**
   * The boss intelligence value.
   */
-  private int intel = 5;
+  private final int intel = 5;
 
   /**
   * The boss defence value.
   */
-  private int def = 10;
+  private final int def = 10;
 
   /**
   * The boss magic defence value.
   */
-  private int mdf = 10;
+  private final int mdf = 10;
 
   /**
   * The boss starting type.
   */
-  private String type = "none";
+  private final String type = "none";
 
   /**
   * The getType method.
@@ -38,16 +38,6 @@ public class Boss extends Character {
   * @return type the enemy's typing.
   */
   public String getType() {
-    final Random random = new Random();
-    final int weak = random.nextInt(3);
-    if (weak == 1) {
-      type = "fire";
-    } else if (weak == 2) {
-      type = "ice";
-    } else if (weak == 3) {
-      type = "lightning";
-    }
-    System.out.println(type);
     return type;
   }
 
@@ -58,9 +48,9 @@ public class Boss extends Character {
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int Pdef) {
+  public int attack(final int pDef) {
     final Random random = new Random();
-    final int damage = random.nextInt(str - Pdef) + Pdef;
+    final int damage = random.nextInt(str - pDef) + pDef;
     return damage;
   }
 
@@ -71,8 +61,8 @@ public class Boss extends Character {
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Pmdf) {
-    final int fireDmg = super.fireball(intel, Pmdf);
+  public int fireball(final int pMdf) {
+    final int fireDmg = super.fireball(intel, pMdf);
     return fireDmg;
   }
 
@@ -83,8 +73,8 @@ public class Boss extends Character {
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Pmdf) {
-    final int zapDmg = super.zap(intel, Pmdf);
+  public int zap(final int pMdf) {
+    final int zapDmg = super.zap(intel, pMdf);
     return zapDmg;
   }
 
@@ -95,8 +85,8 @@ public class Boss extends Character {
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Pmdf) {
-    final int frostDmg = super.frostblast(intel, Pmdf);
+  public int frostblast(final int pMdf) {
+    final int frostDmg = super.frostblast(intel, pMdf);
     return frostDmg;
   }
 
