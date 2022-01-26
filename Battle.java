@@ -92,8 +92,8 @@ final class Battle {
         System.out.println(name + " hp: " + enemyHp);
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
-        act.actions();
         if (newClass == 0) {
+          user.actions();
           int action = act.attacking();
           if (action == 1) {
             dmgDealt = user.attack(enemyDef);
@@ -189,40 +189,40 @@ final class Battle {
         }
       }
     }
-  boolean decision = true;
-  if (bossBattle && bossLevel == 2) {
-    System.out.println("You win!");
-    System.exit(0);
-  }
-  else if (bossBattle) {
-    newClass = act.classChange();
-  }
-  while (decision) {
-    int warning = monster.getLevel();
-    System.out.println("Continue?: (1/0)");
-    if ((warning + 1) % 5 == 0) {
-      System.out.println("Warning! Boss battle ahead!");
+    boolean decision = true;
+    if (bossBattle && bossLevel == 2) {
+      System.out.println("You win!");
+      System.exit(0);
     }
-    try {
-      int battle = userInput.nextInt();
-      if (battle == 1) {
-        bossBattle = false;
-        monster.levelUp();
-        user.levelUp();
-        decision = false;
+    else if (bossBattle) {
+      newClass = act.classChange();
+    }
+    while (decision) {
+      int warning = monster.getLevel();
+      System.out.println("Continue?: (1/0)");
+      if ((warning + 1) % 5 == 0) {
+        System.out.println("Warning! Boss battle ahead!");
       }
-      else if (battle == 0) {
-        System.out.println("Game ended.");
-        System.exit(0);
+      try {
+        int battle = userInput.nextInt();
+        if (battle == 1) {
+          bossBattle = false;
+          monster.levelUp();
+          user.levelUp();
+          decision = false;
+        }
+        else if (battle == 0) {
+          System.out.println("Game ended.");
+          System.exit(0);
+        }
+        else {
+          System.out.println("Invalid input, please input real value.");
+        }
       }
-      else {
-        System.out.println("Invalid input, please input real value.");
+      catch (InputMismatchException errorCode) {
+        System.out.println("That is not a viable input.");
       }
-    }
-    catch (InputMismatchException errorCode) {
-      System.out.println("That is not a viable input.");
-    }
     }
   }
-}
+  }
 }

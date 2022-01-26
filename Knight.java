@@ -29,12 +29,22 @@ public class Knight extends Character {
 
   private int currentMp = 4;
 
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
+
   public void knightSkills() {
     System.out.println("\nSkills:");
     System.out.println("Slam(1): 1Mp");
     System.out.println("Piercing Strike(2): 3Mp");
     System.out.println("Frenzy(3): 4Mp");
     System.out.println("Back(4)");
+  }
+
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
   }
 
   public int knightAttack(final int Edef) {
@@ -46,10 +56,12 @@ public class Knight extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
         if (action == 1) {
           damage = attack(Edef);
           act += 1;
+          attackDamage(damage);
         }
         else if (action == 2) {
           knightSkills();
@@ -59,6 +71,7 @@ public class Knight extends Character {
               damage = slam(Edef);
               act += 1;
               currentMp -= slamCost;
+              attackDamage(damage);
             }
             else {
               invalidMp();
@@ -69,6 +82,7 @@ public class Knight extends Character {
               damage = piercingStrike();
               act += 1;
               currentMp -= piercestrikeCost;
+              attackDamage(damage);
             }
             else {
               invalidMp();
@@ -83,6 +97,9 @@ public class Knight extends Character {
             else {
               invalidMp();
             }
+          }
+          else if (skillAction == 4) {
+            damage = knightAttack(Edef);
           }
         }
         else if (action == 3) {

@@ -26,6 +26,16 @@ public class Mage extends Character {
   */
   private int spellCost = 5;
 
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
+  }
+
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
+
   public void mageSkills() {
     System.out.println("\nSkills:");
     System.out.println("Inferno(1): 5Mp");
@@ -44,10 +54,12 @@ public class Mage extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
         if (action == 1) {
           damage = attack(Edef);
           act += 1;
+          attackDamage(damage);
         }
         else if (action == 2) {
           mageSkills();
@@ -56,16 +68,24 @@ public class Mage extends Character {
             if (skillAction == 1) {
               damage = Inferno(Emdf, type);
               act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
             }
             else if (skillAction == 2) {
               damage = Thunder(Emdf, type);
               act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
             }
             else if (skillAction == 3) {
               damage = IcicleSpear(Emdf, type);
               act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
             }
-            currentMp -= spellCost;
+            else if (skillAction == 4) {
+              damage = mageAttack(Edef, Emdf, type);
+            }
           }
           else {
             invalidMp();

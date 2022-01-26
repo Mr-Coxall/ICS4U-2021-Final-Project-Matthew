@@ -29,6 +29,16 @@ public class Ninja extends Character {
 
   private int animeCost = 6;
 
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
+  }
+
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
+
   public void ninjaSkills() {
     System.out.println("\nSkills:");
     System.out.println("Multislash: 4Mp");
@@ -46,10 +56,12 @@ public class Ninja extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
         if (action == 1) {
           damage = attack(Edef);
           act += 1;
+          attackDamage(damage);
         }
         else if (action == 2) {
           ninjaSkills();
@@ -59,6 +71,7 @@ public class Ninja extends Character {
               damage = multislash(Edef);
               act += 1;
               currentMp -= multislashCost;
+              attackDamage(damage);
             }
             else {
               invalidMp();
@@ -69,6 +82,7 @@ public class Ninja extends Character {
               prepare();
               currentMp -= prepareCost;
               act += 1;
+              attackDamage(damage);
             }
             else {
               invalidMp();
@@ -79,14 +93,18 @@ public class Ninja extends Character {
               damage = animeCut(Ehp);
               act += 1;
               currentMp = 0;
+              attackDamage(damage);
             }
             else {
               invalidMp();
             }
           }
+          else if (skillAction == 4) {
+            damage = ninjaAttack(Edef, Ehp);
+          }
         }
         else if (action == 3) {
-          System.out.println("You steeled yourself"
+          System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += 3;
           act += 1;

@@ -3,12 +3,6 @@ import java.util.InputMismatchException;
 
 public class Actions {
 
-  public void actions() {
-    System.out.println("Attack(1)");
-    System.out.println("Skills(2)");
-    System.out.println("Defend(3)");
-  }
-
   public void help() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Help:");
@@ -120,44 +114,38 @@ public class Actions {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;
     int classInput = 0;
-    int choice = 0;
     System.out.println("Knight(1)");
     System.out.println("Mage(2)");
     System.out.println("Ninja(3)");
     while (classChoice == 0) {
-      choice = 0;
       try {
         classInput = userInput.nextInt();
         if (classInput <= 0 || classInput >= 4) {
           System.out.println("That is not a viable input"
             + " (must be 1, 2, or 3).");
-          choice = 1;
         }
         else if (classInput == 1) {
-          classChoice = 1;
           classKnight();
         }
         else if (classInput == 2) {
-          classChoice = 2;
           classMage();
         }
         else if (classInput == 3) {
-          classChoice = 3;
           classNinja();
         }
       }
       catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
-      if (choice == 0) {
+      if (classInput <= 3 && classInput >= 1) {
         System.out.println("Confirm (1/0)");
         try {
           int confirm = userInput.nextInt();
           if (confirm == 1) {
-            choice = classChoice;
+            classChoice = classInput;
           }
           else if (confirm == 0) {
-            classChoice = 0;
+            classChoice = classChange();
           }
           else {
             System.out.println("That is not a valid input");
@@ -169,6 +157,6 @@ public class Actions {
         }
       }
     }
-    return choice;
+    return classChoice;
   }
 }

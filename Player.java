@@ -14,6 +14,12 @@ public class Player extends Character {
 
   private int lvl = 1;
 
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
+
   public void skills() {
     System.out.println("\nSkills:");
     System.out.println("Fireball(1): 2Mp");
