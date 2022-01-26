@@ -14,7 +14,13 @@ public class Player extends Character {
 
   private int lvl = 1;
 
-  private String Class = "None";
+  public void skills() {
+    System.out.println("\nSkills:");
+    System.out.println("Fireball(1): 2Mp");
+    System.out.println("Zap(2): 2Mp");
+    System.out.println("Frostblast(3): 2Mp");
+    System.out.println("Back(4)");
+  }
 
   public int attack(final int Edef) {
     // final int damage = super.attack(str, Edef) + lvl;
@@ -36,14 +42,20 @@ public class Player extends Character {
     return fireDmg;
   }
 
-  public int zap(final int Emdf) {
-    final int zapDmg = super.zap(intel, Emdf);
+  public int zap(final int Emdf, final String type) {
+    int zapDmg = super.zap(intel, Emdf);
+    if (type.equals("fire")) {
+      zapDmg = zapDmg * 3;
+    }
+    else if (type.equals("lightning")) {
+      zapDmg = 1;
+    }
     return zapDmg;
   }
 
   public int frostblast(final int Emdf, final String type) {
     int frostDmg = super.frostblast(intel, Emdf);
-    if (type.equals("fire")) {
+    if (type.equals("lightning")) {
       frostDmg += 3;
     }
     else if (type.equals("ice")) {
@@ -83,9 +95,5 @@ public class Player extends Character {
 
   public int getLevel() {
     return lvl;
-  }
-
-  public void setClass(final String classChange) {
-    Class = classChange;
   }
 }

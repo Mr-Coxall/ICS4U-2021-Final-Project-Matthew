@@ -23,6 +23,7 @@ final class Battle {
   */
   public static void main(final String[] args) {
     int bossLevel = 0;
+    int newClass = 0;
     int dmgDealt = 0;
     Player user = new Player();
     Knight knight = new Knight();
@@ -60,6 +61,7 @@ final class Battle {
       }
       int playerHp = user.getHp();
       int playerMp = user.getMp();
+      int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
       String type = monster.getType();
       while (playerHp >= 1 && enemyHp >= 1) {
@@ -69,77 +71,100 @@ final class Battle {
         }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
+        if (newClass == 1) {
+          playerHp = knight.getHp();
+          playerMp = knight.getMp();
+          playerDef = knight.getDef();
+        }
+        else if (newClass == 2) {
+          playerHp = mage.getHp();
+          playerMp = mage.getMp();
+          playerDef = mage.getDef();
+        }
+        else if (newClass == 3) {
+          playerHp = ninja.getHp();
+          playerMp = ninja.getMp();
+          playerDef = ninja.getDef();
+        }
         System.out.println("Enemy hp: " + enemyHp);
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
         act.actions();
-        int action = act.attacking();
-        if (action == 1) {
-          dmgDealt = user.attack(enemyDef);
-          enemyHp = enemyHp - dmgDealt;
-          System.out.println("You hit for " + dmgDealt + " damage.");
+        if (newClass == 0) {
+          int action = act.attacking();
+          if (action == 1) {
+            dmgDealt = user.attack(enemyDef);
+            enemyHp = enemyHp - dmgDealt;
+            System.out.println("You hit for " + dmgDealt + " damage.");
+          }
+          else if (action == 2) {
+            user.skills();
+            int skillAttack = act.skillAction();
+            if (skillAttack == 1) {
+              dmgDealt = user.fireball(enemyMdf, type);
+              if (playerMp >= 2) {
+                enemyHp = enemyHp - dmgDealt;
+                System.out.println("You hit for "
+                  + dmgDealt + " damage.");
+                playerMp -= 2;
+                enemyCurrentHp -= 1;
+              }
+              else {
+                System.out.println("Not enough Mp!");
+              }
+            }
+            else if (skillAttack == 2) {
+              int dmgPerHit = 2;
+              dmgDealt = user.zap(enemyMdf, type);
+              if (playerMp >= 2) {
+                dmgPerHit = dmgDealt;
+                enemyHp = enemyHp - dmgPerHit;
+                System.out.println("You hit for "
+                  + dmgDealt + " damage.");
+                playerMp -= 2;
+                enemyCurrentHp -= 1;
+              }
+              else {
+                System.out.println("Not enough Mp!");
+              }
+            }
+            else if (skillAttack == 3) {
+              dmgDealt = user.frostblast(enemyMdf, type);
+              if (playerMp >= 2) {
+                enemyHp = enemyHp - dmgDealt;
+                System.out.println("You hit for "
+                  + dmgDealt + " damage.");
+                playerMp -= 2;
+                enemyCurrentHp -= 1;
+              }
+              else {
+                System.out.println("Not enough Mp!");
+              }
+            }
+          }
+          else if (action == 3) {
+            tempDef += 3;
+          }
         }
-        else if (action == 2) {
-          act.skills();
-          int skillAttack = act.skillAction();
-          if (skillAttack == 1) {
-            dmgDealt = user.fireball(enemyMdf, type);
-            if (playerMp >= 2) {
-              enemyHp = enemyHp - dmgDealt;
-              System.out.println("You hit for "
-                + dmgDealt + " damage.");
-              playerMp -= 2;
-            }
-            else {
-              System.out.println("Not enough Mp!");
-            }
-          }
-          else if (skillAttack == 2) {
-            int dmgPerHit = 2;
-            dmgDealt = user.zap(enemyMdf);
-            if (type.equals("fire")) {
-              dmgPerHit += 1;
-            }
-            else if (type.equals("lightning")) {
-              dmgPerHit = 0;
-            }
-            else if (type.equals("ice")) {
-              dmgPerHit -= 1;
-            }
-            if (playerMp >= 2) {
-              dmgPerHit = dmgDealt * dmgPerHit;
-              enemyHp = enemyHp - dmgPerHit;
-              System.out.println("You hit a total of " + dmgDealt
-                + " times for a total of " + dmgPerHit + " damage.");
-              playerMp -= 2;
-            }
-            else {
-              System.out.println("Not enough Mp!");
-            }
-          }
-          else if (skillAttack == 3) {
-            dmgDealt = user.frostblast(enemyMdf, type);
-            if (playerMp >= 2) {
-              enemyHp = enemyHp - dmgDealt;
-              System.out.println("You hit for "
-                + dmgDealt + " damage.");
-              playerMp -= 2;
-            }
-            else {
-              System.out.println("Not enough Mp!");
-            }
-          }
+        else if (newClass == 1) {
+          dmgDealt = knight.knightAttack(enemyDef);
+          enemyHp -= dmgDealt;
         }
-        else if (action == 3) {
-          tempDef += 3;
+        else if (newClass == 2) {
+          dmgDealt = mage.mageAttack(enemyDef, enemyMdf, type);
+          enemyHp -= dmgDealt;
+        }
+        else if (newClass == 3) {
+          dmgDealt = ninja.ninjaAttack(enemyDef, enemyCurrentHp);
+          enemyHp -= dmgDealt;
         }
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
         if (finalBattle) {
-          dmgDealt = finalBoss.attack(user.getDef());
+          dmgDealt = finalBoss.attack(playerDef);
           int healAmount = 10;
         }
         if (bossBattle) {
-          dmgDealt = boss.attack(user.getDef());
+          dmgDealt = boss.attack(playerDef);
           int healAmount = boss.heal();
           System.out.println("The boss attacked for "
             + dmgDealt + " damage!");
@@ -147,11 +172,11 @@ final class Battle {
             + healAmount + " Hp!");
         }
         else {
-          dmgDealt = monster.attack(user.getDef());
+          dmgDealt = monster.attack(playerDef);
           System.out.println("The enemy attacked for "
             + dmgDealt + " damage.");
         }
-        playerHp = playerHp - (dmgDealt - tempDef);
+        playerHp = playerHp - dmgDealt;
       }
       if (finalBattle) {
         if (enemyHp <= 0 && (tempDef != 0 || enemyCurrentHp != enemyHp)
@@ -167,6 +192,7 @@ final class Battle {
     System.exit(0);
   }
   else if (bossBattle) {
+    newClass = act.classChange();
   }
   while (decision) {
     int warning = monster.getLevel();

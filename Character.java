@@ -42,8 +42,14 @@ public abstract class Character {
   */
   public int attack(final int strength, final int Edef) {
     final Random random = new Random();
-    final int damage = random.nextInt(strength - Edef)
-      + Math.round(strength / 2);
+    int range = strength - Edef;
+    int damage = 1;
+    if (range <= 0) {
+      damage = 1;
+    }
+    else {
+      damage = random.nextInt(range) + Math.round(strength / 2);
+    }
     return damage;
   }
 
@@ -57,8 +63,14 @@ public abstract class Character {
   */
   public int fireball(final int intelligence, final int Emdf) {
     final Random fireRand = new Random();
-    final int fireDmg = fireRand.nextInt(intelligence - Emdf)
-      + Math.round(intelligence / 2);
+    final int range = intelligence - Emdf;
+    int fireDmg = 0;
+    if (range <= 0) {
+      fireDmg = 1;
+    }
+    else {
+      fireDmg = fireRand.nextInt(range) + Math.round(intelligence / 2);
+    }
     return fireDmg;
   }
 
@@ -72,7 +84,14 @@ public abstract class Character {
   */
   public int zap(final int intelligence, final int Emdf) {
     final Random zapRand = new Random();
-    final int zapDmg = zapRand.nextInt(intelligence - Emdf) + 3;
+    final int range = intelligence - Emdf;
+    int zapDmg = 0;
+    if (range <= 0) {
+      zapDmg = 1;
+    }
+    else {
+      zapDmg = zapRand.nextInt(range) + 3;
+    }
     return zapDmg;
   }
 
@@ -86,8 +105,14 @@ public abstract class Character {
   */
   public int frostblast(final int intelligence, final int Emdf) {
     final Random frostRand = new Random();
-    final int frostDmg = frostRand.nextInt(intelligence - Emdf)
-      + Math.round(intelligence / 2);
+    int frostDmg = 0;
+    final int range = intelligence - Emdf;
+    if (range <= 0) {
+      frostDmg = 1;
+    }
+    else {
+      frostDmg = frostRand.nextInt(range) + Math.round(intelligence / 2);
+    }
     return frostDmg;
   }
 }
