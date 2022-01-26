@@ -7,7 +7,7 @@ public class Knight extends Character {
 
   private int mp = 4;
 
-  private int str = 14;
+  private int str = 9;
 
   private int intel = 2;
 

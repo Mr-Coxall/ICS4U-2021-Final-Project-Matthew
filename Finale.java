@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Finale extends Boss {
   
-  private int hp = 150;
+  private int hp = 100;
 
   private int str = 30;
 

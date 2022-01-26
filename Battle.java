@@ -66,6 +66,21 @@ final class Battle {
       final Scanner userInput = new Scanner(System.in);
       String type = monster.getType();
       String name = monster.getName();
+      if (newClass == 1) {
+        playerHp = knight.getHp();
+        playerMp = knight.getMp();
+        playerDef = knight.getDef();
+      }
+      else if (newClass == 2) {
+        playerHp = mage.getHp();
+        playerMp = mage.getMp();
+        playerDef = mage.getDef();
+      }
+      else if (newClass == 3) {
+        playerHp = ninja.getHp();
+        playerMp = ninja.getMp();
+        playerDef = ninja.getDef();
+      }
       while (playerHp >= 1 && enemyHp >= 1) {
         if (finalBattle) {
           enemyDef = finalBoss.getDef();
@@ -74,21 +89,6 @@ final class Battle {
         }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
-        if (newClass == 1) {
-          playerHp = knight.getHp();
-          playerMp = knight.getMp();
-          playerDef = knight.getDef();
-        }
-        else if (newClass == 2) {
-          playerHp = mage.getHp();
-          playerMp = mage.getMp();
-          playerDef = mage.getDef();
-        }
-        else if (newClass == 3) {
-          playerHp = ninja.getHp();
-          playerMp = ninja.getMp();
-          playerDef = ninja.getDef();
-        }
         System.out.println(name + " hp: " + enemyHp);
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
@@ -158,7 +158,8 @@ final class Battle {
           enemyHp -= dmgDealt;
         }
         else if (newClass == 3) {
-          dmgDealt = ninja.ninjaAttack(enemyDef, enemyCurrentHp);
+          dmgDealt = ninja.ninjaAttack(((enemyDef + enemyMdf) / 2),
+            enemyCurrentHp);
           enemyHp -= dmgDealt;
         }
       if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
@@ -209,6 +210,15 @@ final class Battle {
           bossBattle = false;
           monster.levelUp();
           user.levelUp();
+          if (newClass == 1) {
+            knight.levelUp();
+          }
+          else if (newClass == 2) {
+            mage.levelUp();
+          }
+          else if (newClass == 3) {
+            ninja.levelUp();
+          }
           decision = false;
         }
         else if (battle == 0) {

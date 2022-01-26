@@ -94,7 +94,9 @@ public class Actions {
     System.out.println("Inferno: Burn the enemy, dealing high fire damage.");
     System.out.println("Thunder: Strike from the heavens, "
       + "dealing mass lightning damage.");
-    System.out.println("Icicle Spear: Throw a spear of pure ice at the enemy," + " dealing large ice damage that negates a bit of their defences.");
+    System.out.println("Icicle Spear: Throw a spear of pure ice "
+      + "at the enemy, dealing large ice damage "
+      + "that negates a bit of their defences.");
   }
 
   public void classNinja() {
@@ -103,7 +105,7 @@ public class Actions {
       + "strength and intelligence for basic attack.");
     System.out.println("Skills:");
     System.out.println("Prepare: Increases strength and "
-      + "intelligence for one attack.");
+      + "intelligence slightly for one attack.");
     System.out.println("Multislash: A flurry of strikes,"
       + " dealing massive damage.");
     System.out.println("Animecut: The anime sword strike, "
@@ -114,6 +116,8 @@ public class Actions {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;
     int classInput = 0;
+    System.out.println("Time to choose an advanced class! "
+      + "(Warning: this decision cannot be changed later.)");
     System.out.println("Knight(1)");
     System.out.println("Mage(2)");
     System.out.println("Ninja(3)");

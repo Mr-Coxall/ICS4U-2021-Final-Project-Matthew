@@ -47,7 +47,7 @@ public class Ninja extends Character {
     System.out.println("Back(4)");
   }
 
-  public int ninjaAttack(final int Edef, final int Ehp) {
+  public int ninjaAttack(final int Edf, final int Ehp) {
     tempDef = 0;
     int action = 0;
     int skillAction = 0;
@@ -59,7 +59,7 @@ public class Ninja extends Character {
         actions();
         action = userInput.nextInt();
         if (action == 1) {
-          damage = attack(Edef);
+          damage = attack(Edf);
           act += 1;
           attackDamage(damage);
         }
@@ -68,7 +68,7 @@ public class Ninja extends Character {
           skillAction = userInput.nextInt();
           if (skillAction == 1) {
             if (checkMp(multislashCost)) {
-              damage = multislash(Edef);
+              damage = multislash(Edf);
               act += 1;
               currentMp -= multislashCost;
               attackDamage(damage);
@@ -100,7 +100,7 @@ public class Ninja extends Character {
             }
           }
           else if (skillAction == 4) {
-            damage = ninjaAttack(Edef, Ehp);
+            damage = ninjaAttack(Edf, Ehp);
           }
         }
         else if (action == 3) {
