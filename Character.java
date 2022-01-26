@@ -90,7 +90,7 @@ public abstract class Character {
       zapDmg = 1;
     }
     else {
-      zapDmg = zapRand.nextInt(range) + 3;
+      zapDmg = zapRand.nextInt(range) + 2;
     }
     return zapDmg;
   }

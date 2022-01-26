@@ -14,22 +14,63 @@ public class Enemy extends Character {
 
   private int lvl = 1;
 
-  private String weakness = "none";
+  private String element = "none";
+
+  private String name;
 
   public String getType() {
     final Random random = new Random();
     final int type = random.nextInt(4) + 1;
     if (type == 1) {
-      weakness = "fire";
+      element = "fire";
     }
     else if (type == 2) {
-      weakness = "ice";
+      element = "ice";
     }
     else if (type == 3) {
-      weakness = "lightning";
+      element = "lightning";
     }
-    System.out.println(weakness);
-    return weakness;
+    return element;
+  }
+
+  public String getName() {
+    final Random random = new Random();
+    final int randName = random.nextInt(2) + 1;
+    name = "Skeleton";
+    if (element == "fire") {
+      if (randName == 1) {
+        name = "Fire Spirit";
+      }
+      else if (randName == 2) {
+        name = "Pyro";
+      }
+      else {
+        name = "Flame Golem";
+      }
+    }
+    else if (element == "ice") {
+      if (randName == 1) {
+        name = "Frost giant";
+      }
+      else if (randName == 2) {
+        name = "Ice Golem";
+      }
+      else {
+        name = "Frozen Soul";
+      }
+    }
+    else if (element == "lightning") {
+      if (randName == 1) {
+        name = "Conduit";
+      }
+      else if (randName == 2) {
+        name = "Thunder Spirit";
+      }
+      else {
+        name = "Robot";
+      }
+    }
+    return name;
   }
 
   /**

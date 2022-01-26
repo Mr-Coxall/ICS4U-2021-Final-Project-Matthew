@@ -33,6 +33,7 @@ final class Battle {
     Boss boss = new Boss();
     Finale finalBoss = new Finale();
     Actions act = new Actions();
+    act.help();
     while (true) {
       int enemyHp = 0;
       int enemyDef = 0;
@@ -64,10 +65,12 @@ final class Battle {
       int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
       String type = monster.getType();
+      String name = monster.getName();
       while (playerHp >= 1 && enemyHp >= 1) {
         if (finalBattle) {
           enemyDef = finalBoss.getDef();
           enemyMdf = finalBoss.getMdf();
+          name = "Amalgamation";
         }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
@@ -86,7 +89,7 @@ final class Battle {
           playerMp = ninja.getMp();
           playerDef = ninja.getDef();
         }
-        System.out.println("Enemy hp: " + enemyHp);
+        System.out.println(name + " hp: " + enemyHp);
         System.out.println("\nPlayer hp: " + playerHp);
         System.out.println("Player mp: " + playerMp);
         act.actions();
@@ -173,7 +176,7 @@ final class Battle {
         }
         else {
           dmgDealt = monster.attack(playerDef);
-          System.out.println("The enemy attacked for "
+          System.out.println("The " + name + " attacked for "
             + dmgDealt + " damage.");
         }
         playerHp = playerHp - dmgDealt;
@@ -182,7 +185,7 @@ final class Battle {
         if (enemyHp <= 0 && (tempDef != 0 || enemyCurrentHp != enemyHp)
           && finalBoss.checkStage() != 3) {
           enemyHp = finalBoss.revive();
-          System.out.println("The creature stood up, refusing to die!");
+          System.out.println("The Amalgamation stood up, refusing to die!");
         }
       }
     }

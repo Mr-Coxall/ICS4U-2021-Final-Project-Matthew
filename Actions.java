@@ -9,6 +9,25 @@ public class Actions {
     System.out.println("Defend(3)");
   }
 
+  public void help() {
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("Help:");
+    System.out.println("Attack: deal damage up to half your strength plus your strength minus enemy defence.");
+    System.out.println("Skills: Fireball: deal fire damage equal to "
+      + "half your intelligence plus intelligence "
+      + "minus enemy magic defence.");
+    System.out.println("Skills: Zap: Same formula as "
+      + "Fireball, but deals lightning damage.");
+    System.out.println("Skills: Frostblast: Same as Fireball,"
+      + " but deals frost damage.");
+    System.out.println("Defend:Increases defence by 3 for one enemy attack.");
+    System.out.println("Elemental damage: Fire damage deals extra to"
+      + " frost enemies, lightning deals extra "
+      + "to fire, and frost does extra to lightning.");
+    System.out.println("Press enter to continue");
+    String waiting = userInput.nextLine();
+  }
+
   public int attacking() {
     int action = 0;
     final Scanner userInput = new Scanner(System.in);
@@ -134,7 +153,7 @@ public class Actions {
         System.out.println("Confirm (1/0)");
         try {
           int confirm = userInput.nextInt();
-          if (confirm == 0) {
+          if (confirm == 1) {
             choice = classChoice;
           }
           else if (confirm == 0) {
