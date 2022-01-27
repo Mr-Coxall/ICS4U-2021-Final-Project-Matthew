@@ -195,7 +195,7 @@ public class Knight extends Character {
             damage = knightAttack(eDef);
           }
         } else if (action == choiceC) {
-          tempDef += 3;
+          tempDef += choiceC;
           act += 1;
         } else {
           System.out.println("That isn't a viable input.");
@@ -247,7 +247,7 @@ public class Knight extends Character {
   * @return damage the damage dealt.
   */
   public int slam(final int eDef, final int strengthUp) {
-    final int damage = super.attack((str + strengthUp), (eDef - 3));
+    final int damage = super.attack((str + strengthUp), (eDef - choiceC));
     return damage;
   }
 
@@ -279,7 +279,7 @@ public class Knight extends Character {
   * @return def
   */
   public int getDef() {
-    return (def + tempDef) - (3 * frenzyCasts) + (defUp * lvl);
+    return (def + tempDef) - (choiceC * frenzyCasts) + (defUp * lvl);
   }
 
   /**
@@ -288,7 +288,7 @@ public class Knight extends Character {
   * @return mdf
   */
   public int getMdf() {
-    return mdf - (3 * frenzyCasts) + (defUp * lvl);
+    return mdf - (choiceC * frenzyCasts) + (defUp * lvl);
   }
 
   /**
