@@ -226,7 +226,7 @@ public class Player extends Character {
     final int intBuff) {
     int fireDmg = super.fireball((intel + intBuff), eMdf);
     if (type.equals("ice")) {
-      fireDmg += 3;
+      fireDmg += choiceC;
     } else if (type.equals("lightning")) {
       fireDmg -= 2;
     }
@@ -246,7 +246,7 @@ public class Player extends Character {
     final int intBuff) {
     int zapDmg = super.zap((intel + intBuff), eMdf);
     if (type.equals("fire")) {
-      zapDmg = zapDmg * 3;
+      zapDmg = zapDmg * choiceC;
     } else if (type.equals("ice")) {
       zapDmg -= 2;
     }
@@ -266,7 +266,7 @@ public class Player extends Character {
     final int intBuff) {
     int frostDmg = super.frostblast((intel + intBuff), eMdf);
     if (type.equals("lightning")) {
-      frostDmg += 3;
+      frostDmg += choiceC;
     } else if (type.equals("fire")) {
       frostDmg -= 2;
     }
