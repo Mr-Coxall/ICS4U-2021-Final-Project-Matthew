@@ -33,6 +33,11 @@ public class Enemy extends Character {
   private int lvl = 1;
 
   /**
+  * The value that hp goes up by.
+  */
+  private final int hpUpAmount = 5;
+
+  /**
   * The starting enemy element type value.
   */
   private String element = "none";
@@ -202,7 +207,7 @@ public class Enemy extends Character {
     int newHp = hp;
     int times = 1;
     while (times != lvl) {
-      int hpUp = random.nextInt(5) + 5;
+      int hpUp = random.nextInt(hpUpAmount) + hpUpAmount;
       newHp += hpUp;
       times += 1;
     }
