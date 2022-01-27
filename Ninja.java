@@ -230,6 +230,14 @@ public class Ninja extends Character {
     System.out.println("Not enough Mp!");
   }
 
+  /**
+  * The attack method.
+  *
+  * @param eDef the enemy defence value.
+  * @param buff the increase to damage.
+  *
+  * @return damage.
+  */
   public int attack(final int eDef, final int buff) {
     final int physicalDamage = super.attack((str + buff), eDef);
     final int magicalDamage = super.attack((intel + buff), eDef);
@@ -237,16 +245,34 @@ public class Ninja extends Character {
     return damage;
   }
 
+  /**
+  * The multislash method.
+  *
+  * @param eDef the enemy defence value.
+  * @param buff the increase to damage.
+  *
+  * @return damage.
+  */
   public int multislash(final int eDef, final int buff) {
     final int increase = buff * 2;
     final int damage = super.attack((str + intel + increase), eDef);
     return damage;
   }
 
+  /**
+  * The prepare method.
+  */
   public void prepare() {
     prep += 1;
   }
 
+  /**
+  * The animeCut method.
+  *
+  * @param eHp the enemy's current Hp value.
+  *
+  * @return damage.
+  */
   public int animeCut(final int eHp) {
     final int damage = Math.round(eHp / 3);
     return damage;

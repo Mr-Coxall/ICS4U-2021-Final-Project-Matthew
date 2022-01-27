@@ -125,7 +125,7 @@ final class Battle {
       }
       if (finalBattle) {
         if (enemyHp <= 0 && (tempDef != 0 || enemyCurrentHp != enemyHp)
-          && finalBoss.checkStage() != choiceC) {
+          && finalBoss.checkStage() != choiceB) {
           enemyHp = finalBoss.revive();
           System.out.println("The Amalgamation stood up, refusing to die!");
         }
