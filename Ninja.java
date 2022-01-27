@@ -6,37 +6,65 @@ public class Ninja extends Character {
   /**
   * The starting hp value.
   */
-  private final int hp = 40;
+  private int hp;
 
   /**
   * The starting mp value.
   */
-  private final int mp = 8;
+  private int mp;
 
   /**
   * The starting str (strength) value.
   */
-  private final int str = 8;
+  private int str;
 
   /**
   * The starting intel (intelligence) value.
   */
-  private final int intel = 8;
+  private int intel;
 
   /**
   * The starting def (defence) value.
   */
-  private final int def = 6;
+  private int def;
 
   /**
   * The starting mdf (magic defence) value.
   */
-  private final int mdf = 6;
+  private int mdf;
 
   /**
   * The starting level value.
   */
-  private int lvl = 0;
+  private int lvl;
+
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 40;
+
+  /**
+  * The base offensive (str, intel, mp) value.
+  */
+  private final int startingOffensive = 8;
+
+  /**
+  * The base defensive (def, mdf) value.
+  */
+  private final int startingDefensive = 6;
+
+  /**
+  * The no arguements ninja constructor.
+  */
+  public Ninja() {
+    lvl = 1;
+    mdf = startingDefensive;
+    def = startingDefensive;
+    intel = startingOffensive;
+    str = startingOffensive;
+    mp = startingOffensive;
+    hp = startingHp;
+  }
 
   /**
   * The temporary defence value.
@@ -148,7 +176,6 @@ public class Ninja extends Character {
   */
   public int ninjaAttack(final int eDef, final int eHp) {
     tempDef = 0;
-    final int powerUp = damageUp * lvl;
     int action = 0;
     int skillAction = 0;
     int damage = 0;
@@ -159,7 +186,7 @@ public class Ninja extends Character {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(eDef, (prep + powerUp));
+          damage = attack(eDef);
           prep = 0;
           act += 1;
           attackDamage(damage);
@@ -168,7 +195,7 @@ public class Ninja extends Character {
           skillAction = userInput.nextInt();
           if (skillAction == choiceA) {
             if (checkMp(multislashCost)) {
-              damage = multislash(eDef, (prep + powerUp));
+              damage = multislash(eDef);
               act += 1;
               currentMp -= multislashCost;
               attackDamage(damage);
@@ -238,9 +265,9 @@ public class Ninja extends Character {
   *
   * @return damage.
   */
-  public int attack(final int eDef, final int buff) {
-    final int physicalDamage = super.attack((str + buff), eDef);
-    final int magicalDamage = super.attack((intel + buff), eDef);
+  public int attack(final int eDef) {
+    final int physicalDamage = super.attack((str + prep), eDef);
+    final int magicalDamage = super.attack((intel + prep), eDef);
     final int damage = physicalDamage + magicalDamage;
     return damage;
   }
@@ -253,9 +280,8 @@ public class Ninja extends Character {
   *
   * @return damage.
   */
-  public int multislash(final int eDef, final int buff) {
-    final int increase = buff * 2;
-    final int damage = super.attack((str + intel + increase), eDef);
+  public int multislash(final int eDef) {
+    final int damage = super.attack((str + intel), eDef);
     return damage;
   }
 
@@ -283,7 +309,13 @@ public class Ninja extends Character {
   */
   public void levelUp() {
     lvl += 1;
-    currentMp = mp + (mpUp * lvl);
+    str += 2;
+    intel += 2;
+    mp += 2;
+    hp += hpUp;
+    def += 1;
+    mdf += 1;
+    currentMp = mp;
   }
 
   /**
@@ -325,7 +357,7 @@ public class Ninja extends Character {
   * @return def
   */
   public int getDef() {
-    return (def + tempDef) + (defUp * lvl);
+    return (def + tempDef);
   }
 
   /**
@@ -334,7 +366,7 @@ public class Ninja extends Character {
   * @return mdf
   */
   public int getMdf() {
-    return mdf + (defUp * lvl);
+    return mdf;
   }
 
   /**
@@ -343,7 +375,7 @@ public class Ninja extends Character {
   * @return hp
   */
   public int getHp() {
-    return hp + (hpUp * lvl);
+    return hp;
   }
 
   /**

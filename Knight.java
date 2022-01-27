@@ -4,39 +4,72 @@ import java.util.InputMismatchException;
 public class Knight extends Player {
 
   /**
-  * The starting hp value of the knight.
+  * The starting hp value.
   */
-  private final int hp = 50;
+  private int hp;
 
   /**
   * The starting mp value.
   */
-  private final int mp = 4;
+  private int mp;
 
   /**
   * The starting str (strength) value.
   */
-  private final int str = 9;
+  private int str;
 
   /**
   * The starting intel (intelligence) value.
   */
-  private final int intel = 2;
+  private int intel;
 
   /**
   * The starting def (defence) value.
   */
-  private final int def = 10;
+  private int def;
 
   /**
   * The starting mdf (magic defence) value.
   */
-  private final int mdf = 10;
+  private int mdf;
 
   /**
   * The starting level value.
   */
-  private int lvl = 0;
+  private int lvl;
+
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 50;
+
+  /**
+  * The base mp value.
+  */
+  private final int startingMp = 4;
+
+  /**
+  * The base str value.
+  */
+  private final int startingStr = 10;
+
+  /**
+  * The base value for def and mdf.
+  */
+  private final int startingBulk = 8;
+
+  /**
+  * The no arguements knight constructor.
+  */
+  public Knight() {
+    lvl = 1;
+    mdf = startingBulk;
+    def = startingBulk;
+    intel = 2;
+    hp = startingHp;
+    str = startingStr;
+    mp = startingMp;
+  }
 
   /**
   * The tempdef (temporary defence) value.
@@ -85,29 +118,19 @@ public class Knight extends Player {
   private final int choiceD = 4;
 
   /**
-  * The value that strength increases by.
-  */
-  private final int strUp = 3;
-
-  /**
   * The newMp value is used for Mp checks.
   */
   private int newMp = mp;
 
   /**
+  * The value that strength increases by.
+  */
+  private final int strUp = 3;
+
+  /**
   * The value that hp increases by.
   */
   private final int hpUp = 8;
-
-  /**
-  * The value that mp increases by.
-  */
-  private final int mpUp = 1;
-
-  /**
-  * The value that defence increases by.
-  */
-  private final int defUp = 1;
 
   /**
   * The actions method shows basic actions.
@@ -148,7 +171,6 @@ public class Knight extends Player {
   */
   public int knightAttack(final int eDef) {
     tempDef = 0;
-    int strengthIncrease = (strUp * lvl) + (strUp * frenzyCasts);
     int action = 0;
     int skillAction = 0;
     int damage = 0;
@@ -159,7 +181,7 @@ public class Knight extends Player {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(eDef, strengthIncrease);
+          damage = attack(eDef);
           act += 1;
           attackDamage(damage);
         } else if (action == choiceB) {
@@ -167,7 +189,7 @@ public class Knight extends Player {
           skillAction = userInput.nextInt();
           if (skillAction == choiceA) {
             if (checkMp(slamCost)) {
-              damage = slam(eDef, strengthIncrease);
+              damage = slam(eDef);
               act += 1;
               newMp -= slamCost;
               attackDamage(damage);
@@ -176,7 +198,7 @@ public class Knight extends Player {
             }
           } else if (skillAction == choiceB) {
             if (checkMp(piercestrikeCost)) {
-              damage = piercingStrike(strengthIncrease);
+              damage = piercingStrike();
               act += 1;
               newMp -= piercestrikeCost;
               attackDamage(damage);
@@ -231,12 +253,11 @@ public class Knight extends Player {
   * The attack method.
   *
   * @param eDef the enemy defence value.
-  * @param strengthUp the increase to strength value.
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int eDef, final int strengthUp) {
-    final int damage = super.attack((str + strengthUp), eDef);
+  public int attack(final int eDef) {
+    final int damage = super.attack(str, eDef);
     return damage;
   }
 
@@ -244,25 +265,22 @@ public class Knight extends Player {
   * The slam method.
   *
   * @param eDef the enemy defence value.
-  * @param strengthUp the increase to strength value.
   *
   * @return damage the damage dealt.
   */
-  public int slam(final int eDef, final int strengthUp) {
-    final int damage = super.attack((str + strengthUp), (eDef - choiceC));
+  public int slam(final int eDef) {
+    final int damage = super.attack(str, (eDef - choiceC));
     return damage;
   }
 
   /**
   * The piercingStrike method.
   *
-  * @param strengthUp the increase to strength value.
-  *
   * @return damage the damage dealt.
   */
-  public int piercingStrike(final int strengthUp) {
-    int damage = str + (strUp * frenzyCasts);
-    int extra = Math.round((str + (strUp * frenzyCasts)) / 2);
+  public int piercingStrike() {
+    int damage = str;
+    int extra = Math.round(str / 2);
     damage += extra;
     return damage;
   }
@@ -272,6 +290,9 @@ public class Knight extends Player {
   * Frenzy during a battle.
   */
   public void frenzy() {
+    str += strUp;
+    def -= choiceD;
+    mdf -= choiceD;
     frenzyCasts += 1;
   }
 
@@ -281,7 +302,7 @@ public class Knight extends Player {
   * @return def
   */
   public int getDef() {
-    return (def + tempDef) - (choiceC * frenzyCasts) + (defUp * lvl);
+    return (def + tempDef);
   }
 
   /**
@@ -290,7 +311,7 @@ public class Knight extends Player {
   * @return mdf
   */
   public int getMdf() {
-    return mdf - (choiceC * frenzyCasts) + (defUp * lvl);
+    return mdf;
   }
 
   /**
@@ -299,7 +320,7 @@ public class Knight extends Player {
   * @return hp
   */
   public int getHp() {
-    return hp + (hpUp * lvl);
+    return hp;
   }
 
   /**
@@ -316,9 +337,19 @@ public class Knight extends Player {
   * the frenzy casts, and newMp values.
   */
   public void levelUp() {
-    frenzyCasts = 0;
+    while (frenzyCasts != 0) {
+      str -= strUp;
+      def += choiceD;
+      mdf += choiceD;
+      frenzyCasts -= 1;
+    }
     lvl += 1;
-    newMp = mp + (mpUp * lvl);
+    str += strUp;
+    mp += 1;
+    hp += hpUp;
+    def += 1;
+    mdf += 1;
+    newMp = mp;
   }
 
   /**

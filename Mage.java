@@ -6,37 +6,76 @@ public class Mage extends Character {
   /**
   * The starting hp value.
   */
-  private final int hp = 35;
+  private int hp;
 
   /**
   * The starting mp value.
   */
-  private final int mp = 20;
+  private int mp;
 
   /**
   * The starting str (strength) value.
   */
-  private final int str = 4;
+  private int str;
 
   /**
   * The starting intel (intelligence) value.
   */
-  private final int intel = 12;
+  private int intel;
 
   /**
   * The starting def (defence) value.
   */
-  private final int def = 4;
+  private int def;
 
   /**
   * The starting mdf (magic defence) value.
   */
-  private final int mdf = 4;
+  private int mdf;
 
   /**
   * The starting level value.
   */
-  private int lvl = 0;
+  private int lvl;
+
+  /**
+  * The value used to check if skills can be.
+  * used for mage (all skills cost 5 mp)
+  */
+  private final int spellCost = 5;
+
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 35;
+
+  /**
+  * The base mp value.
+  */
+  private final int startingMp = 20;
+
+  /**
+  * The base intel value.
+  */
+  private final int startingIntel = 12;
+
+  /**
+  * The base value for str, def, and mdf.
+  */
+  private final int startingBulk = 4;
+
+  /**
+  * The no arguements mage constructor.
+  */
+  public Mage() {
+    lvl = 1;
+    mdf = startingBulk;
+    def = startingBulk;
+    intel = startingIntel;
+    hp = startingHp;
+    str = startingBulk;
+    mp = startingMp;
+  }
 
   /**
   * The temporary defence value.
@@ -47,12 +86,6 @@ public class Mage extends Character {
   * The mp value used for skills.
   */
   private int currentMp = mp;
-
-  /**
-  * The value used to check if skills can be.
-  * used for mage (all skills cost 5 mp)
-  */
-  private final int spellCost = 5;
 
   /**
   * The value used every time a 1 is needed.
@@ -75,24 +108,9 @@ public class Mage extends Character {
   private final int choiceD = 4;
 
   /**
-  * The value that hp increases by.
-  */
-  private final int hpUp = 4;
-
-  /**
-  * The value that mp increases by.
+  * Value that mp goes up by each levelup.
   */
   private final int mpUp = 5;
-
-  /**
-  * The value that defence increases by.
-  */
-  private final int defUp = 1;
-
-  /**
-  * The value that intelligence increases by.
-  */
-  private final int intUp = 2;
 
   /**
   * The attackDamage method tells you how much damage you dealt.
@@ -136,7 +154,6 @@ public class Mage extends Character {
   public int mageAttack(final int eDef, final int eMdf,
     final String type) {
     tempDef = 0;
-    final int intelligenceUp = intUp * lvl;
     int action = 0;
     int skillAction = 0;
     int damage = 0;
@@ -155,17 +172,17 @@ public class Mage extends Character {
           skillAction = userInput.nextInt();
           if (currentMp >= spellCost) {
             if (skillAction == choiceA) {
-              damage = inferno(eMdf, type, intelligenceUp);
+              damage = inferno(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceB) {
-              damage = thunder(eMdf, type, intelligenceUp);
+              damage = thunder(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceC) {
-              damage = icicleSpear(eMdf, type, intelligenceUp);
+              damage = icicleSpear(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
@@ -214,13 +231,11 @@ public class Mage extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
-  * @param improvement the extra intelligence based on level.
   *
   * @return zapDmg the damage dealt.
   */
-  public int thunder(final int eMdf, final String type,
-    final int improvement) {
-    int zapDmg = super.zap((intel + improvement), eMdf);
+  public int thunder(final int eMdf, final String type) {
+    int zapDmg = super.zap(intel, eMdf);
     if (type.equals("fire")) {
       zapDmg = zapDmg * choiceC;
     } else if (type.equals("lightning")) {
@@ -234,13 +249,11 @@ public class Mage extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
-  * @param improvement the extra intelligence based on level.
   *
   * @return fireDmg the damage dealt.
   */
-  public int inferno(final int eMdf, final String type,
-    final int improvement) {
-    int fireDmg = super.fireball((intel + choiceC + improvement), eMdf);
+  public int inferno(final int eMdf, final String type) {
+    int fireDmg = super.fireball((intel + choiceC), eMdf);
     if (type.equals("ice")) {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
@@ -254,13 +267,11 @@ public class Mage extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
-  * @param improvement the extra intelligence based on level.
   *
   * @return frostDmg the damage dealt.
   */
-  public int icicleSpear(final int eMdf, final String type,
-    final int improvement) {
-    int frostDmg = super.frostblast((intel + choiceB + improvement),
+  public int icicleSpear(final int eMdf, final String type) {
+    int frostDmg = super.frostblast((intel + choiceB),
       (eMdf - choiceA));
     if (type.equals("lightning")) {
       frostDmg += choiceC;
@@ -275,7 +286,12 @@ public class Mage extends Character {
   */
   public void levelUp() {
     lvl += 1;
-    currentMp = mp + (mpUp * lvl);
+    mp += mpUp;
+    intel += 2;
+    def += 1;
+    mdf += 1;
+    hp += choiceC;
+    currentMp = mp;
   }
 
   /**
@@ -317,7 +333,7 @@ public class Mage extends Character {
   * @return def
   */
   public int getDef() {
-    return (def + tempDef) + (defUp * lvl);
+    return (def + tempDef);
   }
 
   /**
@@ -326,7 +342,7 @@ public class Mage extends Character {
   * @return mdf
   */
   public int getMdf() {
-    return mdf + (defUp * lvl);
+    return mdf;
   }
 
   /**
@@ -335,7 +351,7 @@ public class Mage extends Character {
   * @return hp
   */
   public int getHp() {
-    return hp + (hpUp * lvl);
+    return hp;
   }
 
   /**
