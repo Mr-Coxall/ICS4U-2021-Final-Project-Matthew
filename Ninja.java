@@ -23,11 +23,29 @@ public class Ninja extends Character {
 
   private int currentMp = 8;
 
-  private int multislashCost = 4;
+  private final int multislashCost = 4;
 
-  private int prepareCost = 2;
+  private final int prepareCost = 2;
 
-  private int animeCost = 6;
+  private final int animeCost = 6;
+
+  private final int choiceA = 1;
+
+  private final int choiceB = 2;
+
+  private final int choiceC = 3;
+
+  private final int choiceD = 4;
+
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
+  }
+
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
 
   public void ninjaSkills() {
     System.out.println("\nSkills:");
@@ -37,7 +55,7 @@ public class Ninja extends Character {
     System.out.println("Back(4)");
   }
 
-  public int ninjaAttack(final int Edef, final int Ehp) {
+  public int ninjaAttack(final int Edf, final int Ehp) {
     tempDef = 0;
     int action = 0;
     int skillAction = 0;
@@ -46,56 +64,54 @@ public class Ninja extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
-        if (action == 1) {
-          damage = attack(Edef);
+        if (action == choiceA) {
+          damage = attack(Edf);
           act += 1;
-        }
-        else if (action == 2) {
+          attackDamage(damage);
+        } else if (action == choiceB) {
           ninjaSkills();
           skillAction = userInput.nextInt();
-          if (skillAction == 1) {
+          if (skillAction == choiceA) {
             if (checkMp(multislashCost)) {
-              damage = multislash(Edef);
+              damage = multislash(Edf);
               act += 1;
               currentMp -= multislashCost;
-            }
-            else {
+              attackDamage(damage);
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 2) {
+          } else if (skillAction == choiceB) {
             if (checkMp(prepareCost)) {
               prepare();
               currentMp -= prepareCost;
               act += 1;
-            }
-            else {
+              attackDamage(damage);
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 3) {
+          } else if (skillAction == choiceC) {
             if (checkMp(animeCost)) {
               damage = animeCut(Ehp);
               act += 1;
               currentMp = 0;
-            }
-            else {
+              attackDamage(damage);
+            } else {
               invalidMp();
             }
+          } else if (skillAction == choiceD) {
+            damage = ninjaAttack(Edf, Ehp);
           }
-        }
-        else if (action == 3) {
-          System.out.println("You steeled yourself"
+        } else if (action == choiceC) {
+          System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += 3;
           act += 1;
-        }
-        else {
+        } else {
           System.out.println("That isn't a viable input.");
         }
-      }
-      catch (InputMismatchException errorCode) {
+      } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
     }

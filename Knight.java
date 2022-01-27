@@ -3,31 +3,97 @@ import java.util.InputMismatchException;
 
 public class Knight extends Character {
 
+  /**
+  * The starting hp value of the knight.
+  */
   private int hp = 50;
 
+  /**
+  * The starting mp value.
+  */
   private int mp = 4;
 
-  private int str = 14;
+  /**
+  * The starting str (strength) value.
+  */
+  private int str = 9;
 
+  /**
+  * The starting intel (intelligence) value.
+  */
   private int intel = 2;
 
+  /**
+  * The starting def (defence) value.
+  */
   private int def = 10;
 
+  /**
+  * The starting mdf (magic defence) value.
+  */
   private int mdf = 10;
 
+  /**
+  * The starting level value.
+  */
   private int lvl = 6;
 
+  /**
+  * The tempdef (temporary defence) value.
+  */
   private int tempDef = 0;
 
+  /**
+  * The frenzy casts value (amount of.
+  * Times frenzy has been used this fight).
+  */
   private int frenzyCasts = 0;
 
-  private int slamCost = 1;
+  /**
+  * The mp cost of the slam skill.
+  */
+  private final int slamCost = 1;
 
-  private int piercestrikeCost = 3;
+  /**
+  * The mp cost of the piercing strike skill.
+  */
+  private final int piercestrikeCost = 3;
 
-  private int frenzyCost = 4;
+  /**
+  * The mp cost of the frenzy skill.
+  */
+  private final int frenzyCost = 4;
 
+  /**
+  * The current mp you have.
+  */
   private int currentMp = 4;
+
+  /**
+  * The value used every time a 1 is needed.
+  */
+  private final int choiceA = 1;
+
+  /**
+  * The value used every time a 2 is needed.
+  */
+  private final int choiceB = 2;
+
+  /**
+  * The value used every time a 3 is needed.
+  */
+  private final int choiceC = 3;
+
+  /**
+  * The value used every time a 4 is needed.
+  */
+  private final int choiceD = 4;
+
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
 
   public void knightSkills() {
     System.out.println("\nSkills:");
@@ -35,6 +101,10 @@ public class Knight extends Character {
     System.out.println("Piercing Strike(2): 3Mp");
     System.out.println("Frenzy(3): 4Mp");
     System.out.println("Back(4)");
+  }
+
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
   }
 
   public int knightAttack(final int Edef) {
@@ -46,54 +116,51 @@ public class Knight extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
-        if (action == 1) {
+        if (action == choiceA) {
           damage = attack(Edef);
           act += 1;
-        }
-        else if (action == 2) {
+          attackDamage(damage);
+        } else if (action == choiceB) {
           knightSkills();
           skillAction = userInput.nextInt();
-          if (skillAction == 1) {
+          if (skillAction == choiceA) {
             if (checkMp(slamCost)) {
               damage = slam(Edef);
               act += 1;
               currentMp -= slamCost;
-            }
-            else {
+              attackDamage(damage);
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 2) {
+          } else if (skillAction == choiceB) {
             if (checkMp(piercestrikeCost)) {
               damage = piercingStrike();
               act += 1;
               currentMp -= piercestrikeCost;
-            }
-            else {
+              attackDamage(damage);
+            } else {
               invalidMp();
             }
-          }
-          else if (skillAction == 3) {
+          } else if (skillAction == choiceC) {
             if (checkMp(frenzyCost)) {
               frenzy();
               act += 1;
               currentMp -= frenzyCost;
-            }
-            else {
+            } else {
               invalidMp();
             }
+          } else if (skillAction == choiceD) {
+            damage = knightAttack(Edef);
           }
-        }
-        else if (action == 3) {
+        } else if (action == choiceC) {
           tempDef += 3;
           act += 1;
-        }
-        else {
+        } else {
           System.out.println("That isn't a viable input.");
         }
-      }
-      catch (InputMismatchException errorCode) {
+      } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
     }

@@ -24,7 +24,25 @@ public class Mage extends Character {
   /**
   * The value used to check if skills can be used for mage (all skills cost 5 mp)
   */
-  private int spellCost = 5;
+  private final int spellCost = 5;
+
+  private final int choiceA = 1;
+
+  private final int choiceB = 2;
+
+  private final int choiceC = 3;
+
+  private final int choiceD = 4;
+
+  public void attackDamage(final int damage) {
+    System.out.println("You attacked for " + damage + " damage!");
+  }
+
+  public void actions() {
+    System.out.println("Attack(1)");
+    System.out.println("Skills(2)");
+    System.out.println("Defend(3)");
+  }
 
   public void mageSkills() {
     System.out.println("\nSkills:");
@@ -44,42 +62,44 @@ public class Mage extends Character {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       try {
+        actions();
         action = userInput.nextInt();
-        if (action == 1) {
+        if (action == choiceA) {
           damage = attack(Edef);
           act += 1;
-        }
-        else if (action == 2) {
+          attackDamage(damage);
+        } else if (action == choiceB) {
           mageSkills();
           skillAction = userInput.nextInt();
           if (currentMp >= spellCost) {
-            if (skillAction == 1) {
+            if (skillAction == choiceA) {
               damage = Inferno(Emdf, type);
               act += 1;
-            }
-            else if (skillAction == 2) {
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceB) {
               damage = Thunder(Emdf, type);
               act += 1;
-            }
-            else if (skillAction == 3) {
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceC) {
               damage = IcicleSpear(Emdf, type);
               act += 1;
+              currentMp -= spellCost;
+              attackDamage(damage);
+            } else if (skillAction == choiceD) {
+              damage = mageAttack(Edef, Emdf, type);
             }
-            currentMp -= spellCost;
-          }
-          else {
+          } else {
             invalidMp();
           }
-        }
-        else if (action == 3) {
+        } else if (action == choiceC) {
           tempDef += 3;
           act += 1;
-        }
-        else {
+        } else {
           System.out.println("That isn't a viable input.");
         }
-      }
-      catch (InputMismatchException errorCode) {
+      } catch (InputMismatchException errorCode) {
         System.out.println("That is not a viable input.");
       }
     }
@@ -99,8 +119,7 @@ public class Mage extends Character {
     int zapDmg = super.zap(intel, Emdf);
     if (type.equals("fire")) {
       zapDmg = zapDmg * 3;
-    }
-    else if (type.equals("lightning")) {
+    } else if (type.equals("lightning")) {
       zapDmg = 1;
     }
     return (zapDmg + 3);
@@ -110,11 +129,9 @@ public class Mage extends Character {
     int fireDmg = super.fireball((intel + 3), Emdf);
     if (type.equals("ice")) {
       fireDmg += 3;
-    }
-    else if (type.equals("fire")) {
+    } else if (type.equals("fire")) {
       fireDmg = 0;
-    }
-    else if (type.equals("lightning")) {
+    } else if (type.equals("lightning")) {
       fireDmg -= 2;
     }
     return fireDmg;
@@ -124,11 +141,9 @@ public class Mage extends Character {
     int frostDmg = super.frostblast((intel + 2), (Emdf - 1));
     if (type.equals("lightning")) {
       frostDmg += 3;
-    }
-    else if (type.equals("ice")) {
+    } else if (type.equals("ice")) {
       frostDmg = 0;
-    }
-    else if (type.equals("fire")) {
+    } else if (type.equals("fire")) {
       frostDmg -= 2;
     }
     return frostDmg;
