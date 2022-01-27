@@ -119,7 +119,7 @@ public class Knight extends Character {
   }
 
   /**
-  * The knightSkills method shows skills.
+  * The knightSkills method shows the skills of knight class.
   */
   public void knightSkills() {
     System.out.println("\nSkills:");
@@ -197,6 +197,8 @@ public class Knight extends Character {
         } else if (action == choiceC) {
           tempDef += choiceC;
           act += 1;
+          System.out.println("You steeled yourself "
+            + "for the opponent's attack.");
         } else {
           System.out.println("That isn't a viable input.");
         }

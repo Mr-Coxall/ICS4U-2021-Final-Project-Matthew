@@ -104,7 +104,7 @@ public class Mage extends Character {
   }
 
   /**
-  * The actions method shows basic actions.
+  * The actions method shows the basic actions.
   */
   public void actions() {
     System.out.println("Attack(1)");
@@ -113,7 +113,7 @@ public class Mage extends Character {
   }
 
   /**
-  * The mageSkills method shows skills.
+  * The mageSkills method shows the skills of the mage class.
   */
   public void mageSkills() {
     System.out.println("\nSkills:");
@@ -155,17 +155,17 @@ public class Mage extends Character {
           skillAction = userInput.nextInt();
           if (currentMp >= spellCost) {
             if (skillAction == choiceA) {
-              damage = Inferno(eMdf, type, intelligenceUp);
+              damage = inferno(eMdf, type, intelligenceUp);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceB) {
-              damage = Thunder(eMdf, type, intelligenceUp);
+              damage = thunder(eMdf, type, intelligenceUp);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceC) {
-              damage = IcicleSpear(eMdf, type, intelligenceUp);
+              damage = icicleSpear(eMdf, type, intelligenceUp);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
@@ -178,6 +178,8 @@ public class Mage extends Character {
         } else if (action == choiceC) {
           tempDef += choiceC;
           act += 1;
+          System.out.println("You steeled yourself "
+            + "for the opponent's attack.");
         } else {
           System.out.println("That isn't a viable input.");
         }
@@ -208,7 +210,7 @@ public class Mage extends Character {
   }
 
   /**
-  * The Thunder method.
+  * The thunder method.
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
@@ -216,7 +218,7 @@ public class Mage extends Character {
   *
   * @return zapDmg the damage dealt.
   */
-  public int Thunder(final int eMdf, final String type,
+  public int thunder(final int eMdf, final String type,
     final int improvement) {
     int zapDmg = super.zap((intel + improvement), eMdf);
     if (type.equals("fire")) {
@@ -228,7 +230,7 @@ public class Mage extends Character {
   }
 
   /**
-  * The Inferno method.
+  * The inferno method.
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
@@ -236,7 +238,7 @@ public class Mage extends Character {
   *
   * @return fireDmg the damage dealt.
   */
-  public int Inferno(final int eMdf, final String type,
+  public int inferno(final int eMdf, final String type,
     final int improvement) {
     int fireDmg = super.fireball((intel + choiceC + improvement), eMdf);
     if (type.equals("ice")) {
@@ -248,7 +250,7 @@ public class Mage extends Character {
   }
 
   /**
-  * The IcicleSpear method.
+  * The icicleSpear method.
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy type.
@@ -256,7 +258,7 @@ public class Mage extends Character {
   *
   * @return frostDmg the damage dealt.
   */
-  public int IcicleSpear(final int eMdf, final String type,
+  public int icicleSpear(final int eMdf, final String type,
     final int improvement) {
     int frostDmg = super.frostblast((intel + choiceB + improvement),
       (eMdf - choiceA));
