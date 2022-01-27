@@ -43,6 +43,11 @@ public class Enemy extends Character {
   private String name;
 
   /**
+  * The value used every time a 3 is needed.
+  */
+  private final int choiceC = 3;
+
+  /**
   * The getType method.
   *
   * @return type the enemy's typing.
@@ -54,7 +59,7 @@ public class Enemy extends Character {
       element = "fire";
     } else if (type == 2) {
       element = "ice";
-    } else if (type == 3) {
+    } else if (type == choiceC) {
       element = "lightning";
     }
     return element;
@@ -153,6 +158,11 @@ public class Enemy extends Character {
     return frostDmg;
   }
 
+  /**
+  * The getDef method.
+  *
+  * @return newDef.
+  */
   public int getDef() {
     final Random random = new Random();
     int newDef = def;
@@ -162,9 +172,14 @@ public class Enemy extends Character {
       newDef += defUp;
       times += 1;
     }
-    return def;
+    return newDef;
   }
 
+  /**
+  * The getMdf method.
+  *
+  * @return newMdf.
+  */
   public int getMdf() {
     final Random random = new Random();
     int newMdf = mdf;
@@ -174,9 +189,14 @@ public class Enemy extends Character {
       newMdf += mdfUp;
       times += 1;
     }
-    return mdf;
+    return newMdf;
   }
 
+  /**
+  * The getHp method.
+  *
+  * @return newHp.
+  */
   public int getHp() {
     final Random random = new Random();
     int newHp = hp;
@@ -189,10 +209,18 @@ public class Enemy extends Character {
     return newHp;
   }
 
+  /**
+  * The levelup method.
+  */
   public void levelUp() {
     lvl += 1;
   }
 
+  /**
+  * The getLevel method.
+  *
+  * @return lvl.
+  */
   public int getLevel() {
     return lvl;
   }
