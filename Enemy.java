@@ -52,11 +52,24 @@ public class Enemy extends Character {
   */
   private final int choiceC = 3;
 
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 20;
+
+  /**
+  * The base strength value.
+  */
+  private final int startingStr = 4;
+
+  /**
+  * The no arguements enemy constructor.
+  */
   public Enemy() {
-    hp = 20;
-    str = 4;
+    hp = startingHp;
+    str = startingStr;
     intel = 1;
-    def = 3;
+    def = choiceC;
     mdf = 2;
     lvl = 1;
   }

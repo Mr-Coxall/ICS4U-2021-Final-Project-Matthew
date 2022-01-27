@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Knight extends Character {
+public class Knight extends Player {
 
   /**
   * The starting hp value of the knight.

@@ -6,37 +6,70 @@ public class Player extends Character {
   /**
   * The starting hp value.
   */
-  private final int hp = 30;
+  private int hp;
 
   /**
   * The starting mp value.
   */
-  private final int mp = 6;
+  private int mp;
 
   /**
   * The starting str (strength) value.
   */
-  private final int str = 5;
+  private int str;
 
   /**
   * The starting intel (intelligence) value.
   */
-  private final int intel = 4;
+  private int intel;
 
   /**
   * The starting def (defence) value.
   */
-  private final int def = 2;
+  private int def;
 
   /**
   * The starting mdf (magic defence) value.
   */
-  private final int mdf = 2;
+  private int mdf;
 
   /**
   * The starting level value.
   */
-  private int lvl = 0;
+  private int lvl;
+
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 30;
+
+  /**
+  * The base mp value.
+  */
+  private final int startingMp = 6;
+
+  /**
+  * The base str value.
+  */
+  private final int startingStr = 5;
+
+  /**
+  * The base intel value.
+  */
+  private final int startingIntel = 4;
+
+  /**
+  * The no arguements player constructor.
+  */
+  public Player() {
+    lvl = 1;
+    mdf = 2;
+    def = 2;
+    intel = startingIntel;
+    str = startingStr;
+    mp = startingMp;
+    hp = startingHp;
+  }
 
   /**
   * The value used every time a 1 is needed.
@@ -79,26 +112,6 @@ public class Player extends Character {
   private final int hpUp = 5;
 
   /**
-  * The value that mp increases by.
-  */
-  private final int mpUp = 1;
-
-  /**
-  * The value that defence increases by.
-  */
-  private final int defUp = 1;
-
-  /**
-  * The value that strength increases by.
-  */
-  private final int strUp = 2;
-
-  /**
-  * The value that intelligence increases by.
-  */
-  private final int intUp = 1;
-
-  /**
   * The actions method, used to show the basic actions.
   */
   public void actions() {
@@ -131,8 +144,6 @@ public class Player extends Character {
   public int playerAttack(final int eDef, final int eMdf,
     final String type) {
     tempDef = 0;
-    final int intelligenceIncrease = intUp * lvl;
-    final int strengthIncrease = strUp * lvl;
     int action = 0;
     int skillAction = 0;
     int damage = 0;
@@ -143,7 +154,7 @@ public class Player extends Character {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(eDef, strengthIncrease);
+          damage = attack(eDef);
           act += 1;
           attackDamage(damage);
         } else if (action == choiceB) {
@@ -151,17 +162,17 @@ public class Player extends Character {
           skillAction = userInput.nextInt();
           if (currentMp >= spellCost) {
             if (skillAction == choiceA) {
-              damage = fireball(eMdf, type, intelligenceIncrease);
+              damage = fireball(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceB) {
-              damage = zap(eMdf, type, intelligenceIncrease);
+              damage = zap(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceC) {
-              damage = frostblast(eMdf, type, intelligenceIncrease);
+              damage = frostblast(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
@@ -204,12 +215,11 @@ public class Player extends Character {
   * The attack method.
   *
   * @param eDef the enemy defence value.
-  * @param strengthBuff the increase to strength based on level
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int eDef, final int strengthBuff) {
-    final int damage = super.attack((str + strengthBuff), eDef) + lvl;
+  public int attack(final int eDef) {
+    final int damage = super.attack(str, eDef) + lvl;
     return damage;
   }
 
@@ -218,13 +228,11 @@ public class Player extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy's elemental type.
-  * @param intBuff the increase to intelligence based on level
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int eMdf, final String type,
-    final int intBuff) {
-    int fireDmg = super.fireball((intel + intBuff), eMdf);
+  public int fireball(final int eMdf, final String type) {
+    int fireDmg = super.fireball(intel, eMdf);
     if (type.equals("ice")) {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
@@ -238,13 +246,11 @@ public class Player extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy's elemental type.
-  * @param intBuff the increase to intelligence based on level
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int eMdf, final String type,
-    final int intBuff) {
-    int zapDmg = super.zap((intel + intBuff), eMdf);
+  public int zap(final int eMdf, final String type) {
+    int zapDmg = super.zap(intel, eMdf);
     if (type.equals("fire")) {
       zapDmg = zapDmg * choiceC;
     } else if (type.equals("ice")) {
@@ -258,13 +264,11 @@ public class Player extends Character {
   *
   * @param eMdf the enemy magic defence value.
   * @param type the enemy's elemental type.
-  * @param intBuff the increase to intelligence based on level
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int eMdf, final String type,
-    final int intBuff) {
-    int frostDmg = super.frostblast((intel + intBuff), eMdf);
+  public int frostblast(final int eMdf, final String type) {
+    int frostDmg = super.frostblast(intel, eMdf);
     if (type.equals("lightning")) {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {
@@ -279,7 +283,7 @@ public class Player extends Character {
   * @return def
   */
   public int getDef() {
-    return (def + tempDef) + (defUp * lvl);
+    return (def + tempDef);
   }
 
   /**
@@ -288,7 +292,7 @@ public class Player extends Character {
   * @return mdf
   */
   public int getMdf() {
-    return mdf + (defUp * lvl);
+    return mdf;
   }
 
   /**
@@ -297,7 +301,7 @@ public class Player extends Character {
   * @return hp
   */
   public int getHp() {
-    return hp + (hpUp * lvl);
+    return hp;
   }
 
   /**
@@ -314,6 +318,12 @@ public class Player extends Character {
   */
   public void levelUp() {
     lvl += 1;
+    mp += 1;
+    str += 2;
+    intel += 1;
+    def += 1;
+    mdf += 1;
+    hp += hpUp;
     currentMp = mp;
   }
 }
