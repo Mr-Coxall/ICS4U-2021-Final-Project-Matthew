@@ -72,6 +72,9 @@ final class Battle {
       int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
       String name = monster.getName();
+      if (finalBattle) {
+        name = "Amalgamation";
+      }
       if (newClass == choiceA) {
         playerHp = knight.getHp();
         playerMp = knight.getMp();
@@ -86,16 +89,9 @@ final class Battle {
         playerDef = ninja.getDef();
       }
       while (playerHp >= 1 && enemyHp >= 1) {
-        if (finalBattle) {
-          enemyDef = finalBoss.getDef();
-          enemyMdf = finalBoss.getMdf();
-          name = "Amalgamation";
-        }
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
-        System.out.println(name + " hp: " + enemyHp);
-        System.out.println("\nPlayer hp: " + playerHp);
-        System.out.println("Player mp: " + playerMp);
+        act.showHp(name, enemyCurrentHp, playerHp, playerMp);
         if (newClass == 0) {
           dmgDealt = user.playerAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;

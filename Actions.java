@@ -24,6 +24,21 @@ public class Actions {
   private final int choiceD = 4;
 
   /**
+  * The showHp method.
+  *
+  * @param enemyName the enemy name
+  * @param enemyHp the enemy hp value.
+  * @param playerHp the player's hp value.
+  * @param playerMp the player's mp value.
+  */
+  public void showHp(final String enemyName, final int enemyHp,
+    final int playerHp, final int playerMp) {
+    System.out.println(enemyName + " hp: " + enemyHp);
+    System.out.println("\nPlayer hp: " + playerHp);
+    System.out.println("Player mp: " + playerMp);
+  }
+
+  /**
   * The help method, used to show the help menu.
   */
   public void help() {

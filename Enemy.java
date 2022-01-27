@@ -5,27 +5,27 @@ public class Enemy extends Character {
   /**
   * The starting enemy hp value.
   */
-  private int hp = 20;
+  private final int hp = 20;
 
   /**
   * The starting enemy strength value.
   */
-  private int str = 4;
+  private final int str = 4;
 
   /**
   * The starting enemy intelligence value.
   */
-  private int intel = 1;
+  private final int intel = 1;
 
   /**
   * The starting enemy defence value.
   */
-  private int def = 3;
+  private final int def = 3;
 
   /**
   * The starting enemy magic defence value.
   */
-  private int mdf = 2;
+  private final int mdf = 2;
 
   /**
   * The starting enemy level value.
@@ -100,73 +100,96 @@ public class Enemy extends Character {
   /**
   * The attack method.
   *
-  * @param Pdef the player's defence value.
+  * @param pDef the player's defence value.
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int Pdef) {
-    final int damage = super.attack(str, Pdef);
+  public int attack(final int pDef) {
+    final Random random = new Random();
+    int times = 1;
+    int strength = str;
+    while (times != lvl) {
+      int strUp = random.nextInt(2) + 1;
+      strength += strUp;
+      times += 1;
+    }
+    final int damage = super.attack(strength, pDef);
     return damage;
   }
 
   /**
   * The fireball method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Pmdf) {
-    final int fireDmg = super.fireball(intel, Pmdf);
+  public int fireball(final int pMdf) {
+    final int fireDmg = super.fireball(intel, pMdf);
     return fireDmg;
   }
 
   /**
   * The zap method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Pmdf) {
-    final int zapDmg = super.zap(intel, Pmdf);
+  public int zap(final int pMdf) {
+    final int zapDmg = super.zap(intel, pMdf);
     return zapDmg;
   }
 
   /**
   * The frostblast method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Pmdf) {
-    final int frostDmg = super.frostblast(intel, Pmdf);
+  public int frostblast(final int pMdf) {
+    final int frostDmg = super.frostblast(intel, pMdf);
     return frostDmg;
   }
 
   public int getDef() {
+    final Random random = new Random();
+    int newDef = def;
+    int times = 1;
+    while (times != lvl) {
+      final int defUp = random.nextInt(1) + 1;
+      newDef += defUp;
+      times += 1;
+    }
     return def;
   }
 
   public int getMdf() {
+    final Random random = new Random();
+    int newMdf = mdf;
+    int times = 1;
+    while (times != lvl) {
+      final int mdfUp = random.nextInt(1) + 1;
+      newMdf += mdfUp;
+      times += 1;
+    }
     return mdf;
   }
-  
+
   public int getHp() {
-    return hp;
+    final Random random = new Random();
+    int newHp = hp;
+    int times = 1;
+    while (times != lvl) {
+      int hpUp = random.nextInt(5) + 5;
+      newHp += hpUp;
+      times += 1;
+    }
+    return newHp;
   }
 
   public void levelUp() {
-    final Random random = new Random();
-    final int strUp = random.nextInt(2) + 1;
-    final int defUp = random.nextInt(1) + 1;
-    final int mdfUp = random.nextInt(1) + 1;
-    final int hpUp = random.nextInt(5) + 5;
-    str += strUp;
-    hp += hpUp;
-    def += defUp;
-    mdf += mdfUp;
     lvl += 1;
   }
 
