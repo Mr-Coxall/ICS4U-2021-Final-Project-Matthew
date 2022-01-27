@@ -261,7 +261,6 @@ public class Ninja extends Character {
   * The attack method.
   *
   * @param eDef the enemy defence value.
-  * @param buff the increase to damage.
   *
   * @return damage.
   */
@@ -276,7 +275,6 @@ public class Ninja extends Character {
   * The multislash method.
   *
   * @param eDef the enemy defence value.
-  * @param buff the increase to damage.
   *
   * @return damage.
   */
