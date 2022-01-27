@@ -36,7 +36,7 @@ public class Knight extends Character {
   /**
   * The starting level value.
   */
-  private int lvl = 1;
+  private int lvl = 0;
 
   /**
   * The tempdef (temporary defence) value.
@@ -65,11 +65,6 @@ public class Knight extends Character {
   private final int frenzyCost = 4;
 
   /**
-  * The current mp you have.
-  */
-  private int currentMp = 4;
-
-  /**
   * The value used every time a 1 is needed.
   */
   private final int choiceA = 1;
@@ -95,6 +90,11 @@ public class Knight extends Character {
   private final int strUp = 3;
 
   /**
+  * The newMp value is used for Mp checks.
+  */
+  private int newMp = mp;
+
+  /**
   * The value that hp increases by.
   */
   private final int hpUp = 8;
@@ -109,12 +109,18 @@ public class Knight extends Character {
   */
   private final int defUp = 1;
 
+  /**
+  * The actions method shows basic actions.
+  */
   public void actions() {
     System.out.println("Attack(1)");
     System.out.println("Skills(2)");
     System.out.println("Defend(3)");
   }
 
+  /**
+  * The knightSkills method shows skills.
+  */
   public void knightSkills() {
     System.out.println("\nSkills:");
     System.out.println("Slam(1): 1Mp");
@@ -123,11 +129,24 @@ public class Knight extends Character {
     System.out.println("Back(4)");
   }
 
+  /**
+  * The attackDamage method tells you how much damage you dealt.
+  *
+  * @param damage the damage amount.
+  */
   public void attackDamage(final int damage) {
     System.out.println("You attacked for " + damage + " damage!");
   }
 
-  public int knightAttack(final int Edef) {
+  /**
+  * The knightAttack method, used for when it's.
+  * your turn using the knight class.
+  *
+  * @param eDef the enemy defence value.
+  *
+  * @return damage.
+  */
+  public int knightAttack(final int eDef) {
     tempDef = 0;
     int strengthIncrease = (strUp * lvl) + (strUp * frenzyCasts);
     int action = 0;
@@ -140,7 +159,7 @@ public class Knight extends Character {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(Edef, strengthIncrease);
+          damage = attack(eDef, strengthIncrease);
           act += 1;
           attackDamage(damage);
         } else if (action == choiceB) {
@@ -148,9 +167,9 @@ public class Knight extends Character {
           skillAction = userInput.nextInt();
           if (skillAction == choiceA) {
             if (checkMp(slamCost)) {
-              damage = slam(Edef, strengthIncrease);
+              damage = slam(eDef, strengthIncrease);
               act += 1;
-              currentMp -= slamCost;
+              newMp -= slamCost;
               attackDamage(damage);
             } else {
               invalidMp();
@@ -159,7 +178,7 @@ public class Knight extends Character {
             if (checkMp(piercestrikeCost)) {
               damage = piercingStrike(strengthIncrease);
               act += 1;
-              currentMp -= piercestrikeCost;
+              newMp -= piercestrikeCost;
               attackDamage(damage);
             } else {
               invalidMp();
@@ -168,12 +187,12 @@ public class Knight extends Character {
             if (checkMp(frenzyCost)) {
               frenzy();
               act += 1;
-              currentMp -= frenzyCost;
+              newMp -= frenzyCost;
             } else {
               invalidMp();
             }
           } else if (skillAction == choiceD) {
-            damage = knightAttack(Edef);
+            damage = knightAttack(eDef);
           }
         } else if (action == choiceC) {
           tempDef += 3;
@@ -188,24 +207,57 @@ public class Knight extends Character {
     return damage;
   }
 
+  /**
+  * The checkMp method, used to see if you have enough Mp for a skill.
+  *
+  * @param mpCost the cost of the skill.
+  *
+  * @return true or false.
+  */
   public boolean checkMp(final int mpCost) {
-    return (mpCost <= currentMp);
+    return (mpCost <= newMp);
   }
 
+  /**
+  * The invalidMp method tells you when you don't have enough Mp.
+  */
   public void invalidMp() {
     System.out.println("Not enough Mp!");
   }
 
-  public int attack(final int Edef, final int strengthUp) {
-    final int damage = super.attack((str + strengthUp), (Edef - lvl));
+  /**
+  * The attack method.
+  *
+  * @param eDef the enemy defence value.
+  * @param strengthUp the increase to strength value.
+  *
+  * @return damage the damage dealt.
+  */
+  public int attack(final int eDef, final int strengthUp) {
+    final int damage = super.attack((str + strengthUp), eDef);
     return damage;
   }
 
-  public int slam(final int Edef, final int strengthUp) {
-    final int damage = super.attack((str + strengthUp), (Edef - 3));
+  /**
+  * The slam method.
+  *
+  * @param eDef the enemy defence value.
+  * @param strengthUp the increase to strength value.
+  *
+  * @return damage the damage dealt.
+  */
+  public int slam(final int eDef, final int strengthUp) {
+    final int damage = super.attack((str + strengthUp), (eDef - 3));
     return damage;
   }
 
+  /**
+  * The piercingStrike method.
+  *
+  * @param strengthUp the increase to strength value.
+  *
+  * @return damage the damage dealt.
+  */
   public int piercingStrike(final int strengthUp) {
     int damage = str + (strUp * frenzyCasts);
     int extra = Math.round((str + (strUp * frenzyCasts)) / 2);
@@ -213,62 +265,90 @@ public class Knight extends Character {
     return damage;
   }
 
+  /**
+  * The frenzy method keeps track of the number of times you use.
+  * Frenzy during a battle.
+  */
   public void frenzy() {
     frenzyCasts += 1;
   }
 
+  /**
+  * The getDef method.
+  *
+  * @return def
+  */
   public int getDef() {
     return (def + tempDef) - (3 * frenzyCasts) + (defUp * lvl);
   }
 
+  /**
+  * The getMdf method.
+  *
+  * @return mdf
+  */
   public int getMdf() {
     return mdf - (3 * frenzyCasts) + (defUp * lvl);
   }
 
+  /**
+  * The getHp method.
+  *
+  * @return hp
+  */
   public int getHp() {
     return hp + (hpUp * lvl);
   }
 
+  /**
+  * The getMp method.
+  *
+  * @return newMp
+  */
   public int getMp() {
-    return currentMp;
+    return newMp;
   }
 
+  /**
+  * The levelUp method is used to reset.
+  * the frenzy casts, and newMp values.
+  */
   public void levelUp() {
     frenzyCasts = 0;
     lvl += 1;
-    currentMp = mp + (mpUp * (lvl - 1));
+    newMp = mp + (mpUp * lvl);
   }
 
   /**
   * The fireball method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Emdf) {
-    return super.fireball(intel, Emdf);
+  public int fireball(final int eMdf) {
+    return super.fireball(intel, eMdf);
   }
 
   /**
   * The zap method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Emdf) {
-    return super.zap(intel, Emdf);
+  public int zap(final int eMdf) {
+    return super.zap(intel, eMdf);
   }
 
   /**
   * The frostblast method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Emdf) {
-    return super.frostblast(intel, Emdf);
+  public int frostblast(final int eMdf) {
+    return super.frostblast(intel, eMdf);
   }
 }

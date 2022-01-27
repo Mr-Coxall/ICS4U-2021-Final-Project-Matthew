@@ -33,6 +33,11 @@ public class Finale extends Character {
   private int stage = 1;
 
   /**
+  * The multiplier used to lowering boss damage.
+  */
+  private final int damageMultiplier = 4;
+
+  /**
   * The typing of the boss.
   */
   private final String type = "none";
@@ -55,7 +60,7 @@ public class Finale extends Character {
   */
   public int attack(final int pDef) {
     int damage = super.attack(str, pDef);
-    damage = Math.round(damage / (4 - stage));
+    damage = Math.round(damage / (damageMultiplier - stage));
     return damage;
   }
 
