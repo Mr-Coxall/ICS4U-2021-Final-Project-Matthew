@@ -5,32 +5,32 @@ public class Enemy extends Character {
   /**
   * The starting enemy hp value.
   */
-  private final int hp = 20;
+  private int hp;
 
   /**
   * The starting enemy strength value.
   */
-  private final int str = 4;
+  private int str;
 
   /**
   * The starting enemy intelligence value.
   */
-  private final int intel = 1;
+  private int intel;
 
   /**
   * The starting enemy defence value.
   */
-  private final int def = 3;
+  private int def;
 
   /**
   * The starting enemy magic defence value.
   */
-  private final int mdf = 2;
+  private int mdf;
 
   /**
   * The starting enemy level value.
   */
-  private int lvl = 1;
+  private int lvl;
 
   /**
   * The value that hp goes up by.
@@ -51,6 +51,15 @@ public class Enemy extends Character {
   * The value used every time a 3 is needed.
   */
   private final int choiceC = 3;
+
+  public Enemy() {
+    hp = 20;
+    str = 4;
+    intel = 1;
+    def = 3;
+    mdf = 2;
+    lvl = 1;
+  }
 
   /**
   * The getType method.
@@ -115,15 +124,7 @@ public class Enemy extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int pDef) {
-    final Random random = new Random();
-    int times = 1;
-    int strength = str;
-    while (times != lvl) {
-      int strUp = random.nextInt(2) + 1;
-      strength += strUp;
-      times += 1;
-    }
-    final int damage = super.attack(strength, pDef);
+    final int damage = super.attack(str, pDef);
     return damage;
   }
 
@@ -169,56 +170,37 @@ public class Enemy extends Character {
   * @return newDef.
   */
   public int getDef() {
-    final Random random = new Random();
-    int newDef = def;
-    int times = 1;
-    while (times != lvl) {
-      final int defUp = random.nextInt(1) + 1;
-      newDef += defUp;
-      times += 1;
-    }
-    return newDef;
+    return def;
   }
 
   /**
   * The getMdf method.
   *
-  * @return newMdf.
+  * @return mdf.
   */
   public int getMdf() {
-    final Random random = new Random();
-    int newMdf = mdf;
-    int times = 1;
-    while (times != lvl) {
-      final int mdfUp = random.nextInt(1) + 1;
-      newMdf += mdfUp;
-      times += 1;
-    }
-    return newMdf;
+    return mdf;
   }
 
   /**
   * The getHp method.
   *
-  * @return newHp.
+  * @return hp.
   */
   public int getHp() {
-    final Random random = new Random();
-    int newHp = hp;
-    int times = 1;
-    while (times != lvl) {
-      int hpUp = random.nextInt(hpUpAmount) + hpUpAmount;
-      newHp += hpUp;
-      times += 1;
-    }
-    return newHp;
+    return hp;
   }
 
   /**
   * The levelup method.
   */
   public void levelUp() {
+    final Random random = new Random();
     lvl += 1;
+    str += random.nextInt(2) + 1;
+    hp += random.nextInt(hpUpAmount) + hpUpAmount;
+    def += random.nextInt(1) + 1;
+    mdf += random.nextInt(1) + 1;
   }
 
   /**

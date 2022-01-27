@@ -49,8 +49,7 @@ public class Boss extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int pDef) {
-    final Random random = new Random();
-    final int damage = random.nextInt(str - pDef) + pDef;
+    final int damage = super.attack(str, pDef);
     return damage;
   }
 
