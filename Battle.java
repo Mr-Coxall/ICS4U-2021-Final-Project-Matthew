@@ -28,7 +28,6 @@ final class Battle {
     final int choiceD = 4;
     final int checkBoss = 5;
     final int checkFinal = 10;
-    int bossLevel = 0;
     String type = "none";
     int newClass = 0;
     int dmgDealt = 0;
@@ -49,7 +48,6 @@ final class Battle {
       boolean finalBattle = false;
       int level = monster.getLevel();
       if (level % checkBoss == 0 && level % checkFinal != 0) {
-        bossLevel += 1;
         enemyHp = boss.getHp();
         enemyDef = boss.getDef();
         enemyMdf = boss.getMdf();

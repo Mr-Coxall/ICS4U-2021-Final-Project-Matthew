@@ -6,37 +6,37 @@ public class Knight extends Character {
   /**
   * The starting hp value of the knight.
   */
-  private int hp = 50;
+  private final int hp = 50;
 
   /**
   * The starting mp value.
   */
-  private int mp = 4;
+  private final int mp = 4;
 
   /**
   * The starting str (strength) value.
   */
-  private int str = 9;
+  private final int str = 9;
 
   /**
   * The starting intel (intelligence) value.
   */
-  private int intel = 2;
+  private final int intel = 2;
 
   /**
   * The starting def (defence) value.
   */
-  private int def = 10;
+  private final int def = 10;
 
   /**
   * The starting mdf (magic defence) value.
   */
-  private int mdf = 10;
+  private final int mdf = 10;
 
   /**
   * The starting level value.
   */
-  private int lvl = 6;
+  private int lvl = 1;
 
   /**
   * The tempdef (temporary defence) value.
@@ -89,6 +89,26 @@ public class Knight extends Character {
   */
   private final int choiceD = 4;
 
+  /**
+  * The value that strength increases by.
+  */
+  private final int strUp = 3;
+
+  /**
+  * The value that hp increases by.
+  */
+  private final int hpUp = 8;
+
+  /**
+  * The value that mp increases by.
+  */
+  private final int mpUp = 1;
+
+  /**
+  * The value that defence increases by.
+  */
+  private final int defUp = 1;
+
   public void actions() {
     System.out.println("Attack(1)");
     System.out.println("Skills(2)");
@@ -109,6 +129,7 @@ public class Knight extends Character {
 
   public int knightAttack(final int Edef) {
     tempDef = 0;
+    int strengthIncrease = (strUp * lvl) + (strUp * frenzyCasts);
     int action = 0;
     int skillAction = 0;
     int damage = 0;
@@ -119,7 +140,7 @@ public class Knight extends Character {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(Edef);
+          damage = attack(Edef, strengthIncrease);
           act += 1;
           attackDamage(damage);
         } else if (action == choiceB) {
@@ -127,7 +148,7 @@ public class Knight extends Character {
           skillAction = userInput.nextInt();
           if (skillAction == choiceA) {
             if (checkMp(slamCost)) {
-              damage = slam(Edef);
+              damage = slam(Edef, strengthIncrease);
               act += 1;
               currentMp -= slamCost;
               attackDamage(damage);
@@ -136,7 +157,7 @@ public class Knight extends Character {
             }
           } else if (skillAction == choiceB) {
             if (checkMp(piercestrikeCost)) {
-              damage = piercingStrike();
+              damage = piercingStrike(strengthIncrease);
               act += 1;
               currentMp -= piercestrikeCost;
               attackDamage(damage);
@@ -175,60 +196,47 @@ public class Knight extends Character {
     System.out.println("Not enough Mp!");
   }
 
-  public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + lvl;
+  public int attack(final int Edef, final int strengthUp) {
+    final int damage = super.attack((str + strengthUp), (Edef - lvl));
     return damage;
   }
 
-  public int slam(final int Edef) {
-    final int damage = super.attack(str, (Edef - 3));
+  public int slam(final int Edef, final int strengthUp) {
+    final int damage = super.attack((str + strengthUp), (Edef - 3));
     return damage;
   }
 
-  public int piercingStrike() {
-    int damage = str;
-    int extra = Math.round(str / 2);
+  public int piercingStrike(final int strengthUp) {
+    int damage = str + (strUp * frenzyCasts);
+    int extra = Math.round((str + (strUp * frenzyCasts)) / 2);
     damage += extra;
     return damage;
   }
 
   public void frenzy() {
-    str += 3;
-    def -= 4;
-    mdf -= 4;
     frenzyCasts += 1;
   }
 
   public int getDef() {
-    return (def + tempDef);
+    return (def + tempDef) - (3 * frenzyCasts) + (defUp * lvl);
   }
 
   public int getMdf() {
-    return mdf;
+    return mdf - (3 * frenzyCasts) + (defUp * lvl);
   }
 
   public int getHp() {
-    return hp;
+    return hp + (hpUp * lvl);
   }
 
   public int getMp() {
-    return mp;
+    return currentMp;
   }
 
   public void levelUp() {
-    while (frenzyCasts > 0) {
-      frenzyCasts -= 1;
-      str -= 3;
-      def += 4;
-      mdf += 4;
-    }
-    str += 3;
-    hp += 8;
-    mp += 1;
-    def += 1;
-    mdf += 1;
+    frenzyCasts = 0;
     lvl += 1;
-    currentMp = mp;
+    currentMp = mp + (mpUp * (lvl - 1));
   }
 
   /**

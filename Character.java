@@ -36,13 +36,13 @@ public abstract class Character {
   * The attack method.
   *
   * @param strength the character strength value.
-  * @param Edef the enemy defence value.
+  * @param eDef the enemy defence value.
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int strength, final int Edef) {
+  public int attack(final int strength, final int eDef) {
     final Random random = new Random();
-    int range = strength - Edef;
+    int range = strength - eDef;
     int damage = 1;
     if (range <= 0) {
       damage = 1;
@@ -56,13 +56,13 @@ public abstract class Character {
   * The fireball method.
   *
   * @param intelligence the character intelligence value.
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int intelligence, final int Emdf) {
+  public int fireball(final int intelligence, final int eMdf) {
     final Random fireRand = new Random();
-    final int range = intelligence - Emdf;
+    final int range = intelligence - eMdf;
     int fireDmg = 0;
     if (range <= 0) {
       fireDmg = 1;
@@ -76,13 +76,13 @@ public abstract class Character {
   * The zap method.
   *
   * @param intelligence the character intelligence value.
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int intelligence, final int Emdf) {
+  public int zap(final int intelligence, final int eMdf) {
     final Random zapRand = new Random();
-    final int range = intelligence - Emdf;
+    final int range = intelligence - eMdf;
     int zapDmg = 0;
     if (range <= 0) {
       zapDmg = 1;
@@ -96,14 +96,14 @@ public abstract class Character {
   * The frostblast method.
   *
   * @param intelligence the character intelligence value.
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int intelligence, final int Emdf) {
+  public int frostblast(final int intelligence, final int eMdf) {
     final Random frostRand = new Random();
     int frostDmg = 0;
-    final int range = intelligence - Emdf;
+    final int range = intelligence - eMdf;
     if (range <= 0) {
       frostDmg = 1;
     } else {
