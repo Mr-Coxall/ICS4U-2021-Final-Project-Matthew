@@ -3,47 +3,136 @@ import java.util.InputMismatchException;
 
 public class Mage extends Character {
 
-  private int hp = 35;
-
-  private int mp = 20;
-
-  private int str = 4;
-
-  private int intel = 12;
-
-  private int def = 4;
-
-  private int mdf = 4;
-
-  private int lvl = 6;
-
-  private int tempDef = 0;
-
-  private int currentMp = 20;
+  /**
+  * The starting hp value.
+  */
+  private int hp;
 
   /**
-  * The value used to check if skills can be used for mage (all skills cost 5 mp)
+  * The starting mp value.
+  */
+  private int mp;
+
+  /**
+  * The starting str (strength) value.
+  */
+  private int str;
+
+  /**
+  * The starting intel (intelligence) value.
+  */
+  private int intel;
+
+  /**
+  * The starting def (defence) value.
+  */
+  private int def;
+
+  /**
+  * The starting mdf (magic defence) value.
+  */
+  private int mdf;
+
+  /**
+  * The starting level value.
+  */
+  private int lvl;
+
+  /**
+  * The value used to check if skills can be.
+  * used for mage (all skills cost 5 mp)
   */
   private final int spellCost = 5;
 
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 35;
+
+  /**
+  * The base mp value.
+  */
+  private final int startingMp = 20;
+
+  /**
+  * The base intel value.
+  */
+  private final int startingIntel = 12;
+
+  /**
+  * The base value for str, def, and mdf.
+  */
+  private final int startingBulk = 4;
+
+  /**
+  * The no arguements mage constructor.
+  */
+  public Mage() {
+    lvl = 1;
+    mdf = startingBulk;
+    def = startingBulk;
+    intel = startingIntel;
+    hp = startingHp;
+    str = startingBulk;
+    mp = startingMp;
+  }
+
+  /**
+  * The temporary defence value.
+  */
+  private int tempDef = 0;
+
+  /**
+  * The mp value used for skills.
+  */
+  private int currentMp = mp;
+
+  /**
+  * The value used every time a 1 is needed.
+  */
   private final int choiceA = 1;
 
+  /**
+  * The value used every time a 2 is needed.
+  */
   private final int choiceB = 2;
 
+  /**
+  * The value used every time a 3 is needed.
+  */
   private final int choiceC = 3;
 
+  /**
+  * The value used every time a 4 is needed.
+  */
   private final int choiceD = 4;
 
+  /**
+  * Value that mp goes up by each levelup.
+  */
+  private final int mpUp = 5;
+
+  /**
+  * The attackDamage method tells you how much damage you dealt.
+  *
+  * @param damage the damage amount.
+  */
   public void attackDamage(final int damage) {
     System.out.println("You attacked for " + damage + " damage!");
   }
 
+  /**
+  * The actions method shows the basic actions.
+  */
   public void actions() {
     System.out.println("Attack(1)");
     System.out.println("Skills(2)");
     System.out.println("Defend(3)");
   }
 
+  /**
+  * The mageSkills method shows the skills of the mage class.
+  */
   public void mageSkills() {
     System.out.println("\nSkills:");
     System.out.println("Inferno(1): 5Mp");
@@ -52,7 +141,17 @@ public class Mage extends Character {
     System.out.println("Back(4)");
   }
 
-  public int mageAttack(final int Edef, final int Emdf,
+  /**
+  * The mageAttack method, used for when it's.
+  * your turn using the mage class.
+  *
+  * @param eDef the enemy defence value.
+  * @param eMdf the enemy magic defence value.
+  * @param type the enemy type.
+  *
+  * @return damage.
+  */
+  public int mageAttack(final int eDef, final int eMdf,
     final String type) {
     tempDef = 0;
     int action = 0;
@@ -65,7 +164,7 @@ public class Mage extends Character {
         actions();
         action = userInput.nextInt();
         if (action == choiceA) {
-          damage = attack(Edef);
+          damage = attack(eDef);
           act += 1;
           attackDamage(damage);
         } else if (action == choiceB) {
@@ -73,29 +172,31 @@ public class Mage extends Character {
           skillAction = userInput.nextInt();
           if (currentMp >= spellCost) {
             if (skillAction == choiceA) {
-              damage = Inferno(Emdf, type);
+              damage = inferno(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceB) {
-              damage = Thunder(Emdf, type);
+              damage = thunder(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceC) {
-              damage = IcicleSpear(Emdf, type);
+              damage = icicleSpear(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
             } else if (skillAction == choiceD) {
-              damage = mageAttack(Edef, Emdf, type);
+              damage = mageAttack(eDef, eMdf, type);
             }
           } else {
             invalidMp();
           }
         } else if (action == choiceC) {
-          tempDef += 3;
+          tempDef += choiceC;
           act += 1;
+          System.out.println("You steeled yourself "
+            + "for the opponent's attack.");
         } else {
           System.out.println("That isn't a viable input.");
         }
@@ -106,104 +207,158 @@ public class Mage extends Character {
     return damage;
   }
 
+  /**
+  * The invalidMp method tells you when you don't have enough Mp.
+  */
   public void invalidMp() {
     System.out.println("Not enough Mp!");
   }
 
-  public int attack(final int Edef) {
-    final int damage = super.attack(str, Edef) + lvl;
+  /**
+  * The attack method.
+  *
+  * @param eDef the enemy defence value.
+  *
+  * @return damage the damage dealt.
+  */
+  public int attack(final int eDef) {
+    final int damage = super.attack(str, eDef);
     return damage;
   }
 
-  public int Thunder(final int Emdf, final String type) {
-    int zapDmg = super.zap(intel, Emdf);
+  /**
+  * The thunder method.
+  *
+  * @param eMdf the enemy magic defence value.
+  * @param type the enemy type.
+  *
+  * @return zapDmg the damage dealt.
+  */
+  public int thunder(final int eMdf, final String type) {
+    int zapDmg = super.zap(intel, eMdf);
     if (type.equals("fire")) {
-      zapDmg = zapDmg * 3;
+      zapDmg = zapDmg * choiceC;
     } else if (type.equals("lightning")) {
       zapDmg = 1;
     }
-    return (zapDmg + 3);
+    return (zapDmg + choiceC);
   }
 
-  public int Inferno(final int Emdf, final String type) {
-    int fireDmg = super.fireball((intel + 3), Emdf);
+  /**
+  * The inferno method.
+  *
+  * @param eMdf the enemy magic defence value.
+  * @param type the enemy type.
+  *
+  * @return fireDmg the damage dealt.
+  */
+  public int inferno(final int eMdf, final String type) {
+    int fireDmg = super.fireball((intel + choiceC), eMdf);
     if (type.equals("ice")) {
-      fireDmg += 3;
-    } else if (type.equals("fire")) {
-      fireDmg = 0;
+      fireDmg += choiceC;
     } else if (type.equals("lightning")) {
-      fireDmg -= 2;
+      fireDmg -= choiceB;
     }
     return fireDmg;
   }
 
-  public int IcicleSpear(final int Emdf, final String type) {
-    int frostDmg = super.frostblast((intel + 2), (Emdf - 1));
+  /**
+  * The icicleSpear method.
+  *
+  * @param eMdf the enemy magic defence value.
+  * @param type the enemy type.
+  *
+  * @return frostDmg the damage dealt.
+  */
+  public int icicleSpear(final int eMdf, final String type) {
+    int frostDmg = super.frostblast((intel + choiceB),
+      (eMdf - choiceA));
     if (type.equals("lightning")) {
-      frostDmg += 3;
-    } else if (type.equals("ice")) {
-      frostDmg = 0;
+      frostDmg += choiceC;
     } else if (type.equals("fire")) {
-      frostDmg -= 2;
+      frostDmg -= choiceB;
     }
     return frostDmg;
   }
 
+  /**
+  * The levelUp method.
+  */
   public void levelUp() {
-    hp += 4;
-    mp += 5;
+    lvl += 1;
+    mp += mpUp;
     intel += 2;
     def += 1;
     mdf += 1;
-    lvl += 1;
+    hp += choiceC;
     currentMp = mp;
   }
 
   /**
   * The fireball method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Emdf) {
-    return super.fireball(intel, Emdf);
+  public int fireball(final int eMdf) {
+    return super.fireball(intel, eMdf);
   }
 
   /**
   * The zap method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Emdf) {
-    return super.zap(intel, Emdf);
+  public int zap(final int eMdf) {
+    return super.zap(intel, eMdf);
   }
 
   /**
   * The frostblast method.
   *
-  * @param Emdf the enemy magic defence value.
+  * @param eMdf the enemy magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Emdf) {
-    return super.frostblast(intel, Emdf);
+  public int frostblast(final int eMdf) {
+    return super.frostblast(intel, eMdf);
   }
 
+  /**
+  * The getDef method.
+  *
+  * @return def
+  */
   public int getDef() {
     return (def + tempDef);
   }
 
+  /**
+  * The getMdf method.
+  *
+  * @return mdf
+  */
   public int getMdf() {
     return mdf;
   }
 
+  /**
+  * The getHp method.
+  *
+  * @return hp
+  */
   public int getHp() {
     return hp;
   }
 
+  /**
+  * The getMp method.
+  *
+  * @return currentMp
+  */
   public int getMp() {
     return currentMp;
   }

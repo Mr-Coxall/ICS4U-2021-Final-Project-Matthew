@@ -5,7 +5,7 @@ public class Boss extends Character {
   /**
   * The boss hp value.
   */
-  private int hp = 50;
+  private final int hp = 50;
 
   /**
   * The boss strength value.
@@ -44,20 +44,19 @@ public class Boss extends Character {
   /**
   * The attack method.
   *
-  * @param Pdef the player's defence value.
+  * @param pDef the player's defence value.
   *
   * @return damage the damage dealt.
   */
   public int attack(final int pDef) {
-    final Random random = new Random();
-    final int damage = random.nextInt(str - pDef) + pDef;
+    final int damage = super.attack(str, pDef);
     return damage;
   }
 
   /**
   * The fireball method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
@@ -69,7 +68,7 @@ public class Boss extends Character {
   /**
   * The zap method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
@@ -81,7 +80,7 @@ public class Boss extends Character {
   /**
   * The frostblast method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return frostDmg the damage dealt.
   */

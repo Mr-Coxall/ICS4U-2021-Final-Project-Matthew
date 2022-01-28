@@ -5,32 +5,37 @@ public class Enemy extends Character {
   /**
   * The starting enemy hp value.
   */
-  private int hp = 20;
+  private int hp;
 
   /**
   * The starting enemy strength value.
   */
-  private int str = 4;
+  private int str;
 
   /**
   * The starting enemy intelligence value.
   */
-  private int intel = 1;
+  private int intel;
 
   /**
   * The starting enemy defence value.
   */
-  private int def = 3;
+  private int def;
 
   /**
   * The starting enemy magic defence value.
   */
-  private int mdf = 2;
+  private int mdf;
 
   /**
   * The starting enemy level value.
   */
-  private int lvl = 1;
+  private int lvl;
+
+  /**
+  * The value that hp goes up by.
+  */
+  private final int hpUpAmount = 5;
 
   /**
   * The starting enemy element type value.
@@ -41,6 +46,33 @@ public class Enemy extends Character {
   * The empty string for the enemy name.
   */
   private String name;
+
+  /**
+  * The value used every time a 3 is needed.
+  */
+  private final int choiceC = 3;
+
+  /**
+  * The base hp value.
+  */
+  private final int startingHp = 20;
+
+  /**
+  * The base strength value.
+  */
+  private final int startingStr = 4;
+
+  /**
+  * The no arguements enemy constructor.
+  */
+  public Enemy() {
+    hp = startingHp;
+    str = startingStr;
+    intel = 1;
+    def = choiceC;
+    mdf = 2;
+    lvl = 1;
+  }
 
   /**
   * The getType method.
@@ -54,7 +86,7 @@ public class Enemy extends Character {
       element = "fire";
     } else if (type == 2) {
       element = "ice";
-    } else if (type == 3) {
+    } else if (type == choiceC) {
       element = "lightning";
     }
     return element;
@@ -100,76 +132,95 @@ public class Enemy extends Character {
   /**
   * The attack method.
   *
-  * @param Pdef the player's defence value.
+  * @param pDef the player's defence value.
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int Pdef) {
-    final int damage = super.attack(str, Pdef);
+  public int attack(final int pDef) {
+    final int damage = super.attack(str, pDef);
     return damage;
   }
 
   /**
   * The fireball method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Pmdf) {
-    final int fireDmg = super.fireball(intel, Pmdf);
+  public int fireball(final int pMdf) {
+    final int fireDmg = super.fireball(intel, pMdf);
     return fireDmg;
   }
 
   /**
   * The zap method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Pmdf) {
-    final int zapDmg = super.zap(intel, Pmdf);
+  public int zap(final int pMdf) {
+    final int zapDmg = super.zap(intel, pMdf);
     return zapDmg;
   }
 
   /**
   * The frostblast method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Pmdf) {
-    final int frostDmg = super.frostblast(intel, Pmdf);
+  public int frostblast(final int pMdf) {
+    final int frostDmg = super.frostblast(intel, pMdf);
     return frostDmg;
   }
 
+  /**
+  * The getDef method.
+  *
+  * @return newDef.
+  */
   public int getDef() {
     return def;
   }
 
+  /**
+  * The getMdf method.
+  *
+  * @return mdf.
+  */
   public int getMdf() {
     return mdf;
   }
-  
+
+  /**
+  * The getHp method.
+  *
+  * @return hp.
+  */
   public int getHp() {
     return hp;
   }
 
+  /**
+  * The levelup method.
+  */
   public void levelUp() {
     final Random random = new Random();
-    final int strUp = random.nextInt(2) + 1;
-    final int defUp = random.nextInt(1) + 1;
-    final int mdfUp = random.nextInt(1) + 1;
-    final int hpUp = random.nextInt(5) + 5;
-    str += strUp;
-    hp += hpUp;
-    def += defUp;
-    mdf += mdfUp;
     lvl += 1;
+    str += random.nextInt(2) + 1;
+    hp += random.nextInt(hpUpAmount) + hpUpAmount;
+    def += random.nextInt(1) + 1;
+    mdf += random.nextInt(1) + 1;
   }
 
+  /**
+  * The getLevel method.
+  *
+  * @return lvl.
+  */
   public int getLevel() {
     return lvl;
   }

@@ -5,27 +5,27 @@ public class Finale extends Character {
   /**
   * The starting hp value of the final boss.
   */
-  private int hp = 100;
+  private final int hp = 100;
 
   /**
   * The starting strength value of the final boss.
   */
-  private int str = 30;
+  private final int str = 25;
 
   /**
   * The starting intelligence value of the final boss.
   */
-  private int intel = 15;
+  private final int intel = 15;
 
   /**
   * The starting def value of the final boss.
   */
-  private int def = 20;
+  private final int def = 15;
 
   /**
   * The starting mdf value of the final boss.
   */
-  private int mdf = 20;
+  private final int mdf = 15;
 
   /**
   * The starting stage of the final boss.
@@ -33,9 +33,14 @@ public class Finale extends Character {
   private int stage = 1;
 
   /**
+  * The multiplier used to lowering boss damage.
+  */
+  private final int damageMultiplier = 4;
+
+  /**
   * The typing of the boss.
   */
-  private String type = "none";
+  private final String type = "none";
 
   /**
   * The getType method.
@@ -49,49 +54,49 @@ public class Finale extends Character {
   /**
   * The attack method.
   *
-  * @param Pdef the player's defence value.
+  * @param pDef the player's defence value.
   *
   * @return damage the damage dealt.
   */
-  public int attack(final int Pdef) {
-    int damage = super.attack(str, Pdef);
-    damage = Math.round(damage / (4 - stage));
+  public int attack(final int pDef) {
+    int damage = super.attack(str, pDef);
+    damage = Math.round(damage / (damageMultiplier - stage));
     return damage;
   }
 
   /**
   * The fireball method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return fireDmg the damage dealt.
   */
-  public int fireball(final int Pmdf) {
-    final int fireDmg = super.fireball(intel, Pmdf);
+  public int fireball(final int pMdf) {
+    final int fireDmg = super.fireball(intel, pMdf);
     return fireDmg;
   }
 
   /**
   * The zap method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return zapDmg the damage dealt.
   */
-  public int zap(final int Pmdf) {
-    final int zapDmg = super.zap(intel, Pmdf);
+  public int zap(final int pMdf) {
+    final int zapDmg = super.zap(intel, pMdf);
     return zapDmg;
   }
 
   /**
   * The frostblast method.
   *
-  * @param Pmdf the player's magic defence value.
+  * @param pMdf the player's magic defence value.
   *
   * @return frostDmg the damage dealt.
   */
-  public int frostblast(final int Pmdf) {
-    final int frostDmg = super.frostblast(intel, Pmdf);
+  public int frostblast(final int pMdf) {
+    final int frostDmg = super.frostblast(intel, pMdf);
     return frostDmg;
   }
 
@@ -101,8 +106,7 @@ public class Finale extends Character {
   * @return finalDefence
   */
   public int getDef() {
-    int finalDefence = Math.round(def / stage);
-    return finalDefence;
+    return def;
   }
 
   /**
@@ -111,8 +115,7 @@ public class Finale extends Character {
   * @return finalMdf
   */
   public int getMdf() {
-    int finalMdf = Math.round(mdf / stage);
-    return finalMdf;
+    return mdf;
   }
 
   /**
