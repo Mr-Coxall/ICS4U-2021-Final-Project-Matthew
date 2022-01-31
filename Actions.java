@@ -53,13 +53,22 @@ public class Actions {
       + "Fireball, but deals lightning damage.");
     System.out.println("Skills: Frostblast: Same as Fireball,"
       + " but deals frost damage.");
-    System.out.println("Defend:Increases defence by "
+    System.out.println("Defend: Increases defence by "
       + "3 for one enemy attack.");
     System.out.println("Elemental damage: Fire damage deals extra to "
       + "frost enemies, lightning deals extra "
       + "to fire, and frost does extra to lightning.");
     System.out.println("Press enter to continue");
     String waiting = userInput.nextLine();
+  }
+
+  /**
+  * The reminder method, used when choosing the mage advanced class.
+  */
+  public void reminder() {
+    System.out.println("Remember, Fire is strong against ice, "
+      + "ice is strong against lightning, and lightning is strong "
+      + "against fire.");
   }
 
   /**
@@ -190,6 +199,7 @@ public class Actions {
           classKnight();
         } else if (classInput == choiceB) {
           classMage();
+          reminder();
         } else if (classInput == choiceC) {
           classNinja();
         }

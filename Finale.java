@@ -35,7 +35,7 @@ public class Finale extends Character {
   /**
   * The multiplier used to lowering boss damage.
   */
-  private final int damageMultiplier = 4;
+  private final int damageMultiplier = 3;
 
   /**
   * The typing of the boss.
