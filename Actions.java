@@ -24,26 +24,87 @@ public class Actions {
   private final int choiceD = 4;
 
   /**
-  * The help method, used to show the help menu.
+  * The Knight's starting strength.
   */
-  public void help() {
+  private final int knightStr = 10;
+
+  /**
+  * The Knight's starting defence.
+  */
+  private final int knightDef = 8;
+
+  /**
+  * The Knight's starting health.
+  */
+  private final int knightHp = 50;
+
+  /**
+  * The Knight's starting mp.
+  */
+  private final int knightMp = 4;
+
+  /**
+  * The Knight's starting intelligence.
+  */
+  private final int knightInt = 2;
+
+  /**
+  * The Mage's starting intelligence.
+  */
+  private final int mageInt = 12;
+
+  /**
+  * The Mage's starting strength.
+  */
+  private final int mageStr = 4;
+
+  /**
+  * The Mage's starting defence.
+  */
+  private final int mageDef = 4;
+
+  /**
+  * The Mage's starting health.
+  */
+  private final int mageHp = 35;
+
+  /**
+  * The Mage's starting intelligence.
+  */
+  private final int mageMp = 20;
+
+  /**
+  * The ninja's starting health.
+  */
+  private final int ninjaHp = 40;
+
+  /**
+  * The ninja's starting offensive values.
+  */
+  private final int ninjaOffense = 8;
+
+  /**
+  * The ninja's starting defensive values.
+  */
+  private final int ninjaDefence = 6;
+
+  /**
+  * The basics method, used for basic info.
+  */
+  public void basics() {
     final Scanner userInput = new Scanner(System.in);
-    System.out.println("Help:");
-    System.out.println("Attack: deal damage up to half your strength "
-      + "plus your strength minus enemy defence.");
-    System.out.println("Skills: Fireball: deal fire damage equal to "
-      + "half your intelligence plus intelligence "
-      + "minus enemy magic defence.");
-    System.out.println("Skills: Zap: Same formula as "
-      + "Fireball, but deals lightning damage.");
-    System.out.println("Skills: Frostblast: Same as Fireball,"
-      + " but deals frost damage.");
-    System.out.println("Defend: Increases defence by "
-      + "3 for one enemy attack.");
-    System.out.println("Elemental damage: Fire damage deals extra to "
-      + "frost enemies, lightning deals extra "
-      + "to fire, and frost does extra to lightning.");
-    System.out.println("Press enter to continue");
+    System.out.println("Welcome to Battle Blitz!");
+    System.out.println("You are a young trainee, about to have their "
+      + " graduation ceremony.");
+    System.out.println("Fight through 10 monsters, "
+      + "and join the kingdom's army!");
+    System.out.println("\nSome basic information:");
+    System.out.println("Hp = health points, or how much damage you can take"
+      + " before losing.");
+    System.out.println("Mp = mana points, used for skills.");
+    System.out.println("Use your number keys for choosing what you want"
+      + " to do, then press enter to confirm your choice.");
+    System.out.println("Press enter to begin");
     String waiting = userInput.nextLine();
   }
 
@@ -135,9 +196,10 @@ public class Actions {
     System.out.println("Mage");
     System.out.println("High intelligence and MP, low strength and defence.");
     System.out.println("Skills:");
-    System.out.println("Inferno: Burn the enemy, dealing high fire damage.");
-    System.out.println("Thunder: Strike from the heavens, "
-      + "dealing mass lightning damage.");
+    System.out.println("Inferno: Incinerate the enemy, dealing large"
+      + " fire damage.");
+    System.out.println("Thunder: Call upon the storm gods,"
+      + " dealing large lightning damage.");
     System.out.println("Icicle Spear: Throw a spear of pure ice "
       + "at the enemy, dealing large ice damage "
       + "that negates a bit of their defences.");

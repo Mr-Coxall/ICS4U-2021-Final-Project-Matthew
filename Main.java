@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-final class main {
+final class Main {
 
   /**
   * Prevent instantiation
@@ -11,7 +11,7 @@ final class main {
   * @throws IllegalStateException
   *
   */
-  private main() {
+  private Main() {
     throw new IllegalStateException("Cannot be initiated.");
   }
 
@@ -39,7 +39,8 @@ final class main {
     Boss boss = new Boss();
     Finale finalBoss = new Finale();
     Actions act = new Actions();
-    act.help();
+    act.basics();
+    user.help();
     while (true) {
       int enemyHp = 0;
       int enemyDef = 0;
@@ -66,7 +67,6 @@ final class main {
         type = monster.getType();
       }
       int playerHp = user.getHp();
-      int playerMp = user.getMp();
       int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
       String name = monster.getName();
@@ -75,15 +75,12 @@ final class main {
       }
       if (newClass == choiceA) {
         playerHp = knight.getHp();
-        playerMp = knight.getMp();
         playerDef = knight.getDef();
       } else if (newClass == choiceB) {
         playerHp = mage.getHp();
-        playerMp = mage.getMp();
         playerDef = mage.getDef();
       } else if (newClass == choiceC) {
         playerHp = ninja.getHp();
-        playerMp = ninja.getMp();
         playerDef = ninja.getDef();
       }
       while (playerHp >= 1 && enemyHp >= 1) {

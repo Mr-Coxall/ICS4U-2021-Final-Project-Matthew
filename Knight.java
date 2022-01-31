@@ -186,64 +186,70 @@ public class Knight extends Player {
   */
   public int knightAttack(final int eDef) {
     tempDef = 0;
-    int action = 0;
+    String action;
+    int choice = 0;
     int skillAction = 0;
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
-      try {
-        actions();
-        action = userInput.nextInt();
-        if (action == choiceA) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (action == choiceB) {
-          knightSkills();
-          skillAction = userInput.nextInt();
-          if (skillAction == choiceA) {
-            if (checkMp(slamCost)) {
-              damage = slam(eDef);
-              act += 1;
-              newMp -= slamCost;
-              attackDamage(damage);
-            } else {
-              invalidMp();
+      actions();
+      action = userInput.nextLine();
+      if (action.toLowerCase() == "h") {
+        help();
+      } else {
+        try {
+          choice = Integer.valueOf(action);
+          if (choice == choiceA) {
+            damage = attack(eDef);
+            act += 1;
+            attackDamage(damage);
+          } else if (choice == choiceB) {
+            knightSkills();
+            skillAction = userInput.nextInt();
+            if (skillAction == choiceA) {
+              if (checkMp(slamCost)) {
+                damage = slam(eDef);
+                act += 1;
+                newMp -= slamCost;
+                attackDamage(damage);
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceB) {
+              if (checkMp(piercestrikeCost)) {
+                damage = piercingStrike();
+                newMp -= piercestrikeCost;
+                act += 1;
+                attackDamage(damage);
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceC) {
+              if (checkMp(frenzyCost)) {
+                frenzy();
+                newMp -= frenzyCost;
+                act += 1;
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceD) {
+              damage = knightAttack(eDef);
             }
-          } else if (skillAction == choiceB) {
-            if (checkMp(piercestrikeCost)) {
-              damage = piercingStrike();
-              act += 1;
-              newMp -= piercestrikeCost;
-              attackDamage(damage);
-            } else {
-              invalidMp();
-            }
-          } else if (skillAction == choiceC) {
-            if (checkMp(frenzyCost)) {
-              frenzy();
-              act += 1;
-              newMp -= frenzyCost;
-            } else {
-              invalidMp();
-            }
-          } else if (skillAction == choiceD) {
-            damage = knightAttack(eDef);
+          } else if (choice == choiceC) {
+            System.out.println("You steeled yourself "
+              + "for the opponent's attack.");
+            tempDef += choiceC;
+            act += 1;
+          } else {
+            System.out.println("That isn't a viable input.");
           }
-        } else if (action == choiceC) {
-          tempDef += choiceC;
-          act += 1;
-          System.out.println("You steeled yourself "
-            + "for the opponent's attack.");
-        } else {
-          System.out.println("That isn't a viable input.");
+        } catch (InputMismatchException errorCode) {
+          System.out.println("That is not a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
       }
     }
-    return damage;
+  return damage;
   }
 
   /**
@@ -298,6 +304,13 @@ public class Knight extends Player {
     int extra = Math.round(str / 2);
     damage += extra;
     return damage;
+  }
+
+  /**
+  * The help method.
+  */
+  public void help() {
+    super.help();
   }
 
   /**

@@ -169,54 +169,58 @@ public class Mage extends Character {
   public int mageAttack(final int eDef, final int eMdf,
     final String type) {
     tempDef = 0;
-    int action = 0;
+    int choice = 0;
+    String action;
     int skillAction = 0;
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
-      try {
-        actions();
-        action = userInput.nextInt();
-        if (action == choiceA) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (action == choiceB) {
-          mageSkills();
-          skillAction = userInput.nextInt();
-          if (currentMp >= spellCost) {
-            if (skillAction == choiceA) {
-              damage = inferno(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction == choiceB) {
-              damage = thunder(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction == choiceC) {
-              damage = icicleSpear(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction == choiceD) {
-              damage = mageAttack(eDef, eMdf, type);
+      actions();
+      action = userInput.nextLine();
+      if (action.toLowerCase() == "h") {
+        help();
+      } else {
+        try {
+          choice = Integer.valueOf(action);
+          if (choice == choiceA) {
+            damage = attack(eDef);
+            act += 1;
+            attackDamage(damage);
+          } else if (choice == choiceB) {
+            mageSkills();
+            skillAction = userInput.nextInt();
+            if (currentMp >= spellCost) {
+              if (skillAction == choiceA) {
+                damage = inferno(eMdf, type);
+                act += 1;
+                currentMp -= spellCost;
+                attackDamage(damage);
+              } else if (skillAction == choiceB) {
+                damage = thunder(eMdf, type);
+                act += 1;
+                currentMp -= spellCost;
+                attackDamage(damage);
+              } else if (skillAction == choiceC) {
+                damage = icicleSpear(eMdf, type);
+                act += 1;
+                currentMp -= spellCost;
+                attackDamage(damage);
+              } else if (skillAction == choiceD) {
+                damage = mageAttack(eDef, eMdf, type);
+              }
+            } else {
+              invalidMp();
             }
+          } else if (choice == choiceC) {
+            tempDef += choiceC;
+            act += 1;
           } else {
-            invalidMp();
+            System.out.println("That isn't a viable input.");
           }
-        } else if (action == choiceC) {
-          tempDef += choiceC;
-          act += 1;
-          System.out.println("You steeled yourself "
-            + "for the opponent's attack.");
-        } else {
-          System.out.println("That isn't a viable input.");
+        } catch (InputMismatchException errorCode) {
+          System.out.println("That is not a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
       }
     }
     return damage;
@@ -307,6 +311,13 @@ public class Mage extends Character {
     mdf += 1;
     hp += choiceC;
     currentMp = mp;
+  }
+
+  /**
+  * The help method.
+  */
+  public void help() {
+    super.help();
   }
 
   /**

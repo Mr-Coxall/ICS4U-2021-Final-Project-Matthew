@@ -191,67 +191,73 @@ public class Ninja extends Character {
   */
   public int ninjaAttack(final int eDef, final int eHp) {
     tempDef = 0;
-    int action = 0;
+    String action;
+    int choice = 0;
     int skillAction = 0;
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
-      try {
-        actions();
-        action = userInput.nextInt();
-        if (action == choiceA) {
-          damage = attack(eDef);
-          prep = 0;
-          act += 1;
-          attackDamage(damage);
-        } else if (action == choiceB) {
-          ninjaSkills();
-          skillAction = userInput.nextInt();
-          if (skillAction == choiceA) {
-            if (checkMp(multislashCost)) {
-              damage = multislash(eDef);
-              act += 1;
-              currentMp -= multislashCost;
-              attackDamage(damage);
-              prep = 0;
-            } else {
-              invalidMp();
+      actions();
+      action = userInput.nextLine();
+      if (action.toLowerCase() == "h") {
+        help();
+      } else {
+        try {
+          choice = Integer.valueOf(action);
+          if (choice == choiceA) {
+            damage = attack(eDef);
+            prep = 0;
+            act += 1;
+            attackDamage(damage);
+          } else if (choice == choiceB) {
+            ninjaSkills();
+            skillAction = userInput.nextInt();
+            if (skillAction == choiceA) {
+              if (checkMp(multislashCost)) {
+                damage = multislash(eDef);
+                act += 1;
+                currentMp -= multislashCost;
+                attackDamage(damage);
+                prep = 0;
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceB) {
+              if (checkMp(prepareCost)) {
+                prepare();
+                currentMp -= prepareCost;
+                act += 1;
+                attackDamage(damage);
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceC) {
+              if (checkMp(animeCost)) {
+                damage = animeCut(eHp);
+                act += 1;
+                currentMp = 0;
+                attackDamage(damage);
+              } else {
+                invalidMp();
+              }
+            } else if (skillAction == choiceD) {
+              damage = ninjaAttack(eDef, eHp);
             }
-          } else if (skillAction == choiceB) {
-            if (checkMp(prepareCost)) {
-              prepare();
-              currentMp -= prepareCost;
-              act += 1;
-              attackDamage(damage);
-            } else {
-              invalidMp();
-            }
-          } else if (skillAction == choiceC) {
-            if (checkMp(animeCost)) {
-              damage = animeCut(eHp);
-              act += 1;
-              currentMp = 0;
-              attackDamage(damage);
-            } else {
-              invalidMp();
-            }
-          } else if (skillAction == choiceD) {
-            damage = ninjaAttack(eDef, eHp);
+          } else if (choice == choiceC) {
+            System.out.println("You steeled yourself "
+              + "for the opponent's attack.");
+            tempDef += choiceC;
+            act += 1;
+          } else {
+            System.out.println("That isn't a viable input.");
           }
-        } else if (action == choiceC) {
-          System.out.println("You steeled yourself "
-            + "for the opponent's attack.");
-          tempDef += choiceC;
-          act += 1;
-        } else {
-          System.out.println("That isn't a viable input.");
+        } catch (InputMismatchException errorCode) {
+          System.out.println("That is not a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
       }
-    }
-    return damage;
+  }
+  return damage;
   }
 
   /**
@@ -270,6 +276,13 @@ public class Ninja extends Character {
   */
   public void invalidMp() {
     System.out.println("Not enough Mp!");
+  }
+
+  /**
+  * The help method.
+  */
+  public void help() {
+    super.help();
   }
 
   /**

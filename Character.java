@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public abstract class Character {
 
@@ -80,5 +81,30 @@ public abstract class Character {
       frostDmg = frostRand.nextInt(range) + Math.round(intelligence / 2);
     }
     return frostDmg;
+  }
+
+  /**
+  * The help method, used to show the help menu.
+  */
+  public void help() {
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("Help:");
+    System.out.println("Attack: physical damage to the enemy."
+      + " Physical damage uses your strength stat.");
+    System.out.println("Skills: Fireball: deal fire damage to the enemy."
+      + " All skills use your intelligence stat for damage.");
+    System.out.println("Skills: Zap: Same formula as "
+      + "Fireball, but deals lightning damage.");
+    System.out.println("Skills: Frostblast: Same as Fireball,"
+      + " but deals frost damage.");
+    System.out.println("Defend: Increases defence by "
+      + "3 for one enemy attack.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "ice enemies, ice deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("To view this again, input 'h'"
+      + " when choosing your action.");
+    System.out.println("Press enter to continue");
+    String waiting = userInput.nextLine();
   }
 }
