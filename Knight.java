@@ -153,6 +153,21 @@ public class Knight extends Player {
   }
 
   /**
+  * The showHp method.
+  *
+  * @param enemyName the enemy name
+  * @param enemyHp the enemy hp value.
+  * @param playerHp the player's hp
+  */
+  public void showHp(final String enemyName, final int enemyHp,
+    final int playerHp) {
+    final int showMp = newMp;
+    System.out.println(enemyName + " hp: " + enemyHp);
+    System.out.println("\nPlayer hp: " + playerHp);
+    System.out.println("Player mp: " + showMp);
+  }
+
+  /**
   * The attackDamage method tells you how much damage you dealt.
   *
   * @param damage the damage amount.

@@ -59,6 +59,11 @@ public class Player extends Character {
   private final int startingIntel = 4;
 
   /**
+  * The mp value used for skills.
+  */
+  private int currentMp;
+
+  /**
   * The no arguements player constructor.
   */
   public Player() {
@@ -68,6 +73,7 @@ public class Player extends Character {
     intel = startingIntel;
     str = startingStr;
     mp = startingMp;
+    currentMp = startingMp;
     hp = startingHp;
   }
 
@@ -100,11 +106,6 @@ public class Player extends Character {
   * The temporary defence value.
   */
   private int tempDef = 0;
-
-  /**
-  * The mp value used for skills.
-  */
-  private int currentMp = mp;
 
   /**
   * The value that hp increases by.
@@ -193,6 +194,21 @@ public class Player extends Character {
       }
     }
     return damage;
+  }
+
+  /**
+  * The showHp method.
+  *
+  * @param enemyName the enemy name
+  * @param enemyHp the enemy hp value.
+  * @param playerHp the player's hp
+  */
+  public void showHp(final String enemyName, final int enemyHp,
+    final int playerHp) {
+    final int showMp = currentMp;
+    System.out.println(enemyName + " hp: " + enemyHp);
+    System.out.println("\nPlayer hp: " + playerHp);
+    System.out.println("Player mp: " + showMp);
   }
 
   /**

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-final class Battle {
+final class main {
 
   /**
   * Prevent instantiation
@@ -11,7 +11,7 @@ final class Battle {
   * @throws IllegalStateException
   *
   */
-  private Battle() {
+  private main() {
     throw new IllegalStateException("Cannot be initiated.");
   }
 
@@ -89,17 +89,20 @@ final class Battle {
       while (playerHp >= 1 && enemyHp >= 1) {
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
-        act.showHp(name, enemyCurrentHp, playerHp, playerMp);
         if (newClass == 0) {
+          user.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = user.playerAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceA) {
+          knight.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = knight.knightAttack(enemyDef);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceB) {
+          mage.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = mage.mageAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceC) {
+          ninja.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = ninja.ninjaAttack(((enemyDef + enemyMdf) / choiceB),
             enemyCurrentHp);
           enemyHp -= dmgDealt;
