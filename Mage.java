@@ -134,6 +134,9 @@ public class Mage extends Character {
     System.out.println(enemyName + " hp: " + enemyHp);
     System.out.println("\nPlayer hp: " + playerHp);
     System.out.println("Player mp: " + showMp);
+    System.out.println("Player strength: " + str);
+    System.out.println("Player intelligence: " + intel);
+    System.out.println("Player defence: " + def);
   }
 
   /**
