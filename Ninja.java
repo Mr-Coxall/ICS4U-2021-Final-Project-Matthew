@@ -203,7 +203,9 @@ public class Ninja extends Player {
       try {
         choice = userInput.nextLine();
         choice = choice.toLowerCase();
-        if (choice.equals("s")) {
+        if (choice.equals("h")) {
+          help();
+        } else if (choice.equals("s")) {
           damage = attack(eDef);
           prep = 0;
           act += 1;
@@ -280,7 +282,35 @@ public class Ninja extends Player {
   * The help method.
   */
   public void help() {
-    super.help();
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("HP (health points): how much damage you can take"
+      + " before losing.");
+    System.out.println("MP (mana points): spent when activating skills, "
+      + "regained after killing a monster.");
+    System.out.println("Strength: used when dealing damage"
+      + " through you physically touching the enemy.");
+    System.out.println("Magic: used when dealing damage with"
+      + " any sort of special created object.");
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, frost deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("Hint: The name of the monster gives "
+      + "info on their type.");
+    System.out.println("\nSkills:");
+    System.out.println("Prepare: Increases strength and "
+      + "magic slightly for one attack.");
+    System.out.println("Multislash: A flurry of strikes,"
+      + " dealing massive damage.");
+    System.out.println("Animecut: The anime sword strike, "
+      + "sacrificing all your MP in exchange for huge damage.");
+    System.out.println("\nTo view this again, input 'h'"
+      + " when choosing your action.");
+    System.out.println("Press enter to continue");
+    String waiting = userInput.nextLine();
   }
 
   /**

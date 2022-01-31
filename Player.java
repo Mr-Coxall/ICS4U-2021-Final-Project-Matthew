@@ -157,7 +157,9 @@ public class Player extends Character {
       try {
         choice = userInput.nextLine();
         choice = choice.toLowerCase();
-        if (choice.equals("s")) {
+        if (choice.equals("h")) {
+          help();
+        } else if (choice.equals("s")) {
           damage = attack(eDef);
           act += 1;
           attackDamage(damage);

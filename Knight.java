@@ -198,7 +198,9 @@ public class Knight extends Player {
       try {
         choice = userInput.nextLine();
         choice = choice.toLowerCase();
-        if (choice.equals("s")) {
+        if (choice.equals("h")) {
+          help();
+        } else if (choice.equals("s")) {
           damage = attack(eDef);
           act += 1;
           attackDamage(damage);
@@ -308,7 +310,36 @@ public class Knight extends Player {
   * The help method.
   */
   public void help() {
-    super.help();
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("HP (health points): how much damage you can take"
+      + " before losing.");
+    System.out.println("MP (mana points): spent when activating skills, "
+      + "regained after killing a monster.");
+    System.out.println("Strength: used when dealing damage"
+      + " through you physically touching the enemy.");
+    System.out.println("Magic: used when dealing damage with"
+      + " any sort of special created object.");
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, frost deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("Hint: The name of the monster gives "
+      + "info on their type.");
+    System.out.println("\nThe Knight uses strength for skills.");
+    System.out.println("Skills:");
+    System.out.println("Slam: Attack the enemy, "
+      + "negating a small amount of their defence while doing so.");
+    System.out.println("Piercing Strike: attack the enemy, completely "
+      + "negating their defence.");
+    System.out.println("Frenzy: sacrifice some of "
+      + "your defence in exchange for more strength.");
+    System.out.println("\nTo view this again, input 'h'"
+      + " when choosing your action.");
+    System.out.println("Press enter to continue");
+    String waiting = userInput.nextLine();
   }
 
   /**

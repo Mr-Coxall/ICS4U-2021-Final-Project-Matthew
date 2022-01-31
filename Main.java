@@ -141,7 +141,7 @@ final class Main {
     while (decision) {
       int warning = monster.getLevel();
       System.out.println("\nYou defeated the monster.");
-      System.out.println("Continue?: (s = yes, d = no)");
+      System.out.println("Continue?: (y)es/(n)o");
       if ((warning + 1) % checkBoss == 0) {
         System.out.println("Warning! Boss battle ahead!");
       }
