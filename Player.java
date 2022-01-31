@@ -119,6 +119,7 @@ public class Player extends Character {
     System.out.println("Attack(1)");
     System.out.println("Skills(2)");
     System.out.println("Defend(3)");
+    System.out.println("Your turn: ");
   }
 
   /**

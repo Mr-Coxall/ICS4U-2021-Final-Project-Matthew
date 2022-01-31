@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Ninja extends Character {
+public class Ninja extends Player {
 
   /**
   * The starting hp value.
@@ -155,9 +155,9 @@ public class Ninja extends Character {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = currentMp;
-    System.out.println(enemyName + " hp: " + enemyHp);
-    System.out.println("\nPlayer hp: " + playerHp);
-    System.out.println("Player mp: " + showMp);
+    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\nPlayer HP: " + playerHp);
+    System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
     System.out.println("Player intelligence: " + intel);
     System.out.println("Player defence: " + def);
@@ -167,9 +167,7 @@ public class Ninja extends Character {
   * The actions method shows the basic actions.
   */
   public void actions() {
-    System.out.println("Attack(1)");
-    System.out.println("Skills(2)");
-    System.out.println("Defend(3)");
+    super.actions();
   }
 
   /**

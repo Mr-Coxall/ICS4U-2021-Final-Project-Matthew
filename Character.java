@@ -89,19 +89,22 @@ public abstract class Character {
   public void help() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Help:");
-    System.out.println("Attack: physical damage to the enemy."
-      + " Physical damage uses your strength stat.");
+    System.out.println("\nAttack: physical damage to the enemy.");
     System.out.println("Skills: Fireball: deal fire damage to the enemy."
-      + " All skills use your intelligence stat for damage.");
-    System.out.println("Skills: Zap: Same formula as "
-      + "Fireball, but deals lightning damage.");
-    System.out.println("Skills: Frostblast: Same as Fireball,"
-      + " but deals frost damage.");
+      + " Most skills use your intelligence stat for damage.");
+    System.out.println("Skills: Zap: Deals lightning damage.");
+    System.out.println("Skills: Frostblast: Deals frost damage.");
     System.out.println("Defend: Increases defence by "
       + "3 for one enemy attack.");
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
     System.out.println("Elemental damage: Fire damage deals extra to "
-      + "ice enemies, ice deals extra "
+      + "frost enemies, frost deals extra "
       + "to lightning, and lightning does extra to fire.");
+    System.out.println("Hint: The name of the monster gives "
+      + "info on their type.");
     System.out.println("To view this again, input 'h'"
       + " when choosing your action.");
     System.out.println("Press enter to continue");

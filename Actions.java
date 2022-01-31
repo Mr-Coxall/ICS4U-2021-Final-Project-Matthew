@@ -94,14 +94,18 @@ public class Actions {
   public void basics() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Welcome to Battle Blitz!");
-    System.out.println("You are a young trainee, about to have their "
-      + " graduation ceremony.");
-    System.out.println("Fight through 10 monsters, "
+    System.out.println("\nYou are a young trainee, about to start your "
+      + " graduation exam.");
+    System.out.println("Fight through 10 monsters to pass the exam, "
       + "and join the kingdom's army!");
     System.out.println("\nSome basic information:");
-    System.out.println("Hp = health points, or how much damage you can take"
+    System.out.println("HP (health points): how much damage you can take"
       + " before losing.");
-    System.out.println("Mp = mana points, used for skills.");
+    System.out.println("MP (mana points): used to activate skills.");
+    System.out.println("Strength: used when dealing damage"
+      + " with physical attacks.");
+    System.out.println("Intelligence: used when dealing damage"
+      + " with magic attacks.");
     System.out.println("Use your number keys for choosing what you want"
       + " to do, then press enter to confirm your choice.");
     System.out.println("Press enter to begin");
@@ -178,7 +182,7 @@ public class Actions {
   public void classKnight() {
     System.out.println("Knight");
     System.out.println("High strength and defence, "
-      + "low mp and intelligence.");
+      + "low Mp and intelligence.");
     System.out.println("Skills:");
     System.out.println("Slam: Attack the enemy, "
       + "negating a small amount of their defence while doing so.");

@@ -133,12 +133,10 @@ public class Knight extends Player {
   private final int hpUp = 8;
 
   /**
-  * The actions method shows basic actions.
+  * The actions method shows the basic actions.
   */
   public void actions() {
-    System.out.println("Attack(1)");
-    System.out.println("Skills(2)");
-    System.out.println("Defend(3)");
+    super.actions();
   }
 
   /**
@@ -146,9 +144,9 @@ public class Knight extends Player {
   */
   public void knightSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Slam(1): 1Mp");
-    System.out.println("Piercing Strike(2): 3Mp");
-    System.out.println("Frenzy(3): 4Mp");
+    System.out.println("Slam(1): 1MP");
+    System.out.println("Piercing Strike(2): 3MP");
+    System.out.println("Frenzy(3): 4MP");
     System.out.println("Back(4)");
   }
 
@@ -162,9 +160,9 @@ public class Knight extends Player {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = newMp;
-    System.out.println(enemyName + " hp: " + enemyHp);
-    System.out.println("\nPlayer hp: " + playerHp);
-    System.out.println("Player mp: " + showMp);
+    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\nPlayer HP: " + playerHp);
+    System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
     System.out.println("Player intelligence: " + intel);
     System.out.println("Player defence: " + def);
