@@ -23,6 +23,7 @@ final class Main {
   */
   public static void main(final String[] args) {
     final int choiceA = 1;
+    int battle = 0;
     final int choiceB = 2;
     final int choiceC = 3;
     final int choiceD = 4;
@@ -40,7 +41,6 @@ final class Main {
     Finale finalBoss = new Finale();
     Actions act = new Actions();
     act.basics();
-    user.help();
     while (true) {
       int enemyHp = 0;
       int enemyDef = 0;
@@ -139,13 +139,15 @@ final class Main {
       newClass = act.classChange();
     }
     while (decision) {
+      battle = 0;
       int warning = monster.getLevel();
+      System.out.println("\nThe defeated the monster.");
       System.out.println("Continue?: (1/0)");
       if ((warning + 1) % checkBoss == 0) {
         System.out.println("Warning! Boss battle ahead!");
       }
       try {
-        int battle = userInput.nextInt();
+        battle = userInput.nextInt();
         if (battle == 1) {
           bossBattle = false;
           monster.levelUp();

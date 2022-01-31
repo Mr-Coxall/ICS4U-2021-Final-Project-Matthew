@@ -164,7 +164,7 @@ public class Knight extends Player {
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
-    System.out.println("Player intelligence: " + intel);
+    System.out.println("Player magic: " + intel);
     System.out.println("Player defence: " + def);
   }
 
@@ -187,7 +187,6 @@ public class Knight extends Player {
   */
   public int knightAttack(final int eDef) {
     tempDef = 0;
-    String action;
     int choice = 0;
     int skillAction = 0;
     int damage = 0;
@@ -195,59 +194,55 @@ public class Knight extends Player {
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
-      action = userInput.nextLine();
-      if (action.toLowerCase() == "h") {
-        help();
-      } else {
-        try {
-          choice = Integer.valueOf(action);
-          if (choice == choiceA) {
-            damage = attack(eDef);
-            act += 1;
-            attackDamage(damage);
-          } else if (choice == choiceB) {
-            knightSkills();
-            skillAction = userInput.nextInt();
-            if (skillAction == choiceA) {
-              if (checkMp(slamCost)) {
-                damage = slam(eDef);
-                act += 1;
-                newMp -= slamCost;
-                attackDamage(damage);
-              } else {
-                invalidMp();
-              }
-            } else if (skillAction == choiceB) {
-              if (checkMp(piercestrikeCost)) {
-                damage = piercingStrike();
-                newMp -= piercestrikeCost;
-                act += 1;
-                attackDamage(damage);
-              } else {
-                invalidMp();
-              }
-            } else if (skillAction == choiceC) {
-              if (checkMp(frenzyCost)) {
-                frenzy();
-                newMp -= frenzyCost;
-                act += 1;
-              } else {
-                invalidMp();
-              }
-            } else if (skillAction == choiceD) {
-              damage = knightAttack(eDef);
+      choice = 0;
+      try {
+        choice = userInput.nextInt();
+        if (choice == choiceA) {
+          damage = attack(eDef);
+          act += 1;
+          attackDamage(damage);
+        } else if (choice == choiceB) {
+          knightSkills();
+          skillAction = userInput.nextInt();
+          if (skillAction == choiceA) {
+            if (checkMp(slamCost)) {
+              damage = slam(eDef);
+              act += 1;
+              newMp -= slamCost;
+              attackDamage(damage);
+            } else {
+              invalidMp();
             }
-          } else if (choice == choiceC) {
-            System.out.println("You steeled yourself "
-              + "for the opponent's attack.");
-            tempDef += choiceC;
-            act += 1;
-          } else {
-            System.out.println("That isn't a viable input.");
+          } else if (skillAction == choiceB) {
+            if (checkMp(piercestrikeCost)) {
+              damage = piercingStrike();
+              newMp -= piercestrikeCost;
+              act += 1;
+              attackDamage(damage);
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction == choiceC) {
+            if (checkMp(frenzyCost)) {
+              frenzy();
+              newMp -= frenzyCost;
+              act += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction == choiceD) {
+            damage = knightAttack(eDef);
           }
-        } catch (InputMismatchException errorCode) {
-          System.out.println("That is not a viable input.");
+        } else if (choice == choiceC) {
+          System.out.println("You steeled yourself "
+            + "for the opponent's attack.");
+          tempDef += choiceC;
+          act += 1;
+        } else {
+          System.out.println("That isn't a viable input.");
         }
+      } catch (InputMismatchException errorCode) {
+        System.out.println("That is not a viable input.");
       }
     }
   return damage;

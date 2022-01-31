@@ -89,9 +89,9 @@ public abstract class Character {
   public void help() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Help:");
-    System.out.println("\nAttack: physical damage to the enemy.");
-    System.out.println("Skills: Fireball: deal fire damage to the enemy."
-      + " Most skills use your intelligence stat for damage.");
+    System.out.println("\nAttack: deals physical damage to the enemy.");
+    System.out.println("Skills: Fireball: deals fire damage to the enemy."
+      + " Most skills use your magic stat for damage.");
     System.out.println("Skills: Zap: Deals lightning damage.");
     System.out.println("Skills: Frostblast: Deals frost damage.");
     System.out.println("Defend: Increases defence by "
@@ -107,7 +107,7 @@ public abstract class Character {
       + "info on their type.");
     System.out.println("To view this again, input 'h'"
       + " when choosing your action.");
-    System.out.println("Press enter to continue");
+    System.out.println("\nPress enter to continue");
     String waiting = userInput.nextLine();
   }
 }

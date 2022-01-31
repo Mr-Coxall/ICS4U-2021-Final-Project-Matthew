@@ -94,20 +94,38 @@ public class Actions {
   public void basics() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Welcome to Battle Blitz!");
-    System.out.println("\nYou are a young trainee, about to start your "
+    System.out.println("\nYou are a young trainee about to start your "
       + " graduation exam.");
-    System.out.println("Fight through 10 monsters to pass the exam, "
+    System.out.println("Fight through 10 monsters to pass the exam "
       + "and join the kingdom's army!");
     System.out.println("\nSome basic information:");
     System.out.println("HP (health points): how much damage you can take"
       + " before losing.");
-    System.out.println("MP (mana points): used to activate skills.");
+    System.out.println("MP (mana points): spent when activating skills, "
+      + "regained after killing a monster.");
     System.out.println("Strength: used when dealing damage"
       + " with physical attacks.");
-    System.out.println("Intelligence: used when dealing damage"
+    System.out.println("Magic: used when dealing damage"
       + " with magic attacks.");
-    System.out.println("Use your number keys for choosing what you want"
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, frost deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("\nBasic actions:");
+    System.out.println("\nAttack: deals physical damage to the enemy.");
+    System.out.println("Skills: Fireball: deals fire damage to the enemy."
+      + " Most skills use your magic stat for damage.");
+    System.out.println("Skills: Zap: Deals lightning damage.");
+    System.out.println("Skills: Frostblast: Deals frost damage.");
+    System.out.println("Defend: Increases defence by "
+      + "3 for one enemy attack.");
+    System.out.println("\nUse your number keys for choosing what you want"
       + " to do, then press enter to confirm your choice.");
+    System.out.println("To open the help menu, input 'h' "
+      + "into the action spot.");
     System.out.println("Press enter to begin");
     String waiting = userInput.nextLine();
   }
@@ -182,7 +200,8 @@ public class Actions {
   public void classKnight() {
     System.out.println("Knight");
     System.out.println("High strength and defence, "
-      + "low Mp and intelligence.");
+      + "low MP and magic.");
+    System.out.println("The Knight uses strength for skills.");
     System.out.println("Skills:");
     System.out.println("Slam: Attack the enemy, "
       + "negating a small amount of their defence while doing so.");
@@ -198,7 +217,7 @@ public class Actions {
   */
   public void classMage() {
     System.out.println("Mage");
-    System.out.println("High intelligence and MP, low strength and defence.");
+    System.out.println("High magic and MP, low strength and defence.");
     System.out.println("Skills:");
     System.out.println("Inferno: Incinerate the enemy, dealing large"
       + " fire damage.");
@@ -216,10 +235,10 @@ public class Actions {
   public void classNinja() {
     System.out.println("Ninja");
     System.out.println("Balanced in all stats, uses both "
-      + "strength and intelligence for basic attack.");
+      + "strength and magic for his attacks.");
     System.out.println("Skills:");
     System.out.println("Prepare: Increases strength and "
-      + "intelligence slightly for one attack.");
+      + "magic slightly for one attack.");
     System.out.println("Multislash: A flurry of strikes,"
       + " dealing massive damage.");
     System.out.println("Animecut: The anime sword strike, "
