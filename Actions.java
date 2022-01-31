@@ -244,6 +244,11 @@ public class Actions {
       + "sacrificing all your MP in exchange for huge damage.");
   }
 
+  /**
+  * The continueBattle method.
+  *
+  * @return true or false.
+  */
   public boolean continueBattle() {
     final Scanner userInput = new Scanner(System.in);
     String battleContinue = "e";
