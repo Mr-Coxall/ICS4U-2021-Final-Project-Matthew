@@ -246,18 +246,20 @@ public class Actions {
 
   public boolean continueBattle() {
     final Scanner userInput = new Scanner(System.in);
-    String battleContinue = "1";
+    String battleContinue = "e";
     int finish = 0;
     while (finish == 0) {
       battleContinue = userInput.nextLine();
-      finish = 1;
-      if (battleContinue != "1" && battleContinue != "0") {
+      battleContinue = battleContinue.toLowerCase();
+      if (battleContinue.equals("s") || battleContinue.equals("d")) {
+        finish = 1;
+      } else {
         System.out.println("That is not a valid input.");
         finish = 0;
-        System.out.println("Continue? (1 = yes, 0 = no)");
+        System.out.println("Continue? (s = yes, d = no)");
       }
     }
-    return battleContinue == "1";
+    return battleContinue.equals("s");
   }
 
   /**

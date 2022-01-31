@@ -142,7 +142,7 @@ public class Ninja extends Player {
   * @param damage the damage amount.
   */
   public void attackDamage(final int damage) {
-    System.out.println("You attacked for " + damage + " damage!");
+    System.out.println("You dealt " + damage + " damage!");
   }
 
   /**
@@ -159,7 +159,7 @@ public class Ninja extends Player {
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
-    System.out.println("Player intelligence: " + intel);
+    System.out.println("Player magic: " + intel);
     System.out.println("Player defence: " + def);
   }
 
@@ -175,10 +175,10 @@ public class Ninja extends Player {
   */
   public void ninjaSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Multislash: 4Mp");
-    System.out.println("Prepare: 2Mp");
-    System.out.println("Animecut: AllMp (minimum of 6Mp required)");
-    System.out.println("Back(4)");
+    System.out.println("Multislash(S): 4Mp");
+    System.out.println("Prepare(D): 2Mp");
+    System.out.println("Animecut(F): AllMp (minimum of 6Mp required)");
+    System.out.println("Back(G)");
   }
 
   /**
@@ -192,25 +192,27 @@ public class Ninja extends Player {
   */
   public int ninjaAttack(final int eDef, final int eHp) {
     tempDef = 0;
-    int choice = 0;
-    int skillAction = 0;
+    String choice = "0";
+    String skillAction = "0";
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
-      choice = 0;
+      choice = "";
       try {
-        choice = userInput.nextInt();
-        if (choice == choiceA) {
+        choice = userInput.nextLine();
+        choice = choice.toLowerCase();
+        if (choice.equals("s")) {
           damage = attack(eDef);
           prep = 0;
           act += 1;
           attackDamage(damage);
-        } else if (choice == choiceB) {
+        } else if (choice.equals("d")) {
           ninjaSkills();
-          skillAction = userInput.nextInt();
-          if (skillAction == choiceA) {
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
+          if (skillAction.equals("s")) {
             if (checkMp(multislashCost)) {
               damage = multislash(eDef);
               act += 1;
@@ -220,7 +222,7 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceB) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(prepareCost)) {
               prepare();
               currentMp -= prepareCost;
@@ -229,7 +231,7 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceC) {
+          } else if (skillAction.equals("f")) {
             if (checkMp(animeCost)) {
               damage = animeCut(eHp);
               act += 1;
@@ -238,10 +240,10 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceD) {
+          } else if (skillAction.equals("g")) {
             damage = ninjaAttack(eDef, eHp);
           }
-        } else if (choice == choiceC) {
+        } else if (choice.equals("f")) {
           System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += choiceC;

@@ -118,7 +118,7 @@ public class Mage extends Player {
   * @param damage the damage amount.
   */
   public void attackDamage(final int damage) {
-    System.out.println("You attacked for " + damage + " damage!");
+    System.out.println("You dealt " + damage + " damage!");
   }
 
   /**
@@ -151,10 +151,10 @@ public class Mage extends Player {
   */
   public void mageSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Inferno(1): 5Mp");
-    System.out.println("Thunder(2): 5Mp");
-    System.out.println("Icicle Spear(3): 5Mp");
-    System.out.println("Back(4)");
+    System.out.println("Inferno(S): 5Mp");
+    System.out.println("Thunder(D): 5Mp");
+    System.out.println("Icicle Spear(F): 5Mp");
+    System.out.println("Back(G)");
   }
 
   /**
@@ -170,46 +170,48 @@ public class Mage extends Player {
   public int mageAttack(final int eDef, final int eMdf,
     final String type) {
     tempDef = 0;
-    int choice = 0;
-    int skillAction = 0;
+    String choice = "0";
+    String skillAction = "0";
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
-      choice = 0;
+      choice = "";
       try {
-        choice = userInput.nextInt();
-        if (choice == choiceA) {
+        choice = userInput.nextLine();
+        choice = choice.toLowerCase();
+        if (choice.equals("s")) {
           damage = attack(eDef);
           act += 1;
           attackDamage(damage);
-        } else if (choice == choiceB) {
+        } else if (choice.equals("d")) {
           mageSkills();
-          skillAction = userInput.nextInt();
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
           if (currentMp >= spellCost) {
-            if (skillAction == choiceA) {
+            if (skillAction.equals("s")) {
               damage = inferno(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction == choiceB) {
+            } else if (skillAction.equals("d")) {
               damage = thunder(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction == choiceC) {
+            } else if (skillAction.equals("f")) {
               damage = icicleSpear(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction == choiceD) {
+            } else if (skillAction.equals("g")) {
               damage = mageAttack(eDef, eMdf, type);
             }
           } else {
             invalidMp();
           }
-        } else if (choice == choiceC) {
+        } else if (choice.equals("f")) {
           tempDef += choiceC;
           act += 1;
         } else {
