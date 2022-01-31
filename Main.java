@@ -132,6 +132,7 @@ final class Main {
       }
     }
     boolean decision = true;
+    boolean cont = true;
     if (finalBattle) {
       System.out.println("You win!");
       System.exit(0);
@@ -139,16 +140,17 @@ final class Main {
       newClass = act.classChange();
     }
     while (decision) {
-      battle = 0;
       int warning = monster.getLevel();
-      System.out.println("\nThe defeated the monster.");
-      System.out.println("Continue?: (1/0)");
+      System.out.println("\nYou defeated the monster.");
+      System.out.println("Continue?: (1 = yes, 0 = no)");
       if ((warning + 1) % checkBoss == 0) {
         System.out.println("Warning! Boss battle ahead!");
       }
-      try {
-        battle = userInput.nextInt();
-        if (battle == 1) {
+      int battleChoice = 0;
+      while (battleChoice == 0) {
+        cont = act.continueBattle();
+        if (cont) {
+          decision = false;
           bossBattle = false;
           monster.levelUp();
           user.levelUp();
@@ -159,15 +161,11 @@ final class Main {
           } else if (newClass == choiceC) {
             ninja.levelUp();
           }
-          decision = false;
-        } else if (battle == 0) {
+          battleChoice = 1;
+        } else {
           System.out.println("Game ended.");
           System.exit(0);
-        } else {
-          System.out.println("Invalid input, please input real value.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
       }
     }
   }

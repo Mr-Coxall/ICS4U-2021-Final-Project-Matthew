@@ -104,9 +104,8 @@ public class Actions {
     System.out.println("MP (mana points): spent when activating skills, "
       + "regained after killing a monster.");
     System.out.println("Strength: used when dealing damage"
-      + " with physical attacks.");
-    System.out.println("Magic: used when dealing damage"
-      + " with magic attacks.");
+      + " with basic attack, and certain skills.");
+    System.out.println("Magic: used when dealing damage with most skills");
     System.out.println("\nAll monsters will have 1 of 4 types: "
       + "fire, frost, lightning, or neutral.");
     System.out.println("Based on the type of the monster, "
@@ -243,6 +242,22 @@ public class Actions {
       + " dealing massive damage.");
     System.out.println("Animecut: The anime sword strike, "
       + "sacrificing all your MP in exchange for huge damage.");
+  }
+
+  public boolean continueBattle() {
+    final Scanner userInput = new Scanner(System.in);
+    String battleContinue = "1";
+    int finish = 0;
+    while (finish == 0) {
+      battleContinue = userInput.nextLine();
+      finish = 1;
+      if (battleContinue != "1" && battleContinue != "0") {
+        System.out.println("That is not a valid input.");
+        finish = 0;
+        System.out.println("Continue? (1 = yes, 0 = no)");
+      }
+    }
+    return battleContinue == "1";
   }
 
   /**
