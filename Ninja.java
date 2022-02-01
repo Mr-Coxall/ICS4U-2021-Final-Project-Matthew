@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Ninja extends Character {
+public class Ninja extends Player {
 
   /**
   * The starting hp value.
@@ -142,16 +142,32 @@ public class Ninja extends Character {
   * @param damage the damage amount.
   */
   public void attackDamage(final int damage) {
-    System.out.println("You attacked for " + damage + " damage!");
+    System.out.println("You dealt " + damage + " damage!");
+  }
+
+  /**
+  * The showHp method.
+  *
+  * @param enemyName the enemy name
+  * @param enemyHp the enemy hp value.
+  * @param playerHp the player's hp
+  */
+  public void showHp(final String enemyName, final int enemyHp,
+    final int playerHp) {
+    final int showMp = currentMp;
+    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\nPlayer HP: " + playerHp);
+    System.out.println("Player MP: " + showMp);
+    System.out.println("Player strength: " + str);
+    System.out.println("Player magic: " + intel);
+    System.out.println("Player defence: " + def);
   }
 
   /**
   * The actions method shows the basic actions.
   */
   public void actions() {
-    System.out.println("Attack(1)");
-    System.out.println("Skills(2)");
-    System.out.println("Defend(3)");
+    super.actions();
   }
 
   /**
@@ -159,10 +175,10 @@ public class Ninja extends Character {
   */
   public void ninjaSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Multislash: 4Mp");
-    System.out.println("Prepare: 2Mp");
-    System.out.println("Animecut: AllMp (minimum of 6Mp required)");
-    System.out.println("Back(4)");
+    System.out.println("Multislash(S): 4Mp");
+    System.out.println("Prepare(D): 2Mp");
+    System.out.println("Animecut(F): AllMp (minimum of 6Mp required)");
+    System.out.println("Back(G)");
   }
 
   /**
@@ -176,24 +192,29 @@ public class Ninja extends Character {
   */
   public int ninjaAttack(final int eDef, final int eHp) {
     tempDef = 0;
-    int action = 0;
-    int skillAction = 0;
+    String choice = "0";
+    String skillAction = "0";
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
+      actions();
+      choice = "";
       try {
-        actions();
-        action = userInput.nextInt();
-        if (action == choiceA) {
+        choice = userInput.nextLine();
+        choice = choice.toLowerCase();
+        if (choice.equals("h")) {
+          help();
+        } else if (choice.equals("s")) {
           damage = attack(eDef);
           prep = 0;
           act += 1;
           attackDamage(damage);
-        } else if (action == choiceB) {
+        } else if (choice.equals("d")) {
           ninjaSkills();
-          skillAction = userInput.nextInt();
-          if (skillAction == choiceA) {
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
+          if (skillAction.equals("s")) {
             if (checkMp(multislashCost)) {
               damage = multislash(eDef);
               act += 1;
@@ -203,7 +224,7 @@ public class Ninja extends Character {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceB) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(prepareCost)) {
               prepare();
               currentMp -= prepareCost;
@@ -212,7 +233,7 @@ public class Ninja extends Character {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceC) {
+          } else if (skillAction.equals("f")) {
             if (checkMp(animeCost)) {
               damage = animeCut(eHp);
               act += 1;
@@ -221,10 +242,10 @@ public class Ninja extends Character {
             } else {
               invalidMp();
             }
-          } else if (skillAction == choiceD) {
+          } else if (skillAction.equals("g")) {
             damage = ninjaAttack(eDef, eHp);
           }
-        } else if (action == choiceC) {
+        } else if (choice.equals("f")) {
           System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += choiceC;
@@ -236,7 +257,7 @@ public class Ninja extends Character {
         System.out.println("That is not a viable input.");
       }
     }
-    return damage;
+  return damage;
   }
 
   /**
@@ -255,6 +276,41 @@ public class Ninja extends Character {
   */
   public void invalidMp() {
     System.out.println("Not enough Mp!");
+  }
+
+  /**
+  * The help method.
+  */
+  public void help() {
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("HP (health points): how much damage you can take"
+      + " before losing.");
+    System.out.println("MP (mana points): spent when activating skills, "
+      + "regained after killing a monster.");
+    System.out.println("Strength: used when dealing damage"
+      + " through you physically touching the enemy.");
+    System.out.println("Magic: used when dealing damage with"
+      + " any sort of special created object.");
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, frost deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("Hint: The name of the monster gives "
+      + "info on their type.");
+    System.out.println("\nSkills:");
+    System.out.println("Prepare: Increases strength and "
+      + "magic slightly for one attack.");
+    System.out.println("Multislash: A flurry of strikes,"
+      + " dealing massive damage.");
+    System.out.println("Animecut: The anime sword strike, "
+      + "sacrificing all your MP in exchange for huge damage.");
+    System.out.println("\nTo view this again, input 'h'"
+      + " when choosing your action.");
+    System.out.println("Press enter to continue");
+    String waiting = userInput.nextLine();
   }
 
   /**

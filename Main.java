@@ -1,7 +1,6 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
-final class Battle {
+final class Main {
 
   /**
   * Prevent instantiation
@@ -11,7 +10,7 @@ final class Battle {
   * @throws IllegalStateException
   *
   */
-  private Battle() {
+  private Main() {
     throw new IllegalStateException("Cannot be initiated.");
   }
 
@@ -23,6 +22,7 @@ final class Battle {
   */
   public static void main(final String[] args) {
     final int choiceA = 1;
+    int battle = 0;
     final int choiceB = 2;
     final int choiceC = 3;
     final int choiceD = 4;
@@ -39,7 +39,7 @@ final class Battle {
     Boss boss = new Boss();
     Finale finalBoss = new Finale();
     Actions act = new Actions();
-    act.help();
+    act.basics();
     while (true) {
       int enemyHp = 0;
       int enemyDef = 0;
@@ -66,7 +66,6 @@ final class Battle {
         type = monster.getType();
       }
       int playerHp = user.getHp();
-      int playerMp = user.getMp();
       int playerDef = user.getDef();
       final Scanner userInput = new Scanner(System.in);
       String name = monster.getName();
@@ -75,31 +74,31 @@ final class Battle {
       }
       if (newClass == choiceA) {
         playerHp = knight.getHp();
-        playerMp = knight.getMp();
         playerDef = knight.getDef();
       } else if (newClass == choiceB) {
         playerHp = mage.getHp();
-        playerMp = mage.getMp();
         playerDef = mage.getDef();
       } else if (newClass == choiceC) {
         playerHp = ninja.getHp();
-        playerMp = ninja.getMp();
         playerDef = ninja.getDef();
       }
       while (playerHp >= 1 && enemyHp >= 1) {
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
-        act.showHp(name, enemyCurrentHp, playerHp, playerMp);
         if (newClass == 0) {
+          user.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = user.playerAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceA) {
+          knight.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = knight.knightAttack(enemyDef);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceB) {
+          mage.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = mage.mageAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
         } else if (newClass == choiceC) {
+          ninja.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = ninja.ninjaAttack(((enemyDef + enemyMdf) / choiceB),
             enemyCurrentHp);
           enemyHp -= dmgDealt;
@@ -132,6 +131,7 @@ final class Battle {
       }
     }
     boolean decision = true;
+    boolean cont = true;
     if (finalBattle) {
       System.out.println("You win!");
       System.exit(0);
@@ -140,13 +140,16 @@ final class Battle {
     }
     while (decision) {
       int warning = monster.getLevel();
-      System.out.println("Continue?: (1/0)");
+      System.out.println("\nYou defeated the monster.");
+      System.out.println("Continue?: (y)es/(n)o");
       if ((warning + 1) % checkBoss == 0) {
         System.out.println("Warning! Boss battle ahead!");
       }
-      try {
-        int battle = userInput.nextInt();
-        if (battle == 1) {
+      int battleChoice = 0;
+      while (battleChoice == 0) {
+        cont = act.continueBattle();
+        if (cont) {
+          decision = false;
           bossBattle = false;
           monster.levelUp();
           user.levelUp();
@@ -157,15 +160,11 @@ final class Battle {
           } else if (newClass == choiceC) {
             ninja.levelUp();
           }
-          decision = false;
-        } else if (battle == 0) {
+          battleChoice = 1;
+        } else {
           System.out.println("Game ended.");
           System.exit(0);
-        } else {
-          System.out.println("Invalid input, please input real value.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
       }
     }
   }

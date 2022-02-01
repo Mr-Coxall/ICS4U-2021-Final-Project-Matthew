@@ -24,42 +24,123 @@ public class Actions {
   private final int choiceD = 4;
 
   /**
-  * The showHp method.
-  *
-  * @param enemyName the enemy name
-  * @param enemyHp the enemy hp value.
-  * @param playerHp the player's hp value.
-  * @param playerMp the player's mp value.
+  * The Knight's starting strength.
   */
-  public void showHp(final String enemyName, final int enemyHp,
-    final int playerHp, final int playerMp) {
-    System.out.println(enemyName + " hp: " + enemyHp);
-    System.out.println("\nPlayer hp: " + playerHp);
-    System.out.println("Player mp: " + playerMp);
+  private final int knightStr = 10;
+
+  /**
+  * The Knight's starting defence.
+  */
+  private final int knightDef = 8;
+
+  /**
+  * The Knight's starting health.
+  */
+  private final int knightHp = 50;
+
+  /**
+  * The Knight's starting mp.
+  */
+  private final int knightMp = 4;
+
+  /**
+  * The Knight's starting intelligence.
+  */
+  private final int knightInt = 2;
+
+  /**
+  * The Mage's starting intelligence.
+  */
+  private final int mageInt = 12;
+
+  /**
+  * The Mage's starting strength.
+  */
+  private final int mageStr = 4;
+
+  /**
+  * The Mage's starting defence.
+  */
+  private final int mageDef = 4;
+
+  /**
+  * The Mage's starting health.
+  */
+  private final int mageHp = 35;
+
+  /**
+  * The Mage's starting intelligence.
+  */
+  private final int mageMp = 20;
+
+  /**
+  * The ninja's starting health.
+  */
+  private final int ninjaHp = 40;
+
+  /**
+  * The ninja's starting offensive values.
+  */
+  private final int ninjaOffense = 8;
+
+  /**
+  * The ninja's starting defensive values.
+  */
+  private final int ninjaDefence = 6;
+
+  /**
+  * The basics method, used for basic info.
+  */
+  public void basics() {
+    final Scanner userInput = new Scanner(System.in);
+    System.out.println("Welcome to Battle Blitz!");
+    System.out.println("\nWelcome trainee, to the arena! Here "
+      + "we will see if you are ready to join the army.");
+    System.out.println("You will fight 10 monsters in a row, "
+      + "defeat all 10 to pass the exam and join the kingdom's army!");
+    System.out.println("After the 5th fight, you will choose a guild"
+      + " to join, learning their special skills and tactics!");
+    System.out.println("\nSome basic information:");
+    System.out.println("HP (health points): how much damage you can take"
+      + " before losing. It is refilled after killing a monster.");
+    System.out.println("MP (mana points): spent when activating skills, "
+      + "regained after killing a monster.");
+    System.out.println("Strength: used when dealing damage"
+      + " through you physically touching the enemy.");
+    System.out.println("Magic: used when dealing damage with"
+      + " any sort of magically created object.");
+    System.out.println("\nAll monsters will have 1 of 4 types: "
+      + "fire, frost, lightning, or neutral.");
+    System.out.println("Based on the type of the monster, "
+      + "they will take more or less damage from certain skills.");
+    System.out.println("Elemental damage: Fire damage deals extra to "
+      + "frost enemies, frost deals extra "
+      + "to lightning, and lightning does extra to fire.");
+    System.out.println("\nBasic actions:");
+    System.out.println("\nAttack: deals physical damage to the enemy.");
+    System.out.println("Skills: Fireball: Shoot a ball of fire at "
+      + "the enemy, dealing magic fire damage");
+    System.out.println("Skills: Zap: Shoot a small burst of "
+      + "electricity at the enemy, dealing magic lightning damage.");
+    System.out.println("Skills: Frostblast: Shoot a freezing blast"
+      + " at the enemy, dealing magic frost damage.");
+    System.out.println("Defend: Raise your guard, temporary"
+      + " increasing your defence for one enemy attack.");
+    System.out.println("\nUse your SDF keys for choosing what you want"
+      + " to do, then press enter to confirm your choice.");
+    System.out.println("To open the help menu, input 'h' "
+      + "into the action spot.");
+    System.out.println("Press enter to begin");
+    String waiting = userInput.nextLine();
   }
 
   /**
-  * The help method, used to show the help menu.
+  * The reminder method, used when choosing the mage advanced class.
   */
-  public void help() {
-    final Scanner userInput = new Scanner(System.in);
-    System.out.println("Help:");
-    System.out.println("Attack: deal damage up to half your strength "
-      + "plus your strength minus enemy defence.");
-    System.out.println("Skills: Fireball: deal fire damage equal to "
-      + "half your intelligence plus intelligence "
-      + "minus enemy magic defence.");
-    System.out.println("Skills: Zap: Same formula as "
-      + "Fireball, but deals lightning damage.");
-    System.out.println("Skills: Frostblast: Same as Fireball,"
-      + " but deals frost damage.");
-    System.out.println("Defend:Increases defence by "
-      + "3 for one enemy attack.");
-    System.out.println("Elemental damage: Fire damage deals extra to "
-      + "frost enemies, lightning deals extra "
-      + "to fire, and frost does extra to lightning.");
-    System.out.println("Press enter to continue");
-    String waiting = userInput.nextLine();
+  public void reminder() {
+    System.out.println("Remember, Fire is strong against ice, "
+      + "ice is strong against lightning, and lightning is strong "
+      + "against fire.");
   }
 
   /**
@@ -123,7 +204,8 @@ public class Actions {
   public void classKnight() {
     System.out.println("Knight");
     System.out.println("High strength and defence, "
-      + "low mp and intelligence.");
+      + "low MP and magic.");
+    System.out.println("The Knight uses strength for skills.");
     System.out.println("Skills:");
     System.out.println("Slam: Attack the enemy, "
       + "negating a small amount of their defence while doing so.");
@@ -139,11 +221,12 @@ public class Actions {
   */
   public void classMage() {
     System.out.println("Mage");
-    System.out.println("High intelligence and MP, low strength and defence.");
+    System.out.println("High magic and MP, low strength and defence.");
     System.out.println("Skills:");
-    System.out.println("Inferno: Burn the enemy, dealing high fire damage.");
-    System.out.println("Thunder: Strike from the heavens, "
-      + "dealing mass lightning damage.");
+    System.out.println("Inferno: Incinerate the enemy, dealing large"
+      + " fire damage.");
+    System.out.println("Thunder: Call upon the storm gods,"
+      + " dealing large lightning damage.");
     System.out.println("Icicle Spear: Throw a spear of pure ice "
       + "at the enemy, dealing large ice damage "
       + "that negates a bit of their defences.");
@@ -155,15 +238,38 @@ public class Actions {
   */
   public void classNinja() {
     System.out.println("Ninja");
-    System.out.println("Balanced in all stats, uses both "
-      + "strength and intelligence for basic attack.");
+    System.out.println("Balanced in all stats, uses a magical sword "
+      + " that uses both strength and magic for its attacks.");
     System.out.println("Skills:");
     System.out.println("Prepare: Increases strength and "
-      + "intelligence slightly for one attack.");
+      + "magic slightly for one attack.");
     System.out.println("Multislash: A flurry of strikes,"
       + " dealing massive damage.");
     System.out.println("Animecut: The anime sword strike, "
       + "sacrificing all your MP in exchange for huge damage.");
+  }
+
+  /**
+  * The continueBattle method.
+  *
+  * @return true or false.
+  */
+  public boolean continueBattle() {
+    final Scanner userInput = new Scanner(System.in);
+    String battleContinue = "e";
+    int finish = 0;
+    while (finish == 0) {
+      battleContinue = userInput.nextLine();
+      battleContinue = battleContinue.toLowerCase();
+      if (battleContinue.equals("y") || battleContinue.equals("n")) {
+        finish = 1;
+      } else {
+        System.out.println("That is not a valid input.");
+        finish = 0;
+        System.out.println("Continue? (y/n)");
+      }
+    }
+    return battleContinue.equals("y");
   }
 
   /**
@@ -175,7 +281,9 @@ public class Actions {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;
     int classInput = 0;
-    System.out.println("Time to choose an advanced class! "
+    System.out.println("Time to choose a guild to join! "
+      + "Will you choose the steadfast knights, the spell-casting mages, "
+      + "or the stealthy ninjas? "
       + "(Warning: this decision cannot be changed later.)");
     System.out.println("Knight(1)");
     System.out.println("Mage(2)");
@@ -190,6 +298,7 @@ public class Actions {
           classKnight();
         } else if (classInput == choiceB) {
           classMage();
+          reminder();
         } else if (classInput == choiceC) {
           classNinja();
         }
