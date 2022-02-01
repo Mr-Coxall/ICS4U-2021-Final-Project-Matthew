@@ -196,6 +196,7 @@ public class Ninja extends Player {
     String skillAction = "0";
     int damage = 0;
     int act = 0;
+    int skillAct = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
@@ -208,35 +209,44 @@ public class Ninja extends Player {
         damage = attack(eDef);
         act += 1;
       } else if (choice.equals("s")) {
-        ninjaSkills();
-        skillAction = userInput.nextLine();
-        skillAction = skillAction.toLowerCase();
-        if (skillAction.equals("a")) {
-          if (checkMp(multislashCost)) {
-            damage = multislash(eDef);
-            act += 1;
-            currentMp -= multislashCost;
+        skillAct = 0;
+        while (skillAct == 0) {
+          ninjaSkills();
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
+          if (skillAction.equals("a")) {
+            if (checkMp(multislashCost)) {
+              damage = multislash(eDef);
+              act += 1;
+              currentMp -= multislashCost;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("s")) {
+            if (checkMp(prepareCost)) {
+              prepare();
+              currentMp -= prepareCost;
+              act += 1;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("d")) {
+            if (checkMp(animeCost)) {
+              damage = animeCut(eHp);
+              act += 1;
+              currentMp = 0;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
           } else {
-            invalidMp();
+            System.out.println("That is not a valid input.");
           }
-        } else if (skillAction.equals("s")) {
-          if (checkMp(prepareCost)) {
-            prepare();
-            currentMp -= prepareCost;
-            act += 1;
-          } else {
-            invalidMp();
-          }
-        } else if (skillAction.equals("d")) {
-          if (checkMp(animeCost)) {
-            damage = animeCut(eHp);
-            act += 1;
-            currentMp = 0;
-          } else {
-            invalidMp();
-          }
-        } else if (skillAction.equals("f")) {
-          damage = 0;
         }
       } else if (choice.equals("d")) {
         System.out.println("You steeled yourself "
@@ -370,7 +380,7 @@ public class Ninja extends Player {
     def += 1;
     mdf += 1;
     currentMp = mp;
-    System.out.println("Levelup!");
+    System.out.println("Level up!");
     System.out.println("Your max HP increased by " + hpUp + "!");
     System.out.println("Your max MP increased by 2!");
     System.out.println("Your strength increased by 2!");

@@ -190,6 +190,7 @@ public class Knight extends Player {
     String choice = "0";
     String skillAction = "0";
     int damage = 0;
+    int skillAct = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
@@ -203,35 +204,44 @@ public class Knight extends Player {
         damage = attack(eDef);
         act += 1;
       } else if (choice.equals("s")) {
-        knightSkills();
-        skillAction = userInput.nextLine();
-        skillAction = skillAction.toLowerCase();
-        if (skillAction.equals("a")) {
-          if (checkMp(slamCost)) {
-            damage = slam(eDef);
-            act += 1;
-            newMp -= slamCost;
+        skillAct = 0;
+        while (skillAct == 0) {
+          knightSkills();
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
+          if (skillAction.equals("a")) {
+            if (checkMp(slamCost)) {
+              damage = slam(eDef);
+              act += 1;
+              newMp -= slamCost;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("s")) {
+            if (checkMp(piercestrikeCost)) {
+              damage = piercingStrike();
+              newMp -= piercestrikeCost;
+              act += 1;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("d")) {
+            if (checkMp(frenzyCost)) {
+              frenzy();
+              newMp -= frenzyCost;
+              act += 1;
+              skillAct += 1;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
           } else {
-            invalidMp();
+            System.out.println("That is not a valid input.");
           }
-        } else if (skillAction.equals("s")) {
-          if (checkMp(piercestrikeCost)) {
-            damage = piercingStrike();
-            newMp -= piercestrikeCost;
-            act += 1;
-          } else {
-            invalidMp();
-          }
-        } else if (skillAction.equals("d")) {
-          if (checkMp(frenzyCost)) {
-            frenzy();
-            newMp -= frenzyCost;
-            act += 1;
-          } else {
-            invalidMp();
-          }
-        } else if (skillAction.equals("f")) {
-          damage = 0;
         }
       } else if (choice.equals("d")) {
         System.out.println("You steeled yourself "
@@ -404,7 +414,7 @@ public class Knight extends Player {
     def += 1;
     mdf += 1;
     newMp = mp;
-    System.out.println("Levelup!");
+    System.out.println("Level up!");
     System.out.println("Your max HP increased by " + hpUp + "!");
     System.out.println("Your max MP increased by 1!");
     System.out.println("Your strength increased by " + strUp + "!");

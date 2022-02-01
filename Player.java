@@ -147,6 +147,7 @@ public class Player extends Character {
     tempDef = 0;
     String choice = "0";
     String skillAction = "0";
+    int skillAct = 0;
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
@@ -161,27 +162,44 @@ public class Player extends Character {
         damage = attack(eDef);
         act += 1;
       } else if (choice.equals("s")) {
-        skills();
-        skillAction = userInput.nextLine();
-        skillAction = skillAction.toLowerCase();
-        if (currentMp >= spellCost) {
+        skillAct = 0;
+        while (skillAct == 0) {
+          skills();
+          skillAction = userInput.nextLine();
+          skillAction = skillAction.toLowerCase();
           if (skillAction.equals("a")) {
-            damage = fireball(eMdf, type);
-            act += 1;
-            currentMp -= spellCost;
+            if (currentMp >= spellCost) {
+              damage = fireball(eMdf, type);
+              act += 1;
+              skillAct += 1;
+              currentMp -= spellCost;
+            } else {
+              invalidMp();
+            }
           } else if (skillAction.equals("s")) {
-            damage = zap(eMdf, type);
-            act += 1;
-            currentMp -= spellCost;
+            if (currentMp >= spellCost) {
+              damage = zap(eMdf, type);
+              act += 1;
+              skillAct += 1;
+              currentMp -= spellCost;
+            } else {
+              invalidMp();
+            }
           } else if (skillAction.equals("d")) {
+            if (currentMp >= spellCost) {
             damage = frostblast(eMdf, type);
             act += 1;
+            skillAct += 1;
             currentMp -= spellCost;
+            } else {
+              invalidMp();
+            }
           } else if (skillAction.equals("f")) {
             damage = 0;
+            skillAct += 1;
+          } else {
+            System.out.println("That is not a valid input.");
           }
-        } else {
-          invalidMp();
         }
       } else if (choice.equals("d")) {
         System.out.println("You raised your guard!");
@@ -352,7 +370,7 @@ public class Player extends Character {
     mdf += 1;
     hp += hpUp;
     currentMp = mp;
-    System.out.println("Levelup!");
+    System.out.println("Level up!");
     System.out.println("Your max HP increased by " + hpUp + "!");
     System.out.println("Your max MP increased by 1!");
     System.out.println("Your strength increased by 2!");

@@ -226,7 +226,7 @@ public class Actions {
   * The clear method clears the screen of unneeded text.
   */
   public void clear() {
-    System.out.print("\033[H\033[2J");  
+    System.out.print("\033[H\033[2J");
     System.out.flush();
   }
 
@@ -276,8 +276,7 @@ public class Actions {
             decision = 0;
           } else {
             System.out.println("That is not a valid input");
-            decision = 0;
-            classChoice = classChange();
+            decision = 1;
           }
         }
       }
@@ -285,6 +284,11 @@ public class Actions {
     return classChoice;
   }
 
+  /**
+  * The ending method.
+  *
+  * @param guideChoice the guild you chose earlier.
+  */
   public void ending(final int guideChoice) {
     String guildEntered = "";
     if (guideChoice == 1) {
@@ -295,9 +299,9 @@ public class Actions {
       guildEntered = "ninja";
     }
     System.out.println("As the amalgamation falls, the arena doors open"
-      + " allowing you to exit. The " + guildEntered + " captain greets " 
+      + " allowing you to exit. The " + guildEntered + " captain greets "
       + "you, praising you for your excellent fighting skills."
-      + " He brings you to the sleeping quarters, telling" 
+      + " He brings you to the sleeping quarters, telling"
       + " you to get a good rest.");
     System.out.println("\nYou win!");
   }
