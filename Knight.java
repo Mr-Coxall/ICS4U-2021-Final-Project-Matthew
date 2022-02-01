@@ -202,7 +202,6 @@ public class Knight extends Player {
       } else if (choice.equals("a")) {
         damage = attack(eDef);
         act += 1;
-        attackDamage(damage);
       } else if (choice.equals("s")) {
         knightSkills();
         skillAction = userInput.nextLine();
@@ -212,7 +211,6 @@ public class Knight extends Player {
             damage = slam(eDef);
             act += 1;
             newMp -= slamCost;
-            attackDamage(damage);
           } else {
             invalidMp();
           }
@@ -221,7 +219,6 @@ public class Knight extends Player {
             damage = piercingStrike();
             newMp -= piercestrikeCost;
             act += 1;
-            attackDamage(damage);
           } else {
             invalidMp();
           }
@@ -234,7 +231,7 @@ public class Knight extends Player {
             invalidMp();
           }
         } else if (skillAction.equals("f")) {
-          damage = knightAttack(eDef);
+          damage = 0;
         }
       } else if (choice.equals("d")) {
         System.out.println("You steeled yourself "
@@ -245,6 +242,9 @@ public class Knight extends Player {
         System.out.println("That isn't a viable input.");
       }
     }
+  if (damage >= 1) {
+    attackDamage(damage);
+  }
   return damage;
   }
 

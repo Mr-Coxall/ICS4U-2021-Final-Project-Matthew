@@ -10,7 +10,7 @@ public class Finale extends Character {
   /**
   * The starting strength value of the final boss.
   */
-  private final int str = 20;
+  private final int str = 15;
 
   /**
   * The starting intelligence value of the final boss.
@@ -25,7 +25,7 @@ public class Finale extends Character {
   /**
   * The starting mdf value of the final boss.
   */
-  private final int mdf = 10;
+  private final int mdf = 12;
 
   /**
   * The typing of the boss.

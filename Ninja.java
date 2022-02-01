@@ -40,7 +40,7 @@ public class Ninja extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 50;
+  private final int startingHp = 55;
 
   /**
   * The base offensive (str, intel, mp) value.
@@ -206,9 +206,7 @@ public class Ninja extends Player {
         help();
       } else if (choice.equals("a")) {
         damage = attack(eDef);
-        prep = 0;
         act += 1;
-        attackDamage(damage);
       } else if (choice.equals("s")) {
         ninjaSkills();
         skillAction = userInput.nextLine();
@@ -218,8 +216,6 @@ public class Ninja extends Player {
             damage = multislash(eDef);
             act += 1;
             currentMp -= multislashCost;
-            attackDamage(damage);
-            prep = 0;
           } else {
             invalidMp();
           }
@@ -228,7 +224,6 @@ public class Ninja extends Player {
             prepare();
             currentMp -= prepareCost;
             act += 1;
-            attackDamage(damage);
           } else {
             invalidMp();
           }
@@ -237,12 +232,11 @@ public class Ninja extends Player {
             damage = animeCut(eHp);
             act += 1;
             currentMp = 0;
-            attackDamage(damage);
           } else {
             invalidMp();
           }
         } else if (skillAction.equals("f")) {
-          damage = ninjaAttack(eDef, eHp);
+          damage = 0;
         }
       } else if (choice.equals("d")) {
         System.out.println("You steeled yourself "
@@ -253,6 +247,9 @@ public class Ninja extends Player {
         System.out.println("That isn't a viable input.");
       }
     }
+  if (damage >= 1) {
+    attackDamage(damage);
+  }
   return damage;
   }
 

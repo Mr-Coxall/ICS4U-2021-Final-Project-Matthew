@@ -127,7 +127,7 @@ final class Main {
       boolean decision = true;
       boolean cont = true;
       if (finalBattle) {
-        System.out.println("You win!");
+        act.ending(newClass);
         System.exit(0);
       }
       while (decision) {

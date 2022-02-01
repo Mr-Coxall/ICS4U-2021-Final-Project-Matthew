@@ -160,7 +160,6 @@ public class Player extends Character {
       } else if (choice.equals("a")) {
         damage = attack(eDef);
         act += 1;
-        attackDamage(damage);
       } else if (choice.equals("s")) {
         skills();
         skillAction = userInput.nextLine();
@@ -170,19 +169,16 @@ public class Player extends Character {
             damage = fireball(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("s")) {
             damage = zap(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("d")) {
             damage = frostblast(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("f")) {
-            damage = playerAttack(eDef, eMdf, type);
+            damage = 0;
           }
         } else {
           invalidMp();
@@ -194,6 +190,9 @@ public class Player extends Character {
       } else {
         System.out.println("That isn't a viable input.");
       }
+    }
+    if (damage >= 1) {
+      attackDamage(damage);
     }
     return damage;
   }
@@ -240,8 +239,7 @@ public class Player extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int eDef) {
-    final int damage = 50;
-    //final int damage = super.attack(str, eDef) + 1;
+    final int damage = super.attack(str, eDef) + 1;
     return damage;
   }
 

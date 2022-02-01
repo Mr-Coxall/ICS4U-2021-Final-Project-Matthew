@@ -46,7 +46,7 @@ public class Mage extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 45;
+  private final int startingHp = 50;
 
   /**
   * The base mp value.
@@ -185,7 +185,6 @@ public class Mage extends Player {
       } else if (choice.equals("a")) {
         damage = attack(eDef);
         act += 1;
-        attackDamage(damage);
       } else if (choice.equals("s")) {
         mageSkills();
         skillAction = userInput.nextLine();
@@ -195,19 +194,16 @@ public class Mage extends Player {
             damage = inferno(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("s")) {
             damage = thunder(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("d")) {
             damage = icicleSpear(eMdf, type);
             act += 1;
             currentMp -= spellCost;
-            attackDamage(damage);
           } else if (skillAction.equals("f")) {
-            damage = mageAttack(eDef, eMdf, type);
+            damage = 0;
           }
         } else {
           invalidMp();
@@ -219,6 +215,9 @@ public class Mage extends Player {
       } else {
         System.out.println("That isn't a viable input.");
       }
+    }
+    if (damage >= 1) {
+      attackDamage(damage);
     }
     return damage;
   }

@@ -284,4 +284,21 @@ public class Actions {
     }
     return classChoice;
   }
+
+  public void ending(final int guideChoice) {
+    String guildEntered = "";
+    if (guideChoice == 1) {
+      guildEntered = "knight";
+    } else if (guideChoice == 2) {
+      guildEntered = "mage";
+    } else {
+      guildEntered = "ninja";
+    }
+    System.out.println("As the amalgamation falls, the arena doors open"
+      + " allowing you to exit. The " + guildEntered + " captain greets " 
+      + "you, praising you for your excellent fighting skills."
+      + " He brings you to the sleeping quarters, telling" 
+      + " you to get a good rest.");
+    System.out.println("\nYou win!");
+  }
 }
