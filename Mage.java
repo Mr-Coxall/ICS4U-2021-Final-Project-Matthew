@@ -131,7 +131,7 @@ public class Mage extends Player {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = currentMp;
-    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\n" + enemyName + " HP: " + enemyHp);
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);

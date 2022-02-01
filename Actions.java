@@ -245,10 +245,10 @@ public class Actions {
       + "Will you choose the steadfast knights, the spell-casting mages, "
       + "or the stealthy ninjas? "
       + "(Warning: this decision cannot be changed later.)");
-    System.out.println("Knight(A)");
-    System.out.println("Mage(S)");
-    System.out.println("Ninja(D)");
     while (classChoice == 0) {
+      System.out.println("Knight(A)");
+      System.out.println("Mage(S)");
+      System.out.println("Ninja(D)");
       classInput = userInput.nextLine();
       classInput = classInput.toLowerCase();
       if (classInput.equals("a")) {
@@ -261,6 +261,8 @@ public class Actions {
       } else if (classInput.equals("d")) {
         classNinja();
         decision = choiceC;
+      } else {
+        System.out.println("That is not a valid input");
       }
       while (decision != 0) {
         if (classInput.equals("a") || classInput.equals("s")
