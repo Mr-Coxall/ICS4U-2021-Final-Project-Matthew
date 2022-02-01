@@ -262,7 +262,7 @@ public class Actions {
         if (confirm.equals("y")) {
           classChoice = decision;
         } else if (confirm.equals("n")) {
-          classChoice = classChange();
+          classChoice = 0;
         } else {
           System.out.println("That is not a valid input");
           classChoice = 0;
