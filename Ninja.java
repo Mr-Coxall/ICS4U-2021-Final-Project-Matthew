@@ -175,10 +175,10 @@ public class Ninja extends Player {
   */
   public void ninjaSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Multislash(S): 4Mp");
-    System.out.println("Prepare(D): 2Mp");
-    System.out.println("Animecut(F): AllMp (minimum of 6Mp required)");
-    System.out.println("Back(G)");
+    System.out.println("Multislash(A): 4Mp");
+    System.out.println("Prepare(S): 2Mp");
+    System.out.println("Animecut(D): AllMp (minimum of 6Mp required)");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -205,16 +205,16 @@ public class Ninja extends Player {
         choice = choice.toLowerCase();
         if (choice.equals("h")) {
           help();
-        } else if (choice.equals("s")) {
+        } else if (choice.equals("a")) {
           damage = attack(eDef);
           prep = 0;
           act += 1;
           attackDamage(damage);
-        } else if (choice.equals("d")) {
+        } else if (choice.equals("s")) {
           ninjaSkills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
-          if (skillAction.equals("s")) {
+          if (skillAction.equals("a")) {
             if (checkMp(multislashCost)) {
               damage = multislash(eDef);
               act += 1;
@@ -224,7 +224,7 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("d")) {
+          } else if (skillAction.equals("s")) {
             if (checkMp(prepareCost)) {
               prepare();
               currentMp -= prepareCost;
@@ -233,7 +233,7 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("f")) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(animeCost)) {
               damage = animeCut(eHp);
               act += 1;
@@ -242,10 +242,10 @@ public class Ninja extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("g")) {
+          } else if (skillAction.equals("f")) {
             damage = ninjaAttack(eDef, eHp);
           }
-        } else if (choice.equals("f")) {
+        } else if (choice.equals("d")) {
           System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += choiceC;
@@ -370,6 +370,12 @@ public class Ninja extends Player {
     def += 1;
     mdf += 1;
     currentMp = mp;
+    System.out.println("Levelup!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 2!");
+    System.out.println("Your strength increased by 2!");
+    System.out.println("Your magic increased by 2!");
+    System.out.println("Your defence increased by 1!");
   }
 
   /**

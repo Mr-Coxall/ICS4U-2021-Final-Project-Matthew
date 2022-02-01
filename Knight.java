@@ -146,8 +146,8 @@ public class Knight extends Player {
     System.out.println("\nSkills:");
     System.out.println("Slam(A): 1MP");
     System.out.println("Piercing Strike(S): 3MP");
-    System.out.println("Frenzy(F): 4MP");
-    System.out.println("Back(G)");
+    System.out.println("Frenzy(D): 4MP");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -200,15 +200,15 @@ public class Knight extends Player {
         choice = choice.toLowerCase();
         if (choice.equals("h")) {
           help();
-        } else if (choice.equals("s")) {
+        } else if (choice.equals("a")) {
           damage = attack(eDef);
           act += 1;
           attackDamage(damage);
-        } else if (choice.equals("d")) {
+        } else if (choice.equals("s")) {
           knightSkills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
-          if (skillAction.equals("s")) {
+          if (skillAction.equals("a")) {
             if (checkMp(slamCost)) {
               damage = slam(eDef);
               act += 1;
@@ -217,7 +217,7 @@ public class Knight extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("d")) {
+          } else if (skillAction.equals("s")) {
             if (checkMp(piercestrikeCost)) {
               damage = piercingStrike();
               newMp -= piercestrikeCost;
@@ -226,7 +226,7 @@ public class Knight extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("f")) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(frenzyCost)) {
               frenzy();
               newMp -= frenzyCost;
@@ -234,10 +234,10 @@ public class Knight extends Player {
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("g")) {
+          } else if (skillAction.equals("f")) {
             damage = knightAttack(eDef);
           }
-        } else if (choice.equals("f")) {
+        } else if (choice.equals("d")) {
           System.out.println("You steeled yourself "
             + "for the opponent's attack.");
           tempDef += choiceC;
@@ -330,11 +330,11 @@ public class Knight extends Player {
       + "info on their type.");
     System.out.println("\nThe Knight uses strength for skills.");
     System.out.println("Skills:");
-    System.out.println("Slam: Attack the enemy, "
+    System.out.println("    Slam: Attack the enemy, "
       + "negating a small amount of their defence while doing so.");
-    System.out.println("Piercing Strike: attack the enemy, completely "
-      + "negating their defence.");
-    System.out.println("Frenzy: sacrifice some of "
+    System.out.println("    Piercing Strike: attack the enemy,"
+      + " completely negating their defence.");
+    System.out.println("    Frenzy: sacrifice some of "
       + "your defence in exchange for more strength.");
     System.out.println("\nTo view this again, input 'h'"
       + " when choosing your action.");
@@ -407,6 +407,11 @@ public class Knight extends Player {
     def += 1;
     mdf += 1;
     newMp = mp;
+    System.out.println("Levelup!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 1!");
+    System.out.println("Your strength increased by " + strUp + "!");
+    System.out.println("Your defence increased by 1!");
   }
 
   /**

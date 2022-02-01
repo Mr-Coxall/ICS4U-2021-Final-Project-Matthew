@@ -94,39 +94,44 @@ public class Actions {
   public void basics() {
     final Scanner userInput = new Scanner(System.in);
     System.out.println("Welcome to Battle Blitz!");
-    System.out.println("\nWelcome trainee, to the arena! Here "
-      + "we will see if you are ready to join the army.");
-    System.out.println("You will fight 10 monsters in a row, "
-      + "defeat all 10 to pass the exam and join the kingdom's army!");
-    System.out.println("After the 5th fight, you will choose a guild"
-      + " to join, learning their special skills and tactics!");
-    System.out.println("\nSome basic information:");
-    System.out.println("HP (health points): how much damage you can take"
-      + " before losing. It is refilled after killing a monster.");
-    System.out.println("MP (mana points): spent when activating skills, "
-      + "regained after killing a monster.");
-    System.out.println("Strength: used when dealing damage"
-      + " through you physically touching the enemy.");
-    System.out.println("Magic: used when dealing damage with"
-      + " any sort of magically created object.");
-    System.out.println("\nAll monsters will have 1 of 4 types: "
-      + "fire, frost, lightning, or neutral.");
-    System.out.println("Based on the type of the monster, "
-      + "they will take more or less damage from certain skills.");
-    System.out.println("Elemental damage: Fire damage deals extra to "
-      + "frost enemies, frost deals extra "
-      + "to lightning, and lightning does extra to fire.");
+    System.out.println("\nWelcome trainee to the arena! Here "
+      + "we will see if you are ready to join the army."
+      + " You are tasked with fighting 10 monsters in a row. "
+      + "If you defeat all 10 you will become a new member "
+      + "of the kingdom's army!");
+    System.out.println("During the first 5 battles, you can use both "
+      + "your physical and magical abilities to defeat these monsters."
+      + " But behold, you have a limited amount of points so choose your"
+      + " attack wisely. Your points will be replenished after you"
+      + " successfully defeat a monster."
+      + " After the 5th fight, you will choose a guild"
+      + " to join, learning their special skills and tactics!"
+      + " You will get stronger as the fights go on, but be"
+      + " warned, the monsters will also get stronger as time goes on.");
+    System.out.println("\nHP (health points): Indicates the amount of "
+      + "damage you can take before losing.");
+    System.out.println("MP (mana points): The amount of points you have "
+      + "for your magical abilities. Refilled after defeating a monster.");
+    System.out.println("Strength stat : identifies how strong "
+      + "you are when you physically attack the enemy.");
+    System.out.println("Magic stat: identifies how "
+      + "strong your magical abilities are.");
+    System.out.println("\nThere are 4 types of monsters: fire, frost, " 
+      + "lightning, and neutral. The type of monster will impact your "
+      + "magic attacks. Eg. Fire is more effective against a frost "
+      + "monster compared to a lightning monster.");
     System.out.println("\nBasic actions:");
-    System.out.println("\nAttack: deals physical damage to the enemy.");
-    System.out.println("Skills: Fireball: Shoot a ball of fire at "
-      + "the enemy, dealing magic fire damage");
-    System.out.println("Skills: Zap: Shoot a small burst of "
+    System.out.println("Attack: inflict physical damage on the monster.");
+    System.out.println("Skills:");
+    System.out.println("   Fireball: Shoot a ball of fire at "
+      + "the enemy, dealing magic fire damage.");
+    System.out.println("   Zap: Shoot a small burst of "
       + "electricity at the enemy, dealing magic lightning damage.");
-    System.out.println("Skills: Frostblast: Shoot a freezing blast"
+    System.out.println("   Frostblast: Shoot a freezing blast"
       + " at the enemy, dealing magic frost damage.");
-    System.out.println("Defend: Raise your guard, temporary"
+    System.out.println("Defend: Raise your guard, temporarily"
       + " increasing your defence for one enemy attack.");
-    System.out.println("\nUse your SDF keys for choosing what you want"
+    System.out.println("\nUse your asdf keys for choosing what you want"
       + " to do, then press enter to confirm your choice.");
     System.out.println("To open the help menu, input 'h' "
       + "into the action spot.");
@@ -141,60 +146,6 @@ public class Actions {
     System.out.println("Remember, Fire is strong against ice, "
       + "ice is strong against lightning, and lightning is strong "
       + "against fire.");
-  }
-
-  /**
-  * The attacking method, used for the basic class' attack menu.
-  *
-  * @return action choice.
-  */
-  public int attacking() {
-    int action = 0;
-    final Scanner userInput = new Scanner(System.in);
-    int input = 0;
-    try {
-      input = userInput.nextInt();
-      if (input <= 0 || input >= choiceD) {
-        System.out.println("That is not a viable input"
-          + " (must be 1, 2, or 3).");
-      } else if (input == choiceA) {
-        action = choiceA;
-      } else if (input == choiceB) {
-        action = choiceB;
-      } else {
-        action = choiceC;
-      }
-    } catch (InputMismatchException errorCode) {
-      System.out.println("That is not a viable input.");
-    }
-    return action;
-  }
-
-  /**
-  * The skillAction method, used for the basic class' skill menu.
-  *
-  * @return skill choice.
-  */
-  public int skillAction() {
-    int action = 0;
-    final Scanner userInput = new Scanner(System.in);
-    int skillInput = 0;
-    try {
-      skillInput = userInput.nextInt();
-      if (skillInput <= 0 || skillInput > choiceD) {
-        System.out.println("That is not a viable input"
-          + " (must be 1, 2, 3, or 4).");
-      } else if (skillInput == choiceA) {
-        action = choiceA;
-      } else if (skillInput == choiceB) {
-        action = choiceB;
-      } else if (skillInput == choiceC) {
-        action = choiceC;
-      }
-    } catch (InputMismatchException errorCode) {
-      System.out.println("That is not a viable input.");
-    }
-    return action;
   }
 
   /**
@@ -280,45 +231,41 @@ public class Actions {
   public int classChange() {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;
-    int classInput = 0;
+    String classInput = "0";
+    int decision = 0;
     System.out.println("Time to choose a guild to join! "
       + "Will you choose the steadfast knights, the spell-casting mages, "
       + "or the stealthy ninjas? "
       + "(Warning: this decision cannot be changed later.)");
-    System.out.println("Knight(1)");
-    System.out.println("Mage(2)");
-    System.out.println("Ninja(3)");
+    System.out.println("Knight(A)");
+    System.out.println("Mage(S)");
+    System.out.println("Ninja(D)");
     while (classChoice == 0) {
-      try {
-        classInput = userInput.nextInt();
-        if (classInput <= 0 || classInput >= choiceD) {
-          System.out.println("That is not a viable input"
-            + " (must be 1, 2, or 3).");
-        } else if (classInput == choiceA) {
-          classKnight();
-        } else if (classInput == choiceB) {
-          classMage();
-          reminder();
-        } else if (classInput == choiceC) {
-          classNinja();
-        }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
+      classInput = userInput.nextLine();
+      classInput = classInput.toLowerCase();
+      if (classInput.equals("a")) {
+        classKnight();
+        decision = 1;
+      } else if (classInput.equals("s")) {
+        classMage();
+        decision = 2;
+        reminder();
+      } else if (classInput.equals("d")) {
+        classNinja();
+        decision = 3;
       }
-      if (classInput <= choiceC && classInput >= choiceA) {
-        System.out.println("Confirm (1/0)");
-        try {
-          int confirm = userInput.nextInt();
-          if (confirm == choiceA) {
-            classChoice = classInput;
-          } else if (confirm == 0) {
-            classChoice = classChange();
-          } else {
-            System.out.println("That is not a valid input");
-            classChoice = 0;
-          }
-        } catch (InputMismatchException errorCode) {
-          System.out.println("That is not a viable input.");
+      if (classInput.equals("a") || classInput.equals("s")
+        || classInput.equals("d")) {
+        System.out.println("Confirm: (y)es/(n)o");
+        String confirm = userInput.nextLine();
+        confirm = confirm.toLowerCase();
+        if (confirm.equals("y")) {
+          classChoice = decision;
+        } else if (confirm.equals("n")) {
+          classChoice = classChange();
+        } else {
+          System.out.println("That is not a valid input");
+          classChoice = 0;
         }
       }
     }

@@ -116,9 +116,9 @@ public class Player extends Character {
   * The actions method, used to show the basic actions.
   */
   public void actions() {
-    System.out.println("Attack(S)");
-    System.out.println("Skills(D)");
-    System.out.println("Defend(F)");
+    System.out.println("Attack(A)");
+    System.out.println("Skills(S)");
+    System.out.println("Defend(D)");
     System.out.println("Your turn: ");
   }
 
@@ -127,10 +127,10 @@ public class Player extends Character {
   */
   public void skills() {
     System.out.println("\nSkills:");
-    System.out.println("Fireball(S): 2MP");
-    System.out.println("Zap(D): 2MP");
-    System.out.println("Frostblast(F): 2MP");
-    System.out.println("Back(G)");
+    System.out.println("Fireball(A): 2MP");
+    System.out.println("Zap(S): 2MP");
+    System.out.println("Frostblast(D): 2MP");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -159,37 +159,37 @@ public class Player extends Character {
         choice = choice.toLowerCase();
         if (choice.equals("h")) {
           help();
-        } else if (choice.equals("s")) {
+        } else if (choice.equals("a")) {
           damage = attack(eDef);
           act += 1;
           attackDamage(damage);
-        } else if (choice.equals("d")) {
+        } else if (choice.equals("s")) {
           skills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
           if (currentMp >= spellCost) {
-            if (skillAction.equals("s")) {
+            if (skillAction.equals("a")) {
               damage = fireball(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction.equals("d")) {
+            } else if (skillAction.equals("s")) {
               damage = zap(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction.equals("f")) {
+            } else if (skillAction.equals("d")) {
               damage = frostblast(eMdf, type);
               act += 1;
               currentMp -= spellCost;
               attackDamage(damage);
-            } else if (skillAction.equals("g")) {
+            } else if (skillAction.equals("f")) {
               damage = playerAttack(eDef, eMdf, type);
             }
           } else {
             invalidMp();
           }
-        } else if (choice.equals("f")) {
+        } else if (choice.equals("d")) {
           tempDef += choiceC;
           act += 1;
         } else {
@@ -357,5 +357,11 @@ public class Player extends Character {
     mdf += 1;
     hp += hpUp;
     currentMp = mp;
+    System.out.println("Levelup!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 1!");
+    System.out.println("Your strength increased by 2!");
+    System.out.println("Your magic increased by 1!");
+    System.out.println("Your defence increased by 1!");
   }
 }
