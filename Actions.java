@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Actions {
 
@@ -116,7 +115,7 @@ public class Actions {
       + "you are when you physically attack the enemy.");
     System.out.println("Magic stat: identifies how "
       + "strong your magical abilities are.");
-    System.out.println("\nThere are 4 types of monsters: fire, frost, " 
+    System.out.println("\nThere are 4 types of monsters: fire, frost, "
       + "lightning, and neutral. The type of monster will impact your "
       + "magic attacks. Eg. Fire is more effective against a frost "
       + "monster compared to a lightning monster.");
@@ -252,7 +251,7 @@ public class Actions {
         reminder();
       } else if (classInput.equals("d")) {
         classNinja();
-        decision = 3;
+        decision = choiceC;
       }
       if (classInput.equals("a") || classInput.equals("s")
         || classInput.equals("d")) {
