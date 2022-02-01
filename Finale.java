@@ -10,7 +10,7 @@ public class Finale extends Character {
   /**
   * The starting strength value of the final boss.
   */
-  private final int str = 15;
+  private final int str = 18;
 
   /**
   * The starting intelligence value of the final boss.
@@ -25,7 +25,7 @@ public class Finale extends Character {
   /**
   * The starting mdf value of the final boss.
   */
-  private final int mdf = 12;
+  private final int mdf = 10;
 
   /**
   * The typing of the boss.
@@ -49,7 +49,7 @@ public class Finale extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int pDef) {
-    final int damage = super.attack(str, pDef);
+    final int damage = super.attack(str, pDef) + 2;
     System.out.println("The amalgamation dealt " + damage + " damage!");
     return damage;
   }

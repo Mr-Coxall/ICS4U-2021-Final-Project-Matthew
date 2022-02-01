@@ -56,7 +56,7 @@ public class Mage extends Player {
   /**
   * The base intel value.
   */
-  private final int startingIntel = 12;
+  private final int startingIntel = 14;
 
   /**
   * The base value for str, def, and mdf.
