@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Mage extends Player {
 
@@ -47,7 +46,7 @@ public class Mage extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 35;
+  private final int startingHp = 45;
 
   /**
   * The base mp value.
@@ -62,7 +61,12 @@ public class Mage extends Player {
   /**
   * The base value for str, def, and mdf.
   */
-  private final int startingBulk = 4;
+  private final int startingBulk = 6;
+
+  /**
+  * The mp value used for skills.
+  */
+  private int currentMp;
 
   /**
   * The no arguements mage constructor.
@@ -73,19 +77,15 @@ public class Mage extends Player {
     def = startingBulk;
     intel = startingIntel;
     hp = startingHp;
-    str = startingBulk;
+    str = (startingBulk - 2);
     mp = startingMp;
+    currentMp = startingMp;
   }
 
   /**
   * The temporary defence value.
   */
   private int tempDef = 0;
-
-  /**
-  * The mp value used for skills.
-  */
-  private int currentMp = mp;
 
   /**
   * The value used every time a 1 is needed.
@@ -178,49 +178,46 @@ public class Mage extends Player {
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("a")) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("s")) {
-          mageSkills();
-          skillAction = userInput.nextLine();
-          skillAction = skillAction.toLowerCase();
-          if (currentMp >= spellCost) {
-            if (skillAction.equals("a")) {
-              damage = inferno(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("s")) {
-              damage = thunder(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("d")) {
-              damage = icicleSpear(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("f")) {
-              damage = mageAttack(eDef, eMdf, type);
-            }
-          } else {
-            invalidMp();
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+        attackDamage(damage);
+      } else if (choice.equals("s")) {
+        mageSkills();
+        skillAction = userInput.nextLine();
+        skillAction = skillAction.toLowerCase();
+        if (currentMp >= spellCost) {
+          if (skillAction.equals("a")) {
+            damage = inferno(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("s")) {
+            damage = thunder(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("d")) {
+            damage = icicleSpear(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("f")) {
+            damage = mageAttack(eDef, eMdf, type);
           }
-        } else if (choice.equals("d")) {
-          tempDef += choiceC;
-          act += 1;
         } else {
-          System.out.println("That isn't a viable input.");
+          invalidMp();
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
+      } else if (choice.equals("d")) {
+        tempDef += choiceC;
+        System.out.println("You raised your guard!");
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
     }
     return damage;
@@ -254,7 +251,7 @@ public class Mage extends Player {
   * @return zapDmg the damage dealt.
   */
   public int thunder(final int eMdf, final String type) {
-    int zapDmg = super.zap(intel, eMdf);
+    int zapDmg = super.zap(intel, eMdf) + lvl;
     if (type.equals("fire")) {
       zapDmg = zapDmg * choiceC;
     } else if (type.equals("lightning")) {
@@ -272,7 +269,7 @@ public class Mage extends Player {
   * @return fireDmg the damage dealt.
   */
   public int inferno(final int eMdf, final String type) {
-    int fireDmg = super.fireball((intel + choiceC), eMdf);
+    int fireDmg = super.fireball((intel + choiceC), eMdf) + lvl;
     if (type.equals("ice")) {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
@@ -291,7 +288,7 @@ public class Mage extends Player {
   */
   public int icicleSpear(final int eMdf, final String type) {
     int frostDmg = super.frostblast((intel + choiceB),
-      (eMdf - choiceA));
+      (eMdf - choiceA)) + lvl;
     if (type.equals("lightning")) {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {

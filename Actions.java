@@ -223,6 +223,14 @@ public class Actions {
   }
 
   /**
+  * The clear method clears the screen of unneeded text.
+  */
+  public void clear() {
+    System.out.print("\033[H\033[2J");  
+    System.out.flush();
+  }
+
+  /**
   * The class change method, used for changing to one of the advanced classes.
   *
   * @return class value.
@@ -231,6 +239,7 @@ public class Actions {
     final Scanner userInput = new Scanner(System.in);
     int classChoice = 0;
     String classInput = "0";
+    String confirm = "0";
     int decision = 0;
     System.out.println("Time to choose a guild to join! "
       + "Will you choose the steadfast knights, the spell-casting mages, "
@@ -253,18 +262,23 @@ public class Actions {
         classNinja();
         decision = choiceC;
       }
-      if (classInput.equals("a") || classInput.equals("s")
+      while (decision != 0) {
+        if (classInput.equals("a") || classInput.equals("s")
         || classInput.equals("d")) {
-        System.out.println("Confirm: (y)es/(n)o");
-        String confirm = userInput.nextLine();
-        confirm = confirm.toLowerCase();
-        if (confirm.equals("y")) {
-          classChoice = decision;
-        } else if (confirm.equals("n")) {
-          classChoice = 0;
-        } else {
-          System.out.println("That is not a valid input");
-          classChoice = 0;
+          System.out.println("Confirm guild choice: (y)es/(n)o");
+          confirm = userInput.nextLine();
+          confirm = confirm.toLowerCase();
+          if (confirm.equals("n")) {
+            decision = 0;
+            classChoice = classChange();
+          } else if (confirm.equals("y")) {
+            classChoice = decision;
+            decision = 0;
+          } else {
+            System.out.println("That is not a valid input");
+            decision = 0;
+            classChoice = classChange();
+          }
         }
       }
     }

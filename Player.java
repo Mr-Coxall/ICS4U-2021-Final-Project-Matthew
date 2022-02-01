@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Player extends Character {
 
@@ -154,49 +153,46 @@ public class Player extends Character {
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("a")) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("s")) {
-          skills();
-          skillAction = userInput.nextLine();
-          skillAction = skillAction.toLowerCase();
-          if (currentMp >= spellCost) {
-            if (skillAction.equals("a")) {
-              damage = fireball(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("s")) {
-              damage = zap(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("d")) {
-              damage = frostblast(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("f")) {
-              damage = playerAttack(eDef, eMdf, type);
-            }
-          } else {
-            invalidMp();
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+        attackDamage(damage);
+      } else if (choice.equals("s")) {
+        skills();
+        skillAction = userInput.nextLine();
+        skillAction = skillAction.toLowerCase();
+        if (currentMp >= spellCost) {
+          if (skillAction.equals("a")) {
+            damage = fireball(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("s")) {
+            damage = zap(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("d")) {
+            damage = frostblast(eMdf, type);
+            act += 1;
+            currentMp -= spellCost;
+            attackDamage(damage);
+          } else if (skillAction.equals("f")) {
+            damage = playerAttack(eDef, eMdf, type);
           }
-        } else if (choice.equals("d")) {
-          tempDef += choiceC;
-          act += 1;
         } else {
-          System.out.println("That isn't a viable input.");
+          invalidMp();
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a valid input.");
+      } else if (choice.equals("d")) {
+        System.out.println("You raised your guard!");
+        tempDef += choiceC;
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
     }
     return damage;
@@ -244,7 +240,8 @@ public class Player extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int eDef) {
-    final int damage = super.attack(str, eDef) + lvl;
+    final int damage = 50;
+    //final int damage = super.attack(str, eDef) + 1;
     return damage;
   }
 

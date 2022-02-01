@@ -20,12 +20,12 @@ public class Boss extends Character {
   /**
   * The boss defence value.
   */
-  private final int def = 10;
+  private final int def = 7;
 
   /**
   * The boss magic defence value.
   */
-  private final int mdf = 10;
+  private final int mdf = 7;
 
   /**
   * The boss starting type.
