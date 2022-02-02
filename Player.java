@@ -283,6 +283,9 @@ public class Player extends Character {
     } else if (type.equals("lightning")) {
       fireDmg -= 2;
     }
+    if (fireDmg < 1) {
+      fireDmg = 1;
+    }
     return fireDmg;
   }
 
@@ -318,6 +321,9 @@ public class Player extends Character {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {
       frostDmg -= 2;
+    }
+    if (frostDmg < 1) {
+      frostDmg = 1;
     }
     return frostDmg;
   }
