@@ -208,7 +208,7 @@ public class Mage extends Player {
               act += 1;
               skillAct += 1;
               currentMp -= spellCost;
-            } 
+            }
           } else if (skillAction.equals("f")) {
             damage = 0;
             skillAct += 1;
@@ -281,6 +281,9 @@ public class Mage extends Player {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
       fireDmg -= choiceB;
+      if (fireDmg < 1) {
+        fireDmg = 1;
+      }
     }
     return fireDmg;
   }
@@ -300,6 +303,9 @@ public class Mage extends Player {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {
       frostDmg -= choiceB;
+    }
+    if (frostDmg < 1) {
+      frostDmg = 1;
     }
     return frostDmg;
   }
