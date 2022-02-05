@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Mage extends Player {
 
@@ -47,7 +46,7 @@ public class Mage extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 35;
+  private final int startingHp = 50;
 
   /**
   * The base mp value.
@@ -57,12 +56,17 @@ public class Mage extends Player {
   /**
   * The base intel value.
   */
-  private final int startingIntel = 12;
+  private final int startingIntel = 14;
 
   /**
   * The base value for str, def, and mdf.
   */
-  private final int startingBulk = 4;
+  private final int startingBulk = 6;
+
+  /**
+  * The mp value used for skills.
+  */
+  private int currentMp;
 
   /**
   * The no arguements mage constructor.
@@ -73,19 +77,15 @@ public class Mage extends Player {
     def = startingBulk;
     intel = startingIntel;
     hp = startingHp;
-    str = startingBulk;
+    str = (startingBulk - 2);
     mp = startingMp;
+    currentMp = startingMp;
   }
 
   /**
   * The temporary defence value.
   */
   private int tempDef = 0;
-
-  /**
-  * The mp value used for skills.
-  */
-  private int currentMp = mp;
 
   /**
   * The value used every time a 1 is needed.
@@ -131,7 +131,7 @@ public class Mage extends Player {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = currentMp;
-    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\n" + enemyName + " HP: " + enemyHp);
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
@@ -151,10 +151,10 @@ public class Mage extends Player {
   */
   public void mageSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Inferno(S): 5Mp");
-    System.out.println("Thunder(D): 5Mp");
-    System.out.println("Icicle Spear(F): 5Mp");
-    System.out.println("Back(G)");
+    System.out.println("Inferno(A): 5Mp");
+    System.out.println("Thunder(S): 5Mp");
+    System.out.println("Icicle Spear(D): 5Mp");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -173,55 +173,59 @@ public class Mage extends Player {
     String choice = "0";
     String skillAction = "0";
     int damage = 0;
+    int skillAct = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("s")) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("d")) {
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+      } else if (choice.equals("s")) {
+        skillAct = 0;
+        while (skillAct == 0) {
           mageSkills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
           if (currentMp >= spellCost) {
-            if (skillAction.equals("s")) {
+            if (skillAction.equals("a")) {
               damage = inferno(eMdf, type);
               act += 1;
+              skillAct += 1;
               currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("d")) {
+            } else if (skillAction.equals("s")) {
               damage = thunder(eMdf, type);
               act += 1;
+              skillAct += 1;
               currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("f")) {
+            } else if (skillAction.equals("d")) {
               damage = icicleSpear(eMdf, type);
               act += 1;
+              skillAct += 1;
               currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("g")) {
-              damage = mageAttack(eDef, eMdf, type);
             }
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
           } else {
             invalidMp();
           }
-        } else if (choice.equals("f")) {
-          tempDef += choiceC;
-          act += 1;
-        } else {
-          System.out.println("That isn't a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
+      } else if (choice.equals("d")) {
+        tempDef += choiceC;
+        System.out.println("You raised your guard!");
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
+    }
+    if (damage >= 1) {
+      attackDamage(damage);
     }
     return damage;
   }
@@ -254,7 +258,7 @@ public class Mage extends Player {
   * @return zapDmg the damage dealt.
   */
   public int thunder(final int eMdf, final String type) {
-    int zapDmg = super.zap(intel, eMdf);
+    int zapDmg = super.zap(intel, eMdf) + lvl;
     if (type.equals("fire")) {
       zapDmg = zapDmg * choiceC;
     } else if (type.equals("lightning")) {
@@ -272,11 +276,14 @@ public class Mage extends Player {
   * @return fireDmg the damage dealt.
   */
   public int inferno(final int eMdf, final String type) {
-    int fireDmg = super.fireball((intel + choiceC), eMdf);
+    int fireDmg = super.fireball((intel + choiceC), eMdf) + lvl;
     if (type.equals("ice")) {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
       fireDmg -= choiceB;
+      if (fireDmg < 1) {
+        fireDmg = 1;
+      }
     }
     return fireDmg;
   }
@@ -291,11 +298,14 @@ public class Mage extends Player {
   */
   public int icicleSpear(final int eMdf, final String type) {
     int frostDmg = super.frostblast((intel + choiceB),
-      (eMdf - choiceA));
+      (eMdf - choiceA)) + lvl;
     if (type.equals("lightning")) {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {
       frostDmg -= choiceB;
+    }
+    if (frostDmg < 1) {
+      frostDmg = 1;
     }
     return frostDmg;
   }
@@ -311,6 +321,11 @@ public class Mage extends Player {
     mdf += 1;
     hp += choiceC;
     currentMp = mp;
+    System.out.println("Level up!");
+    System.out.println("Your max HP increased by " + choiceC + "!");
+    System.out.println("Your max MP increased by " + mpUp + "!");
+    System.out.println("Your magic increased by 2!");
+    System.out.println("Your defence increased by 1!");
   }
 
   /**

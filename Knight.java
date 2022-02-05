@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Knight extends Player {
 
@@ -41,7 +40,7 @@ public class Knight extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 50;
+  private final int startingHp = 60;
 
   /**
   * The base mp value.
@@ -59,6 +58,11 @@ public class Knight extends Player {
   private final int startingBulk = 8;
 
   /**
+  * The newMp value is used for Mp checks.
+  */
+  private int newMp;
+
+  /**
   * The no arguements knight constructor.
   */
   public Knight() {
@@ -69,6 +73,7 @@ public class Knight extends Player {
     hp = startingHp;
     str = startingStr;
     mp = startingMp;
+    newMp = startingMp;
   }
 
   /**
@@ -118,11 +123,6 @@ public class Knight extends Player {
   private final int choiceD = 4;
 
   /**
-  * The newMp value is used for Mp checks.
-  */
-  private int newMp = mp;
-
-  /**
   * The value that strength increases by.
   */
   private final int strUp = 3;
@@ -146,8 +146,8 @@ public class Knight extends Player {
     System.out.println("\nSkills:");
     System.out.println("Slam(A): 1MP");
     System.out.println("Piercing Strike(S): 3MP");
-    System.out.println("Frenzy(F): 4MP");
-    System.out.println("Back(G)");
+    System.out.println("Frenzy(D): 4MP");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -160,7 +160,7 @@ public class Knight extends Player {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = newMp;
-    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\n" + enemyName + " HP: " + enemyHp);
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
@@ -174,7 +174,7 @@ public class Knight extends Player {
   * @param damage the damage amount.
   */
   public void attackDamage(final int damage) {
-    System.out.println("You dealt" + damage + " damage!");
+    System.out.println("You dealt " + damage + " damage!");
   }
 
   /**
@@ -190,65 +190,71 @@ public class Knight extends Player {
     String choice = "0";
     String skillAction = "0";
     int damage = 0;
+    int skillAct = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("s")) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("d")) {
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+      } else if (choice.equals("s")) {
+        skillAct = 0;
+        while (skillAct == 0) {
           knightSkills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
-          if (skillAction.equals("s")) {
+          if (skillAction.equals("a")) {
             if (checkMp(slamCost)) {
               damage = slam(eDef);
               act += 1;
               newMp -= slamCost;
-              attackDamage(damage);
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("d")) {
+          } else if (skillAction.equals("s")) {
             if (checkMp(piercestrikeCost)) {
               damage = piercingStrike();
               newMp -= piercestrikeCost;
               act += 1;
-              attackDamage(damage);
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("f")) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(frenzyCost)) {
               frenzy();
               newMp -= frenzyCost;
               act += 1;
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("g")) {
-            damage = knightAttack(eDef);
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
+          } else {
+            System.out.println("That is not a valid input.");
           }
-        } else if (choice.equals("f")) {
-          System.out.println("You steeled yourself "
-            + "for the opponent's attack.");
-          tempDef += choiceC;
-          act += 1;
-        } else {
-          System.out.println("That isn't a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
+      } else if (choice.equals("d")) {
+        System.out.println("You steeled yourself "
+          + "for the opponent's attack.");
+        tempDef += choiceC;
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
     }
+  if (damage >= 1) {
+    attackDamage(damage);
+  }
   return damage;
   }
 
@@ -278,7 +284,7 @@ public class Knight extends Player {
   * @return damage the damage dealt.
   */
   public int attack(final int eDef) {
-    final int damage = super.attack(str, eDef);
+    final int damage = super.attack(str, (eDef - 2));
     return damage;
   }
 
@@ -290,7 +296,8 @@ public class Knight extends Player {
   * @return damage the damage dealt.
   */
   public int slam(final int eDef) {
-    final int damage = super.attack(str, (eDef - choiceC));
+    final int defense = eDef - choiceC;
+    final int damage = super.attack(str, (defense - 1));
     return damage;
   }
 
@@ -330,11 +337,11 @@ public class Knight extends Player {
       + "info on their type.");
     System.out.println("\nThe Knight uses strength for skills.");
     System.out.println("Skills:");
-    System.out.println("Slam: Attack the enemy, "
+    System.out.println("    Slam: Attack the enemy, "
       + "negating a small amount of their defence while doing so.");
-    System.out.println("Piercing Strike: attack the enemy, completely "
-      + "negating their defence.");
-    System.out.println("Frenzy: sacrifice some of "
+    System.out.println("    Piercing Strike: attack the enemy,"
+      + " completely negating their defence.");
+    System.out.println("    Frenzy: sacrifice some of "
       + "your defence in exchange for more strength.");
     System.out.println("\nTo view this again, input 'h'"
       + " when choosing your action.");
@@ -407,6 +414,11 @@ public class Knight extends Player {
     def += 1;
     mdf += 1;
     newMp = mp;
+    System.out.println("Level up!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 1!");
+    System.out.println("Your strength increased by " + strUp + "!");
+    System.out.println("Your defence increased by 1!");
   }
 
   /**

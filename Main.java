@@ -21,7 +21,6 @@ final class Main {
   string of numbers.
   */
   public static void main(final String[] args) {
-    final int choiceA = 1;
     int battle = 0;
     final int choiceB = 2;
     final int choiceC = 3;
@@ -72,101 +71,99 @@ final class Main {
       if (finalBattle) {
         name = "Amalgamation";
       }
-      if (newClass == choiceA) {
+      if (newClass == 1) {
         playerHp = knight.getHp();
-        playerDef = knight.getDef();
       } else if (newClass == choiceB) {
         playerHp = mage.getHp();
-        playerDef = mage.getDef();
       } else if (newClass == choiceC) {
         playerHp = ninja.getHp();
-        playerDef = ninja.getDef();
       }
-      while (playerHp >= 1 && enemyHp >= 1) {
+      while (enemyHp >= 1) {
         int enemyCurrentHp = enemyHp;
         int tempDef = 0;
         if (newClass == 0) {
           user.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = user.playerAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
-        } else if (newClass == choiceA) {
+          playerDef = user.getDef();
+        } else if (newClass == 1) {
           knight.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = knight.knightAttack(enemyDef);
           enemyHp -= dmgDealt;
+          playerDef = knight.getDef();
         } else if (newClass == choiceB) {
           mage.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = mage.mageAttack(enemyDef, enemyMdf, type);
           enemyHp -= dmgDealt;
+          playerDef = mage.getDef();
         } else if (newClass == choiceC) {
           ninja.showHp(name, enemyCurrentHp, playerHp);
           dmgDealt = ninja.ninjaAttack(((enemyDef + enemyMdf) / choiceB),
             enemyCurrentHp);
           enemyHp -= dmgDealt;
+          playerDef = ninja.getDef();
         }
-      if (enemyHp >= 1 && (tempDef != 0 || enemyCurrentHp != enemyHp)) {
-        if (finalBattle) {
-          dmgDealt = finalBoss.attack(playerDef);
-          int healAmount = checkFinal;
-        }
-        if (bossBattle) {
-          dmgDealt = boss.attack(playerDef);
-          int healAmount = boss.heal();
-          System.out.println("The boss attacked for "
-            + dmgDealt + " damage!");
-          System.out.println("The boss regained "
-            + healAmount + " Hp!");
-        } else {
-          dmgDealt = monster.attack(playerDef);
-          System.out.println("The " + name + " attacked for "
-            + dmgDealt + " damage.");
-        }
-        playerHp = playerHp - dmgDealt;
-      }
-      if (finalBattle) {
-        if (enemyHp <= 0 && (tempDef != 0 || enemyCurrentHp != enemyHp)
-          && finalBoss.checkStage() != choiceB) {
-          enemyHp = finalBoss.revive();
-          System.out.println("The Amalgamation stood up, refusing to die!");
-        }
-      }
-    }
-    boolean decision = true;
-    boolean cont = true;
-    if (finalBattle) {
-      System.out.println("You win!");
-      System.exit(0);
-    } else if (bossBattle) {
-      newClass = act.classChange();
-    }
-    while (decision) {
-      int warning = monster.getLevel();
-      System.out.println("\nYou defeated the monster.");
-      System.out.println("Continue?: (y)es/(n)o");
-      if ((warning + 1) % checkBoss == 0) {
-        System.out.println("Warning! Boss battle ahead!");
-      }
-      int battleChoice = 0;
-      while (battleChoice == 0) {
-        cont = act.continueBattle();
-        if (cont) {
-          decision = false;
-          bossBattle = false;
-          monster.levelUp();
-          user.levelUp();
-          if (newClass == choiceA) {
-            knight.levelUp();
-          } else if (newClass == choiceB) {
-            mage.levelUp();
-          } else if (newClass == choiceC) {
-            ninja.levelUp();
+        if (enemyHp >= 1) {
+          if (finalBattle) {
+            dmgDealt = finalBoss.attack(playerDef);
+            int healAmount = checkFinal;
+          } else if (bossBattle) {
+            dmgDealt = boss.attack(playerDef);
+            int healAmount = boss.heal();
+            System.out.println("The boss dealt " + dmgDealt + " damage!");
+            System.out.println("The boss regained " + healAmount + " Hp!");
+          } else {
+            dmgDealt = monster.attack(playerDef);
+            System.out.println("The " + name + " dealt " + dmgDealt
+              + " damage!");
           }
-          battleChoice = 1;
-        } else {
-          System.out.println("Game ended.");
-          System.exit(0);
+          playerHp = playerHp - dmgDealt;
+          if (playerHp <= 0) {
+            System.out.println("You lose!");
+            System.exit(0);
+          }
+        }
+      }
+      boolean decision = true;
+      boolean cont = true;
+      if (finalBattle) {
+        act.ending(newClass);
+        System.exit(0);
+      }
+      while (decision) {
+        int warning = monster.getLevel();
+        System.out.println("\nYou defeated the monster.");
+        System.out.println("Continue?: (y)es/(n)o");
+        if ((warning + 1) % checkBoss == 0) {
+          System.out.println("Warning! Boss battle ahead!");
+        }
+        int battleChoice = 0;
+        while (battleChoice == 0) {
+          cont = act.continueBattle();
+          act.clear();
+          if (cont) {
+            if (bossBattle) {
+              newClass = act.classChange();
+            }
+            decision = false;
+            monster.levelUp();
+            if (newClass == 0) {
+              user.levelUp();
+            } else if (newClass == 1 && !(bossBattle)) {
+              knight.levelUp();
+            } else if (newClass == choiceB && !(bossBattle)) {
+              mage.levelUp();
+            } else if (newClass == choiceC && !(bossBattle)) {
+              ninja.levelUp();
+            }
+            bossBattle = false;
+            battleChoice = 1;
+          } else {
+            System.out.println("Game ended.");
+            System.exit(0);
+          }
         }
       }
     }
-  }
   }
 }

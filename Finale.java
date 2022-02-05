@@ -5,12 +5,12 @@ public class Finale extends Character {
   /**
   * The starting hp value of the final boss.
   */
-  private final int hp = 100;
+  private final int hp = 150;
 
   /**
   * The starting strength value of the final boss.
   */
-  private final int str = 25;
+  private final int str = 18;
 
   /**
   * The starting intelligence value of the final boss.
@@ -20,22 +20,12 @@ public class Finale extends Character {
   /**
   * The starting def value of the final boss.
   */
-  private final int def = 15;
+  private final int def = 12;
 
   /**
   * The starting mdf value of the final boss.
   */
-  private final int mdf = 15;
-
-  /**
-  * The starting stage of the final boss.
-  */
-  private int stage = 1;
-
-  /**
-  * The multiplier used to lowering boss damage.
-  */
-  private final int damageMultiplier = 3;
+  private final int mdf = 10;
 
   /**
   * The typing of the boss.
@@ -59,8 +49,8 @@ public class Finale extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int pDef) {
-    int damage = super.attack(str, pDef);
-    damage = Math.round(damage / (damageMultiplier - stage));
+    final int damage = super.attack(str, pDef) + 2;
+    System.out.println("The amalgamation dealt " + damage + " damage!");
     return damage;
   }
 
@@ -136,24 +126,5 @@ public class Finale extends Character {
     final Random random = new Random();
     final int healing = random.nextInt(intel);
     return healing;
-  }
-
-  /**
-  * The revive method.
-  *
-  * @return hp.
-  */
-  public int revive() {
-    stage += 1;
-    return hp;
-  }
-
-  /**
-  * The checkStage method.
-  *
-  * @return stage.
-  */
-  public int checkStage() {
-    return stage;
   }
 }

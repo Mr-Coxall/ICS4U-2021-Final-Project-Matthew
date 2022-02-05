@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Ninja extends Player {
 
@@ -41,17 +40,22 @@ public class Ninja extends Player {
   /**
   * The base hp value.
   */
-  private final int startingHp = 40;
+  private final int startingHp = 55;
 
   /**
   * The base offensive (str, intel, mp) value.
   */
-  private final int startingOffensive = 8;
+  private final int startingOffensive = 9;
 
   /**
   * The base defensive (def, mdf) value.
   */
   private final int startingDefensive = 6;
+
+  /**
+  * The mp value used for skills.
+  */
+  private int currentMp;
 
   /**
   * The no arguements ninja constructor.
@@ -62,19 +66,15 @@ public class Ninja extends Player {
     def = startingDefensive;
     intel = startingOffensive;
     str = startingOffensive;
-    mp = startingOffensive;
+    mp = (startingOffensive - 1);
     hp = startingHp;
+    currentMp = (startingOffensive - 1);
   }
 
   /**
   * The temporary defence value.
   */
   private int tempDef = 0;
-
-  /**
-  * The mp value used for skills.
-  */
-  private int currentMp = mp;
 
   /**
   * The prep value used for when you use the prepare skill.
@@ -155,7 +155,7 @@ public class Ninja extends Player {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = currentMp;
-    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\n" + enemyName + " HP: " + enemyHp);
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
@@ -175,10 +175,10 @@ public class Ninja extends Player {
   */
   public void ninjaSkills() {
     System.out.println("\nSkills:");
-    System.out.println("Multislash(S): 4Mp");
-    System.out.println("Prepare(D): 2Mp");
-    System.out.println("Animecut(F): AllMp (minimum of 6Mp required)");
-    System.out.println("Back(G)");
+    System.out.println("Multislash(A): 4Mp");
+    System.out.println("Prepare(S): 2Mp");
+    System.out.println("Animecut(D): AllMp (minimum of 6Mp required)");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -196,67 +196,70 @@ public class Ninja extends Player {
     String skillAction = "0";
     int damage = 0;
     int act = 0;
+    int skillAct = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("s")) {
-          damage = attack(eDef);
-          prep = 0;
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("d")) {
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+      } else if (choice.equals("s")) {
+        skillAct = 0;
+        while (skillAct == 0) {
           ninjaSkills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
-          if (skillAction.equals("s")) {
+          if (skillAction.equals("a")) {
             if (checkMp(multislashCost)) {
               damage = multislash(eDef);
               act += 1;
               currentMp -= multislashCost;
-              attackDamage(damage);
-              prep = 0;
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("d")) {
+          } else if (skillAction.equals("s")) {
             if (checkMp(prepareCost)) {
               prepare();
               currentMp -= prepareCost;
               act += 1;
-              attackDamage(damage);
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("f")) {
+          } else if (skillAction.equals("d")) {
             if (checkMp(animeCost)) {
               damage = animeCut(eHp);
               act += 1;
               currentMp = 0;
-              attackDamage(damage);
+              skillAct += 1;
             } else {
               invalidMp();
             }
-          } else if (skillAction.equals("g")) {
-            damage = ninjaAttack(eDef, eHp);
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
+          } else {
+            System.out.println("That is not a valid input.");
           }
-        } else if (choice.equals("f")) {
-          System.out.println("You steeled yourself "
-            + "for the opponent's attack.");
-          tempDef += choiceC;
-          act += 1;
-        } else {
-          System.out.println("That isn't a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a viable input.");
+      } else if (choice.equals("d")) {
+        System.out.println("You steeled yourself "
+          + "for the opponent's attack.");
+        tempDef += choiceC;
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
     }
+  if (damage >= 1) {
+    attackDamage(damage);
+  }
   return damage;
   }
 
@@ -321,8 +324,8 @@ public class Ninja extends Player {
   * @return damage.
   */
   public int attack(final int eDef) {
-    final int physicalDamage = super.attack((str + prep), eDef);
-    final int magicalDamage = super.attack((intel + prep), eDef);
+    final int physicalDamage = super.attack(str, eDef);
+    final int magicalDamage = super.attack(intel, eDef);
     final int damage = physicalDamage + magicalDamage;
     return damage;
   }
@@ -336,7 +339,7 @@ public class Ninja extends Player {
   */
   public int multislash(final int eDef) {
     final int damage = super.attack((str + intel), eDef);
-    return damage;
+    return (damage + choiceD);
   }
 
   /**
@@ -344,6 +347,8 @@ public class Ninja extends Player {
   */
   public void prepare() {
     prep += 1;
+    str += 1;
+    intel += 1;
   }
 
   /**
@@ -362,6 +367,11 @@ public class Ninja extends Player {
   * The levelUp method.
   */
   public void levelUp() {
+    while (prep != 0) {
+      str -= 1;
+      intel -= 1;
+      prep -= 1;
+    }
     lvl += 1;
     str += 2;
     intel += 2;
@@ -370,6 +380,12 @@ public class Ninja extends Player {
     def += 1;
     mdf += 1;
     currentMp = mp;
+    System.out.println("Level up!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 2!");
+    System.out.println("Your strength increased by 2!");
+    System.out.println("Your magic increased by 2!");
+    System.out.println("Your defence increased by 1!");
   }
 
   /**

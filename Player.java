@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Player extends Character {
 
@@ -116,9 +115,9 @@ public class Player extends Character {
   * The actions method, used to show the basic actions.
   */
   public void actions() {
-    System.out.println("Attack(S)");
-    System.out.println("Skills(D)");
-    System.out.println("Defend(F)");
+    System.out.println("Attack(A)");
+    System.out.println("Skills(S)");
+    System.out.println("Defend(D)");
     System.out.println("Your turn: ");
   }
 
@@ -127,10 +126,10 @@ public class Player extends Character {
   */
   public void skills() {
     System.out.println("\nSkills:");
-    System.out.println("Fireball(S): 2MP");
-    System.out.println("Zap(D): 2MP");
-    System.out.println("Frostblast(F): 2MP");
-    System.out.println("Back(G)");
+    System.out.println("Fireball(A): 2MP");
+    System.out.println("Zap(S): 2MP");
+    System.out.println("Frostblast(D): 2MP");
+    System.out.println("Back(F)");
   }
 
   /**
@@ -148,56 +147,70 @@ public class Player extends Character {
     tempDef = 0;
     String choice = "0";
     String skillAction = "0";
+    int skillAct = 0;
     int damage = 0;
     int act = 0;
     final Scanner userInput = new Scanner(System.in);
     while (act == 0) {
       actions();
       choice = "";
-      try {
-        choice = userInput.nextLine();
-        choice = choice.toLowerCase();
-        if (choice.equals("h")) {
-          help();
-        } else if (choice.equals("s")) {
-          damage = attack(eDef);
-          act += 1;
-          attackDamage(damage);
-        } else if (choice.equals("d")) {
+      choice = userInput.nextLine();
+      choice = choice.toLowerCase();
+      if (choice.equals("h")) {
+        help();
+      } else if (choice.equals("a")) {
+        damage = attack(eDef);
+        act += 1;
+      } else if (choice.equals("s")) {
+        skillAct = 0;
+        while (skillAct == 0) {
           skills();
           skillAction = userInput.nextLine();
           skillAction = skillAction.toLowerCase();
-          if (currentMp >= spellCost) {
-            if (skillAction.equals("s")) {
+          if (skillAction.equals("a")) {
+            if (currentMp >= spellCost) {
               damage = fireball(eMdf, type);
               act += 1;
+              skillAct += 1;
               currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("d")) {
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("s")) {
+            if (currentMp >= spellCost) {
               damage = zap(eMdf, type);
               act += 1;
+              skillAct += 1;
               currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("f")) {
-              damage = frostblast(eMdf, type);
-              act += 1;
-              currentMp -= spellCost;
-              attackDamage(damage);
-            } else if (skillAction.equals("g")) {
-              damage = playerAttack(eDef, eMdf, type);
+            } else {
+              invalidMp();
             }
+          } else if (skillAction.equals("d")) {
+            if (currentMp >= spellCost) {
+            damage = frostblast(eMdf, type);
+            act += 1;
+            skillAct += 1;
+            currentMp -= spellCost;
+            } else {
+              invalidMp();
+            }
+          } else if (skillAction.equals("f")) {
+            damage = 0;
+            skillAct += 1;
           } else {
-            invalidMp();
+            System.out.println("That is not a valid input.");
           }
-        } else if (choice.equals("f")) {
-          tempDef += choiceC;
-          act += 1;
-        } else {
-          System.out.println("That isn't a viable input.");
         }
-      } catch (InputMismatchException errorCode) {
-        System.out.println("That is not a valid input.");
+      } else if (choice.equals("d")) {
+        System.out.println("You raised your guard!");
+        tempDef += choiceC;
+        act += 1;
+      } else {
+        System.out.println("That isn't a viable input.");
       }
+    }
+    if (damage >= 1) {
+      attackDamage(damage);
     }
     return damage;
   }
@@ -212,7 +225,7 @@ public class Player extends Character {
   public void showHp(final String enemyName, final int enemyHp,
     final int playerHp) {
     final int showMp = currentMp;
-    System.out.println(enemyName + " HP: " + enemyHp);
+    System.out.println("\n" + enemyName + " HP: " + enemyHp);
     System.out.println("\nPlayer HP: " + playerHp);
     System.out.println("Player MP: " + showMp);
     System.out.println("Player strength: " + str);
@@ -244,7 +257,7 @@ public class Player extends Character {
   * @return damage the damage dealt.
   */
   public int attack(final int eDef) {
-    final int damage = super.attack(str, eDef) + lvl;
+    final int damage = super.attack(str, eDef) + 1;
     return damage;
   }
 
@@ -269,6 +282,9 @@ public class Player extends Character {
       fireDmg += choiceC;
     } else if (type.equals("lightning")) {
       fireDmg -= 2;
+    }
+    if (fireDmg < 1) {
+      fireDmg = 1;
     }
     return fireDmg;
   }
@@ -305,6 +321,9 @@ public class Player extends Character {
       frostDmg += choiceC;
     } else if (type.equals("fire")) {
       frostDmg -= 2;
+    }
+    if (frostDmg < 1) {
+      frostDmg = 1;
     }
     return frostDmg;
   }
@@ -357,5 +376,11 @@ public class Player extends Character {
     mdf += 1;
     hp += hpUp;
     currentMp = mp;
+    System.out.println("Level up!");
+    System.out.println("Your max HP increased by " + hpUp + "!");
+    System.out.println("Your max MP increased by 1!");
+    System.out.println("Your strength increased by 2!");
+    System.out.println("Your magic increased by 1!");
+    System.out.println("Your defence increased by 1!");
   }
 }
